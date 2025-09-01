@@ -1,9 +1,10 @@
 @use "../../../scss/colors.scss";
 @use "../../../scss/constants.scss";
+@use "../../../scss/fonts.scss";
 
 .Body {
-  font-family: "Instrument Sans";
-  font-weight: 400;
+  font-family: fonts.$instrument-sans;
+  font-weight: fonts.$weight-regular;
   line-height: constants.$line-height;
   color: colors.$body;
 
