@@ -1,0 +1,17 @@
+@use "../../../scss/colors.scss";
+@use "../../../scss/constants.scss";
+
+.Body {
+  font-family: "Instrument Sans";
+  font-weight: 400;
+  line-height: constants.$line-height;
+  color: colors.$body;
+
+  &__type-M {
+    font-size: 16px;
+  }
+
+  &__type-S {
+    font-size: 12px;
+  }
+}
