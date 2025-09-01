@@ -5,7 +5,7 @@ interface BodyProps {
   text: string;
 }
 
-const Body = ({ bodyType, text }: BodyProps) => {
+export const Body = ({ bodyType, text }: BodyProps) => {
   return (
     <p
       className={
@@ -18,5 +18,3 @@ const Body = ({ bodyType, text }: BodyProps) => {
     </p>
   );
 };
-
-export default Body;
