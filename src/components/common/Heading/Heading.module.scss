@@ -1,0 +1,17 @@
+@use "../../../scss/colors.scss";
+@use "../../../scss/constants.scss";
+
+.Heading {
+  font-family: "Instrument Sans";
+  font-weight: 700;
+  line-height: constants.$line-height;
+  color: colors.$heading;
+
+  &__type-M {
+    font-size: 32px;
+  }
+
+  &__type-S {
+    font-size: 16px;
+  }
+}
