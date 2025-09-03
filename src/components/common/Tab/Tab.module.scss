@@ -17,12 +17,12 @@
   }
 
   &--is-active {
-    color: colors.$tab-label-hover-active;
+    color: colors.$tab-label-active;
     background-color: colors.$tab-background-color-active;
   }
 
   &:hover {
     background-color: unset;
-    color: colors.$tab-label-hover-active;
+    color: colors.$tab-label-hover;
   }
 }
