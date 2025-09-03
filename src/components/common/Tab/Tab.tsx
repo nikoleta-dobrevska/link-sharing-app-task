@@ -18,7 +18,7 @@ export const Tab = ({ label, type, size, isActive, onClick }: TabProps) => {
       className={clsx(
         tabClasses["tab"],
         tabClasses[`tab__${size}`],
-        isActive && tabClasses["tab--isActive"]
+        isActive && tabClasses["tab--is-active"]
       )}
     >
       {label}

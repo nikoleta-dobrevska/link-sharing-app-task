@@ -1,0 +1,28 @@
+@use "../../../scss/colors.scss";
+@use "../../../scss/constants.scss";
+@use "../../../scss/fonts.scss";
+
+.tab {
+  font-family: fonts.$instrument-sans;
+  font-weight: fonts.$weight-bold;
+  font-size: fonts.$tab-font-size;
+  border-radius: constants.$tab-border-radius;
+  padding: constants.$tab-padding;
+  cursor: pointer;
+
+  &__s {
+    width: constants.$tab-s-width;
+    background-color: unset;
+    color: colors.$tab-label-default;
+  }
+
+  &--is-active {
+    color: colors.$tab-label-hover-active;
+    background-color: colors.$tab-background-color-active;
+  }
+
+  &:hover {
+    background-color: unset;
+    color: colors.$tab-label-hover-active;
+  }
+}
