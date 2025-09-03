@@ -1,11 +1,21 @@
+$lavender: #efebff;
+$light-purple: #beadff;
+$dark-purple: #633cff;
+$gray: #737373;
+$dark-gray: #333333;
+$light-gray: #d9d9d9;
+$white: #ffffff;
+$beige: #fafafa;
+$red: #ff3939;
+
 $heading: #333333;
 $body: #737373;
 
-$btn-primary: #633cff;
-$btn-primary-label: #ffffff;
-$btn-primary-disabled: #efebff;
+$btn-primary: $dark-purple;
+$btn-primary-label: $white;
+$btn-primary-disabled: $lavender;
 
-$btn-secondary: #fafafa;
-$btn-secondary-label: #633cff;
-$btn-secondary-active: #efebff;
-$btn-secondary-border: #633cff;
+$btn-secondary: $beige;
+$btn-secondary-label: $dark-purple;
+$btn-secondary-hover: $lavender;
+$btn-secondary-border: $dark-purple;
