@@ -2,17 +2,17 @@
 @use "../../../scss/constants.scss";
 @use "../../../scss/fonts.scss";
 
-.Body {
+.p {
   font-family: fonts.$instrument-sans;
   font-weight: fonts.$weight-regular;
   line-height: constants.$line-height;
   color: colors.$body;
 
-  &__type-M {
-    font-size: 16px;
+  &__m {
+    font-size: fonts.$p-m-font-size;
   }
 
-  &__type-S {
-    font-size: 12px;
+  &__s {
+    font-size: fonts.$p-s-font-size;
   }
 }

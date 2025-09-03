@@ -1,0 +1,1 @@
+export { TypographyBody } from "./TypographyBody";

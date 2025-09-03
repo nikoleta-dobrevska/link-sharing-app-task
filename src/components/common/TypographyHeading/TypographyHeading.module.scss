@@ -2,17 +2,17 @@
 @use "../../../scss/constants.scss";
 @use "../../../scss/fonts.scss";
 
-.Heading {
+.heading {
   font-family: fonts.$instrument-sans;
   font-weight: fonts.$weight-bold;
   line-height: constants.$line-height;
   color: colors.$heading;
 
-  &__type-M {
-    font-size: 32px;
+  &__m {
+    font-size: fonts.$heading-m-font-size;
   }
 
-  &__type-S {
-    font-size: 16px;
+  &__s {
+    font-size: fonts.$heading-s-font-size;
   }
 }
