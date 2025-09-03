@@ -1,0 +1,41 @@
+@use "../../../scss/colors.scss";
+@use "../../../scss/constants.scss";
+@use "../../../scss/fonts.scss";
+
+.btn {
+  font-size: fonts.$btn-font-size;
+  font-family: fonts.$instrument-sans;
+  font-weight: fonts.$weight-bold;
+  border-radius: constants.$btn-border-radius;
+  padding: constants.$btn-padding;
+  cursor: pointer;
+
+  &__primary {
+    background-color: colors.$btn-primary;
+    color: colors.$btn-primary-label;
+  }
+
+  &__m {
+    width: constants.$btn-m-width;
+  }
+
+  &__primary:not(.btn__secondary):not(.btn--disabled):hover {
+    box-shadow: constants.$btn-box-shadow-active;
+    opacity: 0.5;
+  }
+
+  &__secondary {
+    background-color: colors.$btn-secondary;
+    color: colors.$btn-secondary-label;
+    border: 1px solid colors.$btn-secondary-border;
+  }
+
+  &__secondary:not(.btn__primary):not(.btn--disabled):hover {
+    background-color: colors.$btn-secondary-active;
+  }
+
+  &--disabled {
+    opacity: 0.25;
+    cursor: default;
+  }
+}
