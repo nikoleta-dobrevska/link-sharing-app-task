@@ -1,1 +1,0 @@
-export { TypographyHeading } from "./TypographyHeading";
