@@ -5,8 +5,8 @@ import { clsx } from "clsx";
 interface ButtonProps {
   variant: "primary" | "secondary";
   type: "button" | "submit" | "reset";
-  size: "xs" | "s" | "m" | "l" | "xl";
-  label: string;
+  size: "md";
+  children: string;
   isDisabled?: boolean;
   onClick?: React.MouseEventHandler;
 }
@@ -15,7 +15,7 @@ export const Button = ({
   variant,
   type,
   size,
-  label,
+  children,
   isDisabled,
   onClick,
 }: ButtonProps) => {
@@ -23,16 +23,14 @@ export const Button = ({
     <button
       className={clsx(
         buttonClasses["btn"],
-        buttonClasses[`btn__${variant}`],
-        buttonClasses[`btn__${size}`],
-        isDisabled && buttonClasses["btn--disabled"]
+        buttonClasses[`btn--${size}`],
+        buttonClasses[`btn--${variant}`]
       )}
       type={type}
       disabled={isDisabled}
       onClick={onClick}
-      aria-label={label || "Button"}
     >
-      {label}
+      {children}
     </button>
   );
 };
