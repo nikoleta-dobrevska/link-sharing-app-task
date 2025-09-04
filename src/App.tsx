@@ -1,7 +1,8 @@
 import "./App.css";
+import { Navbar } from "./components/ui/Navbar";
 
 function App() {
-  return <></>;
+  return <Navbar activeNavItem={1}></Navbar>;
 }
 
 export default App;

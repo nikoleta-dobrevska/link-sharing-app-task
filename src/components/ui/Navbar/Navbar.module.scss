@@ -1,0 +1,47 @@
+@use "../../../scss/colors.scss";
+@use "../../../scss/fonts.scss";
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: colors.$white;
+  align-items: center;
+  height: 4.7rem;
+  padding: 1rem;
+
+  &__center {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+    &__nav-item {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: unset;
+      gap: 0.5rem;
+      padding: 0.9rem 1.7rem;
+      border-radius: 0.5rem;
+
+      &__link {
+        color: colors.$gray;
+        font-family: fonts.$instrument-sans;
+        font-weight: fonts.$weight-bold;
+        text-decoration: unset;
+
+        &--active {
+          color: colors.$dark-purple;
+        }
+      }
+
+      &--active {
+        background-color: colors.$lavender;
+      }
+
+      & a:hover {
+        color: colors.$dark-purple;
+        cursor: pointer;
+      }
+    }
+  }
+}
