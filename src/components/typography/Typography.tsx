@@ -19,7 +19,7 @@ export const Typography = ({
     <Component
       className={clsx(
         typographyClasses[variant],
-        typographyClasses[`${variant}__${size}`]
+        typographyClasses[`${variant}--${size}`]
       )}
     >
       {children}
