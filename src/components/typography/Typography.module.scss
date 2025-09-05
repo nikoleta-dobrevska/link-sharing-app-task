@@ -1,0 +1,33 @@
+@use "../../scss/colors.scss";
+@use "../../scss/constants.scss";
+@use "../../scss/fonts.scss";
+
+.heading {
+  font-family: fonts.$instrument-sans;
+  font-weight: fonts.$weight-bold;
+  line-height: constants.$line-height;
+  color: colors.$heading-font-color;
+
+  &--md {
+    font-size: fonts.$heading-md-font-size;
+  }
+
+  &--sm {
+    font-size: fonts.$heading-sm-font-size;
+  }
+}
+
+.body {
+  font-family: fonts.$instrument-sans;
+  font-weight: fonts.$weight-regular;
+  line-height: constants.$line-height;
+  color: colors.$body-font-color;
+
+  &--md {
+    font-size: fonts.$body-md-font-size;
+  }
+
+  &--sm {
+    font-size: fonts.$body-sm-font-size;
+  }
+}
