@@ -6,7 +6,7 @@ interface ButtonProps {
   variant: "primary" | "secondary";
   type: "button" | "submit" | "reset";
   size: "md";
-  children: string;
+  children: any;
   isDisabled?: boolean;
   onClick?: React.MouseEventHandler;
 }

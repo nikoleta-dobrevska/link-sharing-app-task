@@ -7,7 +7,15 @@
   background-color: colors.$white;
   align-items: center;
   height: 4.7rem;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 1.5rem;
+
+  &__left {
+    margin-left: 1rem;
+  }
+
+  &__right {
+    margin-right: 1rem;
+  }
 
   &__center {
     display: flex;
@@ -24,6 +32,10 @@
       border-radius: 0.5rem;
 
       &__link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
         color: colors.$gray;
         font-family: fonts.$instrument-sans;
         font-weight: fonts.$weight-bold;
@@ -32,15 +44,15 @@
         &--active {
           color: colors.$dark-purple;
         }
+
+        &:hover {
+          color: colors.$dark-purple;
+          cursor: pointer;
+        }
       }
 
       &--active {
         background-color: colors.$lavender;
-      }
-
-      & a:hover {
-        color: colors.$dark-purple;
-        cursor: pointer;
       }
     }
   }
