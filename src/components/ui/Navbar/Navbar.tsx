@@ -5,14 +5,15 @@ import Preview from "../../../assets/svgr/preview.svg?react";
 import ProfileDetails from "../../../assets/svgr/profile-details.svg?react";
 import { clsx } from "clsx";
 import { Button } from "../Button";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 interface NavbarProps {
-  activeNavItem: number;
+  activePage: number;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activeNavItem }) => {
+export const Navbar = ({ activePage }: NavbarProps) => {
   const [useSvg, setUseSvg] = useState(false);
+  const [hideText, setHideText] = useState(false);
 
   useEffect(() => {
     const renderSvgOrText = () => {
@@ -20,8 +21,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeNavItem }) => {
 
       if (screenSize < 768) {
         setUseSvg(true);
+        setHideText(true);
       } else {
         setUseSvg(false);
+        setHideText(false);
       }
     };
 
@@ -32,18 +35,18 @@ export const Navbar: React.FC<NavbarProps> = ({ activeNavItem }) => {
     return () => {
       window.removeEventListener("resize", renderSvgOrText);
     };
-  }, [useSvg]);
+  }, [useSvg, hideText]);
 
   return (
     <nav className={navbarClasses["navbar"]}>
       <div className={navbarClasses["navbar__left"]}>
-        <Logo />
+        <Logo hideText={hideText} />
       </div>
       <div className={navbarClasses["navbar__center"]}>
         <li
           className={clsx(
             navbarClasses["navbar__center__nav-item"],
-            activeNavItem === 1 &&
+            activePage === 1 &&
               navbarClasses["navbar__center__nav-item--active"]
           )}
         >
@@ -51,18 +54,18 @@ export const Navbar: React.FC<NavbarProps> = ({ activeNavItem }) => {
             href="/links"
             className={clsx(
               navbarClasses["navbar__center__nav-item__link"],
-              activeNavItem === 1 &&
+              activePage === 1 &&
                 navbarClasses["navbar__center__nav-item__link--active"]
             )}
           >
             <Links />
-            Links
+            {!hideText && "Links"}
           </a>
         </li>
         <li
           className={clsx(
             navbarClasses["navbar__center__nav-item"],
-            activeNavItem === 2 &&
+            activePage === 2 &&
               navbarClasses["navbar__center__nav-item--active"]
           )}
         >
@@ -70,12 +73,12 @@ export const Navbar: React.FC<NavbarProps> = ({ activeNavItem }) => {
             href="/profile-details"
             className={clsx(
               navbarClasses["navbar__center__nav-item__link"],
-              activeNavItem === 2 &&
+              activePage === 2 &&
                 navbarClasses["navbar__center__nav-item__link--active"]
             )}
           >
             <ProfileDetails />
-            Profile Details
+            {!hideText && "Profile Details"}
           </a>
         </li>
       </div>

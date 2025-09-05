@@ -4,7 +4,7 @@ import typographyClasses from "./Typography.module.scss";
 interface TypographyProps {
   variant: "heading" | "body";
   size: "sm" | "md";
-  children: string;
+  children: any;
   component: React.ElementType;
 }
 
