@@ -2,7 +2,12 @@ import "./App.css";
 import { Navbar } from "./components/ui/Navbar";
 
 function App() {
-  return <Navbar activePage={1}></Navbar>;
+  return (
+    <>
+      {/* example with active page #1 */}
+      <Navbar activePage={1}></Navbar>
+    </>
+  );
 }
 
 export default App;

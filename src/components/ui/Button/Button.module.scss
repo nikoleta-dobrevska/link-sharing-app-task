@@ -5,12 +5,11 @@
 .btn {
   font-family: fonts.$instrument-sans;
   font-weight: fonts.$weight-bold;
-  border-radius: 0.5rem;
-  padding: 0.7rem 1.4rem;
+  border-radius: constants.$border-radius;
+  padding: constants.$padding;
   cursor: pointer;
 
   &--md {
-    width: fit-content;
     font-size: 1rem;
   }
 

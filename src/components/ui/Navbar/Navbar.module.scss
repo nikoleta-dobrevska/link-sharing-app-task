@@ -1,5 +1,6 @@
 @use "../../../scss/colors.scss";
 @use "../../../scss/fonts.scss";
+@use "../../../scss/constants.scss";
 
 .navbar {
   display: flex;
@@ -25,10 +26,9 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      background-color: unset;
       gap: 0.5rem;
-      padding: 0.9rem 1.7rem;
-      border-radius: 0.5rem;
+      padding: constants.$padding;
+      border-radius: constants.$border-radius;
 
       &__link {
         display: flex;
@@ -38,7 +38,6 @@
         color: colors.$gray;
         font-family: fonts.$instrument-sans;
         font-weight: fonts.$weight-bold;
-        text-decoration: unset;
 
         &--active {
           color: colors.$dark-purple;
@@ -46,7 +45,6 @@
 
         &:hover {
           color: colors.$dark-purple;
-          cursor: pointer;
         }
       }
 
