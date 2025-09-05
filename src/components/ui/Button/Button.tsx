@@ -1,12 +1,13 @@
 import type React from "react";
 import buttonClasses from "./Button.module.scss";
 import { clsx } from "clsx";
+import { Typography } from "../../typography";
 
 interface ButtonProps {
   variant: "primary" | "secondary";
   type: "button" | "submit" | "reset";
   size: "md";
-  children: string;
+  children: React.ReactNode;
   isDisabled?: boolean;
   onClick?: React.MouseEventHandler;
 }
@@ -30,7 +31,17 @@ export const Button = ({
       disabled={isDisabled}
       onClick={onClick}
     >
-      {children}
+      {
+        <Typography
+          component="span"
+          variant="heading"
+          size="sm"
+          color={variant === "primary" ? "white" : "dark-purple"}
+          //not a good approach but i need ideas
+        >
+          {children}
+        </Typography>
+      }
     </button>
   );
 };
