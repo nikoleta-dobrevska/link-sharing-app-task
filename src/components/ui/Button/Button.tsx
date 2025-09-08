@@ -1,6 +1,7 @@
-import type React from "react";
-import buttonClasses from "./Button.module.scss";
 import { clsx } from "clsx";
+import type React from "react";
+
+import buttonClasses from "./Button.module.scss";
 
 interface ButtonProps {
   variant: "primary" | "secondary";
