@@ -1,25 +1,34 @@
 import { clsx } from "clsx";
 import typographyClasses from "./Typography.module.scss";
 
-interface TypographyProps {
+type TypographyProps<C extends React.ElementType> = {
+  component?: C;
+  children: React.ReactNode;
   variant: "heading" | "body";
   size: "sm" | "md";
-  children: any;
-  component: React.ElementType;
-}
+  color: "dark-gray" | "dark-purple" | "white" | "gray";
+  className: string;
+} & React.ComponentProps<C>;
 
-export const Typography = ({
+export const Typography = <C extends React.ElementType = "span">({
+  component,
+  children,
   variant,
   size,
-  children,
-  component,
-}: TypographyProps) => {
-  const Component = component;
+  color,
+  className,
+  ...restProps
+}: TypographyProps<C>) => {
+  const Component = component || "span";
+
   return (
     <Component
+      {...restProps}
       className={clsx(
         typographyClasses[variant],
-        typographyClasses[`${variant}--${size}`]
+        typographyClasses[`${variant}--${size}`],
+        typographyClasses[`${variant}--${color}`],
+        className
       )}
     >
       {children}

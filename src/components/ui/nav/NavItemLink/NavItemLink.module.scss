@@ -1,0 +1,12 @@
+@use "../../../../scss/colors.scss";
+
+.nav-item-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    color: colors.$dark-purple;
+  }
+}

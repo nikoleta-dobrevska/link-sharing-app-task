@@ -1,0 +1,20 @@
+@use "../../../../scss/colors.scss";
+@use "../../../../scss/fonts.scss";
+@use "../../../../scss/constants.scss";
+
+.nav-item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0.5rem;
+  padding: constants.$button-padding;
+  border-radius: constants.$border-radius;
+
+  &--active {
+    background-color: colors.$lavender;
+
+    a {
+      color: colors.$dark-purple;
+    }
+  }
+}

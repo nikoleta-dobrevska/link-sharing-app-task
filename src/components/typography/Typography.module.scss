@@ -6,7 +6,6 @@
   font-family: fonts.$instrument-sans;
   font-weight: fonts.$weight-bold;
   line-height: constants.$line-height;
-  color: colors.$heading-font-color;
 
   &--md {
     font-size: fonts.$heading-md-font-size;
@@ -15,13 +14,20 @@
   &--sm {
     font-size: fonts.$heading-sm-font-size;
   }
+
+  &--gray {
+    color: colors.$gray;
+  }
+
+  &--dark-purple {
+    color: colors.$dark-purple;
+  }
 }
 
 .body {
   font-family: fonts.$instrument-sans;
   font-weight: fonts.$weight-regular;
   line-height: constants.$line-height;
-  color: colors.$body-font-color;
 
   &--md {
     font-size: fonts.$body-md-font-size;

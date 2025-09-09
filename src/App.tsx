@@ -1,13 +1,7 @@
-import "./App.css";
-import { Navbar } from "./components/ui/Navbar";
+import { Navbar } from "./components/ui/nav/Navbar";
 
 function App() {
-  return (
-    <>
-      {/* example with active page #1 */}
-      <Navbar activePage={1}></Navbar>
-    </>
-  );
+  return <Navbar activePage={1}></Navbar>;
 }
 
 export default App;

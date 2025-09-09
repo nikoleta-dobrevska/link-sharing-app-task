@@ -1,0 +1,46 @@
+@use "../../../../scss/colors.scss";
+@use "../../../../scss/fonts.scss";
+@use "../../../../scss/constants.scss";
+@use "../../../../scss/screens.scss";
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: colors.$white;
+  align-items: center;
+  height: 4.7rem;
+  padding: 1rem 1rem 1rem 1.5rem;
+
+  &__left {
+    margin-left: 1rem;
+  }
+
+  &__right {
+    margin-right: 1rem;
+  }
+
+  &__center {
+    display: flex;
+    justify-content: space-between;
+
+    &__link {
+      &:hover {
+        color: colors.$dark-purple;
+      }
+    }
+  }
+
+  &__svg--preview {
+    display: none;
+
+    @include screens.mobile {
+      display: inline;
+    }
+  }
+
+  &__span {
+    @include screens.mobile {
+      display: none;
+    }
+  }
+}

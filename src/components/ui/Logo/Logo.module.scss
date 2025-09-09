@@ -1,7 +1,15 @@
+@use "../../../scss/screens.scss";
+
 .logo {
   width: fit-content;
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
   align-items: center;
   gap: 0.3rem;
+
+  &__h3 {
+    @include screens.mobile {
+      display: none;
+    }
+  }
 }
