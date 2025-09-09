@@ -7,6 +7,7 @@ type TypographyProps<C extends React.ElementType> = {
   variant: "heading" | "body";
   size: "sm" | "md";
   color: "dark-gray" | "dark-purple" | "white";
+  className: string;
 } & React.ComponentProps<C>;
 
 export const Typography = <C extends React.ElementType = "span">({
