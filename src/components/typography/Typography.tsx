@@ -7,7 +7,7 @@ type TypographyProps<C extends React.ElementType> = {
   variant: "heading" | "body";
   size: "sm" | "md";
   color: "dark-gray" | "dark-purple" | "white";
-} & React.ComponentPropsWithoutRef<C>;
+} & React.ComponentProps<C>;
 
 export const Typography = <C extends React.ElementType = "span">({
   component,
@@ -15,6 +15,7 @@ export const Typography = <C extends React.ElementType = "span">({
   variant,
   size,
   color,
+  className,
   ...restProps
 }: TypographyProps<C>) => {
   const Component = component || "span";
@@ -25,7 +26,8 @@ export const Typography = <C extends React.ElementType = "span">({
       className={clsx(
         typographyClasses[variant],
         typographyClasses[`${variant}--${size}`],
-        typographyClasses[`${variant}--${color}`]
+        typographyClasses[`${variant}--${color}`],
+        className
       )}
     >
       {children}

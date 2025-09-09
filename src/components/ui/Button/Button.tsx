@@ -12,6 +12,20 @@ interface ButtonProps {
   onClick?: React.MouseEventHandler;
 }
 
+interface Colors {
+  [variant: string]: string;
+}
+
+let colors: Colors = {};
+colors = {
+  primary: "white",
+  secondary: "dark-purple",
+};
+
+const getTypographyColor = (variant: string) => {
+  return colors[variant].valueOf();
+};
+
 export const Button = ({
   variant,
   type,
@@ -21,27 +35,21 @@ export const Button = ({
   onClick,
 }: ButtonProps) => {
   return (
-    <button
+    <Typography
+      component="button"
+      variant="heading"
+      size="sm"
+      color={getTypographyColor(variant)}
+      type={type}
+      disabled={isDisabled}
+      onClick={onClick}
       className={clsx(
         buttonClasses["btn"],
         buttonClasses[`btn--${size}`],
         buttonClasses[`btn--${variant}`]
       )}
-      type={type}
-      disabled={isDisabled}
-      onClick={onClick}
     >
-      {
-        <Typography
-          component="span"
-          variant="heading"
-          size="sm"
-          color={variant === "primary" ? "white" : "dark-purple"}
-          //not a good approach but i need ideas
-        >
-          {children}
-        </Typography>
-      }
-    </button>
+      {children}
+    </Typography>
   );
 };
