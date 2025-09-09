@@ -2,12 +2,13 @@ import type React from "react";
 import navItemClasses from "./NavItem.module.scss";
 import { clsx } from "clsx";
 
-type NavItem = {
+type NavItemProps = {
   children: React.ReactNode;
   isActive: boolean;
+  href: string;
 };
 
-export const NavItem = ({ children, isActive }: NavItem) => {
+export const NavItem = ({ children, isActive, href }: NavItemProps) => {
   return (
     <li
       className={clsx(
@@ -15,7 +16,9 @@ export const NavItem = ({ children, isActive }: NavItem) => {
         isActive && navItemClasses[`nav-item--active`]
       )}
     >
-      {children}
+      <a href={href} className={navItemClasses["nav-item-link"]}>
+        {children}
+      </a>
     </li>
   );
 };

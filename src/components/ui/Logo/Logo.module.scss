@@ -1,4 +1,5 @@
 @use "../../../scss/screens.scss";
+@use "../../../scss/colors.scss";
 
 .logo {
   width: fit-content;
@@ -7,7 +8,9 @@
   align-items: center;
   gap: 0.3rem;
 
-  &__h3 {
+  &__title {
+    color: colors.$dark-gray;
+
     @include screens.mobile {
       display: none;
     }

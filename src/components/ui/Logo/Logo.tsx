@@ -1,16 +1,17 @@
-import Icon from "../../../assets/svgr/logo.svg?react";
+import LogoIcon from "../../../assets/svgr/logo.svg?react";
 import { Typography } from "../../typography";
 import logoClasses from "./Logo.module.scss";
 
 export const Logo = () => {
   return (
     <div className={logoClasses["logo"]}>
-      <Icon />
+      <LogoIcon />
       <Typography
         variant="heading"
         size="md"
-        component={"h3"}
-        className={logoClasses["logo__h3"]}
+        component="span"
+        color="dark-gray"
+        className={logoClasses["logo__title"]}
       >
         devlinks
       </Typography>

@@ -9,11 +9,25 @@
   gap: 0.5rem;
   padding: constants.$button-padding;
   border-radius: constants.$border-radius;
+  font-family: fonts.$instrument-sans;
+  font-weight: fonts.$weight-bold;
+
+  .nav-item-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    color: colors.$gray;
+
+    &:hover {
+      color: colors.$dark-purple;
+    }
+  }
 
   &--active {
     background-color: colors.$lavender;
 
-    a {
+    .nav-item-link {
       color: colors.$dark-purple;
     }
   }

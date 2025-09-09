@@ -15,6 +15,7 @@
 
   &--primary {
     background-color: colors.$dark-purple;
+    color: colors.$white;
 
     &:not(:disabled):hover {
       box-shadow: rgba(99, 60, 255, 0.5) 0rem 0.4rem 1.7rem 0rem;
@@ -24,6 +25,7 @@
 
   &--secondary {
     background-color: colors.$beige;
+    color: colors.$dark-purple;
     border: 1px solid colors.$dark-purple;
 
     &:not(:disabled):hover {
