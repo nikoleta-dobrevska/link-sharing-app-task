@@ -7,10 +7,9 @@ export const Logo = () => {
     <div className={logoClasses["logo"]}>
       <LogoIcon />
       <Typography
+        component="span"
         variant="heading"
         size="md"
-        component="span"
-        color="dark-gray"
         className={logoClasses["logo__title"]}
       >
         devlinks
