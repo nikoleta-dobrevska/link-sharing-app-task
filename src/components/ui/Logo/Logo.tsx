@@ -1,5 +1,6 @@
-import LogoIcon from "../../../assets/svgr/logo.svg?react";
-import { Typography } from "../../typography";
+import LogoIcon from "@/assets/svgr/logo.svg?react";
+import { Typography } from "@/components/typography";
+
 import logoClasses from "./Logo.module.scss";
 
 export const Logo = () => {

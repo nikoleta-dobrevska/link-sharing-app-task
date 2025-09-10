@@ -1,6 +1,7 @@
-import type React from "react";
-import navItemClasses from "./NavItem.module.scss";
 import { clsx } from "clsx";
+import type React from "react";
+
+import navItemClasses from "./NavItem.module.scss";
 
 type NavItemProps = {
   children: React.ReactNode;

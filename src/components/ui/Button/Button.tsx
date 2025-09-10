@@ -1,33 +1,28 @@
-import type React from "react";
-import buttonClasses from "./Button.module.scss";
 import { clsx } from "clsx";
+import type React from "react";
 
-interface ButtonProps {
+import buttonClasses from "./Button.module.scss";
+
+type ButtonProps = {
   variant: "primary" | "secondary";
-  type: "button" | "submit" | "reset";
   size: "md";
-  children: React.ReactNode;
-  isDisabled?: boolean;
-  onClick?: React.MouseEventHandler;
-}
+} & React.ComponentProps<"button">;
 
 export const Button = ({
   variant,
-  type,
   size,
+  className,
   children,
-  isDisabled,
-  onClick,
+  ...buttonProps
 }: ButtonProps) => {
   return (
     <button
-      type={type}
-      disabled={isDisabled}
-      onClick={onClick}
+      {...buttonProps}
       className={clsx(
         buttonClasses["btn"],
         buttonClasses[`btn--${size}`],
-        buttonClasses[`btn--${variant}`]
+        buttonClasses[`btn--${variant}`],
+        className
       )}
     >
       {children}

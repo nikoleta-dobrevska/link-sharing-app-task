@@ -1,10 +1,11 @@
+import LinksIcon from "@/assets/svgr/links.svg?react";
+import PreviewIcon from "@/assets/svgr/preview.svg?react";
+import ProfileDetailsIcon from "@/assets/svgr/profile-details.svg?react";
+import { Button } from "@/components/ui/Button";
+import { Logo } from "@/components/ui/Logo";
+import { NavItem } from "@/components/ui/nav/NavItem";
+
 import navbarClasses from "./Navbar.module.scss";
-import { Logo } from "../../Logo";
-import LinksIcon from "../../../../assets/svgr/links.svg?react";
-import ProfileDetailsIcon from "../../../../assets/svgr/profile-details.svg?react";
-import PreviewIcon from "../../../../assets/svgr/preview.svg?react";
-import { Button } from "../../Button";
-import { NavItem } from "../NavItem";
 
 const navItems = [
   {

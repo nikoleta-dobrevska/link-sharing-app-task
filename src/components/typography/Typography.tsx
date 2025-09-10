@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+
 import typographyClasses from "./Typography.module.scss";
 
 type TypographyProps<C extends React.ElementType> = {
