@@ -25,7 +25,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v5
         with:
-          node-version: ${{ github.env.NODE_JS_VERSION }}
+          node-version: ${{ env.NODE_JS_VERSION }}
           cache: npm
           package-manager-cache: true
           cache-dependency-path: package-lock.json
