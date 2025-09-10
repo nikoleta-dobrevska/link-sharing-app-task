@@ -1,0 +1,9 @@
+@use "../../../../scss/colors.scss";
+
+.form-label--dark-gray {
+  color: colors.$dark-gray;
+}
+
+.form-label--gray {
+  color: colors.$gray;
+}

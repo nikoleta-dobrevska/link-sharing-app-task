@@ -1,0 +1,31 @@
+@use "../../../../scss/colors.scss";
+@use "../../../../scss/constants.scss";
+@use "../../../../scss/fonts.scss";
+
+.form__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  &__icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0.5rem;
+  }
+
+  &__error-message {
+    font-family: fonts.$instrument-sans;
+    font-weight: fonts.$weight-regular;
+    font-size: fonts.$body-sm-font-size;
+    color: colors.$red;
+    position: absolute;
+    box-sizing: border-box;
+    right: 2.5%;
+  }
+}
