@@ -46,7 +46,6 @@ export default tseslint.config([
 
       // eslint-plugin-import
       "import/no-deprecated": "error",
-      "import/no-relative-parent-imports": "error",
       "import/no-empty-named-blocks": "error",
       "import/no-extraneous-dependencies": [
         "error",

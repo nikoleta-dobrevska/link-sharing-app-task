@@ -127,3 +127,16 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+button {
+  border: unset;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
+  background-color: unset;
+}

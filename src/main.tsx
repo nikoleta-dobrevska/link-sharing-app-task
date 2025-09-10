@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import App from "@/App";
 
-import "./scss/reset.scss";
+import "@/scss/reset.scss";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
