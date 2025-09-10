@@ -6,19 +6,16 @@ const data = [
     icon: "↓",
     name: "Option 1",
     value: "Option 1",
-    isDisabled: false,
   },
   {
     icon: "↓",
     name: "Option 2",
     value: "Option 2",
-    isDisabled: false,
   },
   {
     icon: "↓",
     name: "Option 3",
     value: "Option 3",
-    isDisabled: false,
   },
 ];
 

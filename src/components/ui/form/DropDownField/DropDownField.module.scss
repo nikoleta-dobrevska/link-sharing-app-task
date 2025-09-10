@@ -1,6 +1,6 @@
-@use "@/scss/colors.scss";
-@use "@/scss/constants.scss";
-@use "@/scss/fonts.scss";
+@use "/src/scss/colors.scss";
+@use "/src/scss/constants.scss";
+@use "/src/scss/fonts.scss";
 
 .form__drop-down-field {
   appearance: none;
@@ -26,7 +26,6 @@
   }
 
   &__option {
-    padding: 0.75rem 1rem;
     &:checked {
       color: colors.$dark-purple;
     }
