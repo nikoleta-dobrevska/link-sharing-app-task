@@ -1,0 +1,37 @@
+name: Validate Pull Request Changes
+
+run-name: "Validate Changes in PR #${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}"
+
+on:
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_JS_VERSION: "22.19.0"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Run Pull Request Checks
+    if: ${{ github.event.pull_request.draft == false }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup node
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_JS_VERSION }}
+          cache: npm
+          package-manager-cache: true
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Run format check
+        run: npm run format:check
+      - name: Run lint check
+        run: npm run lint:check
