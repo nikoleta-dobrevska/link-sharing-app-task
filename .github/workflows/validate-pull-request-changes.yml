@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  NODE_JS_VERSION: "lts/jod"
+  NODE_JS_VERSION: "22.19.0"
 
 permissions:
   contents: read
