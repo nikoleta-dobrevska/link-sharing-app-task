@@ -1,9 +1,7 @@
 import inputClasses from "./Input.module.scss";
 
-type InputProps = React.ComponentPropsWithRef<"input">;
+type InputProps = React.ComponentProps<"input">;
 
 export const Input = ({ ...inputProps }): InputProps => {
-  return (
-    <input {...inputProps} className={inputClasses["form__input"]}></input>
-  );
+  return <input {...inputProps} className={inputClasses["form__input"]} />;
 };

@@ -1,6 +1,8 @@
-import { Typography } from "../../../typography";
-import labelClasses from "./Label.module.scss";
 import { clsx } from "clsx";
+
+import { Typography } from "@/components/typography";
+
+import labelClasses from "./Label.module.scss";
 
 interface LabelProps {
   children: React.ReactNode;
@@ -8,10 +10,9 @@ interface LabelProps {
   color: "dark-gray" | "gray";
 }
 
-export const Label = (/*{ children, htmlFor }: LabelProps*/) => {
+export const Label = ({ children, htmlFor, color }: LabelProps) => {
   return (
-    <></>
-    /*<Typography
+    <Typography
       htmlFor={htmlFor}
       variant="body"
       component={"label"}
@@ -19,6 +20,6 @@ export const Label = (/*{ children, htmlFor }: LabelProps*/) => {
       className={clsx(labelClasses[`form-label--${color}`])}
     >
       {children}
-    </Typography>*/
+    </Typography>
   );
 };

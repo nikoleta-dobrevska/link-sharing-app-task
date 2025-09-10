@@ -9,11 +9,11 @@ type DropDownFieldData = {
 
 type DataArray = DropDownFieldData[];
 
-type OptionProps = {} & React.ComponentPropsWithRef<"option">;
+type OptionProps = {} & React.ComponentProps<"option">;
 
 type SelectProps = {
   data: DataArray;
-} & React.ComponentPropsWithRef<"select">;
+} & React.ComponentProps<"select">;
 
 const Option = ({ children, ...optionProps }: OptionProps) => {
   return <option {...optionProps}>{children}</option>;
