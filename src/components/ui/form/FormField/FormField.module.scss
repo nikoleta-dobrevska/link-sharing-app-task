@@ -12,7 +12,7 @@
     height: 1.5rem;
     width: 1.5rem;
     position: absolute;
-    box-sizing: border-box;
+    box-sizing: constants.$box-sizing;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +25,7 @@
     font-size: fonts.$body-sm-font-size;
     color: colors.$red;
     position: absolute;
-    box-sizing: border-box;
+    box-sizing: constants.$box-sizing;
     right: 2.5%;
   }
 }

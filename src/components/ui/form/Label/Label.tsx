@@ -1,4 +1,4 @@
-import { clsx } from "clsx";
+/* eslint-disable jsx-a11y/label-has-for */
 
 import { Typography } from "@/components/typography";
 
@@ -15,9 +15,9 @@ export const Label = ({ children, htmlFor, color }: LabelProps) => {
     <Typography
       htmlFor={htmlFor}
       variant="body"
-      component={"label"}
+      component="label"
       size="sm"
-      className={clsx(labelClasses[`form-label--${color}`])}
+      className={labelClasses[`form-label--${color}`]}
     >
       {children}
     </Typography>

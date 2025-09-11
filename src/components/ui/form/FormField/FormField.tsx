@@ -9,9 +9,14 @@ type FormFieldProps = {
 export const FormField = ({ icon, errorMessage, children }: FormFieldProps) => {
   return (
     <div className={formFieldClasses["form__field"]}>
-      <div className={formFieldClasses["form__field__icon"]}>{icon}</div>
+      <div className={formFieldClasses["form__field__icon"]} aria-hidden={true}>
+        {icon}
+      </div>
       {children}
-      <div className={formFieldClasses["form__field__error-message"]}>
+      <div
+        className={formFieldClasses["form__field__error-message"]}
+        aria-hidden={errorMessage ? false : true}
+      >
         {errorMessage}
       </div>
     </div>

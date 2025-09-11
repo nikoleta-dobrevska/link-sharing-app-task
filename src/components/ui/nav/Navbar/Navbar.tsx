@@ -9,12 +9,12 @@ import navbarClasses from "./Navbar.module.scss";
 
 const navItems = [
   {
-    icon: <LinksIcon />,
+    icon: <LinksIcon aria-hidden={true} />,
     href: "/links",
     name: "Links",
   },
   {
-    icon: <ProfileDetailsIcon />,
+    icon: <ProfileDetailsIcon aria-hidden={true} />,
     href: "/profile-details",
     name: "Profile Details",
   },
@@ -45,7 +45,10 @@ export const Navbar = ({ activeIndex }: NavbarProps) => {
       </div>
       <div className={navbarClasses["navbar__right"]}>
         <Button type="button" variant="secondary" size="md">
-          <PreviewIcon className={navbarClasses["navbar__preview-icon"]} />
+          <PreviewIcon
+            aria-hidden={true}
+            className={navbarClasses["navbar__preview-icon"]}
+          />
           <span className={navbarClasses["navbar__span"]}>Preview</span>
         </Button>
       </div>

@@ -6,7 +6,7 @@ import logoClasses from "./Logo.module.scss";
 export const Logo = () => {
   return (
     <div className={logoClasses["logo"]}>
-      <LogoIcon />
+      <LogoIcon aria-hidden={true} />
       <Typography
         component="span"
         variant="heading"

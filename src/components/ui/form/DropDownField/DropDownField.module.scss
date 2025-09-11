@@ -2,32 +2,80 @@
 @use "/src/scss/constants.scss";
 @use "/src/scss/fonts.scss";
 
-.form__drop-down-field {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  box-sizing: border-box;
-  border: 1px solid colors.$light-gray;
-  border-radius: constants.$border-radius;
-  padding: 0.75rem 2.5rem;
-  background-color: colors.$white;
-  font-family: fonts.$instrument-sans;
-  font-weight: fonts.$weight-regular;
-  font-size: fonts.$body-md-font-size;
-  color: colors.$dark-gray;
-  line-height: constants.$line-height;
-  width: inherit;
-  cursor: pointer;
+.drop-down-field {
+  position: relative;
+  width: 100%;
 
-  &:focus {
-    outline: 1px solid colors.$dark-purple;
-    box-shadow: rgba(99, 60, 255, 0.25) 0rem 0.4rem 1.7rem 0rem;
-    opacity: 1;
+  &__display-container {
+    box-sizing: constants.$box-sizing;
+    border: 1px solid colors.$light-gray;
+    border-radius: constants.$border-radius;
+    padding: constants.$drop-down-field-padding;
+    background-color: colors.$white;
+    width: inherit;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:focus {
+      outline: 1px solid colors.$dark-purple;
+      box-shadow: constants.$form-fields-box-shadow;
+      opacity: 1;
+    }
+
+    &__tools {
+      width: inherit;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
   }
 
-  &__option {
-    &:checked {
-      color: colors.$dark-purple;
+  &__options {
+    box-shadow: rgba(217, 217, 217, 0.5) 0px 8px 24px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: constants.$box-sizing;
+    border: 1px solid colors.$light-gray;
+    border-radius: constants.$border-radius;
+    background-color: colors.$white;
+    position: absolute;
+    z-index: 99;
+    top: 65px;
+    overflow: auto;
+    flex-wrap: wrap;
+
+    &__option {
+      padding: constants.$drop-down-field-padding;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background-color: colors.$white;
+      border-radius: constants.$border-radius;
+      cursor: pointer;
+      color: #737373;
+
+      &:hover,
+      &:focus {
+        color: colors.$dark-purple;
+      }
+
+      &--selected {
+        color: colors.$dark-purple;
+      }
+
+      &__separator {
+        display: flex;
+        border-bottom: 1px solid colors.$light-gray;
+        width: 96%;
+        align-self: center;
+
+        &:last-child {
+          border: unset;
+        }
+      }
     }
   }
 }
