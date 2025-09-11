@@ -1,9 +1,16 @@
 @use "@/scss/colors.scss";
 
-.form-label--dark-gray {
-  color: colors.$dark-gray;
-}
+.form-label {
+  font-family: fonts.$instrument-sans;
+  font-weight: fonts.$weight-regular;
+  line-height: constants.$line-height;
+  font-size: fonts.$body-sm-font-size;
 
-.form-label--gray {
-  color: colors.$gray;
+  &--dark-gray {
+    color: colors.$dark-gray;
+  }
+
+  &--gray {
+    color: colors.$gray;
+  }
 }

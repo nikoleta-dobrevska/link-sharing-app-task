@@ -1,7 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-for */
 
-import { Typography } from "@/components/typography";
-
 import labelClasses from "./Label.module.scss";
 
 interface LabelProps {
@@ -12,14 +10,13 @@ interface LabelProps {
 
 export const Label = ({ children, htmlFor, color }: LabelProps) => {
   return (
-    <Typography
+    <label
       htmlFor={htmlFor}
-      variant="body"
-      component="label"
-      size="sm"
-      className={labelClasses[`form-label--${color}`]}
+      className={
+        (labelClasses["form-label"], labelClasses[`form-label--${color}`])
+      }
     >
       {children}
-    </Typography>
+    </label>
   );
 };
