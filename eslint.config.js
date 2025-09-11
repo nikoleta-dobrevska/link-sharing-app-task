@@ -4,6 +4,7 @@ import js from "@eslint/js";
 import stylistic from "@stylistic/eslint-plugin";
 import { globalIgnores } from "eslint/config";
 import pluginImport from "eslint-plugin-import";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
@@ -19,6 +20,7 @@ export default tseslint.config([
       tseslint.configs.recommended,
       reactHooks.configs["recommended-latest"],
       reactRefresh.configs.vite,
+      jsxA11y.flatConfigs.recommended,
       pluginImport.flatConfigs.recommended,
       pluginImport.flatConfigs.typescript,
     ],
@@ -29,9 +31,16 @@ export default tseslint.config([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
     },
     rules: {
       // eslint
+      "no-console": "error",
+      "no-duplicate-imports": "off",
       "no-restricted-syntax": [
         "error",
         {
@@ -39,10 +48,22 @@ export default tseslint.config([
           message: 'Use absolute "@/" imports instead of relative ones.',
         },
       ],
-      "no-console": "error",
 
-      // @stylistic
+      // typescript-eslint
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        {
+          disallowTypeAnnotations: true,
+          fixStyle: "inline-type-imports",
+          prefer: "type-imports",
+        },
+      ],
+
+      // @stylistic/eslint-plugin
       "@stylistic/jsx-self-closing-comp": "error",
+
+      // eslint-plugin-jsx-a11y
+      "jsx-a11y/label-has-for": "error",
 
       // eslint-plugin-import
       "import/no-deprecated": "error",
@@ -58,7 +79,12 @@ export default tseslint.config([
       "import/no-mutable-exports": "error",
       "import/enforce-node-protocol-usage": ["error", "always"],
       "import/no-useless-path-segments": ["error", { noUselessIndex: true }],
+      "import/consistent-type-specifier-style": ["error", "prefer-inline"],
       "import/first": "error",
+      "import/no-duplicates": [
+        "error",
+        { considerQueryString: true, "prefer-inline": true },
+      ],
       "import/no-namespace": "error",
 
       // eslint-plugin-simple-import-sort
@@ -82,6 +108,9 @@ export default tseslint.config([
       "simple-import-sort/exports": "error",
     },
     settings: {
+      "jsx-a11y": {
+        polymorphicPropName: "component",
+      },
       "import/resolver": { typescript: true, node: true },
     },
   },
