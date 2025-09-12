@@ -1,6 +1,6 @@
-@use "/src/scss/colors.scss";
-@use "/src/scss/constants.scss";
-@use "/src/scss/fonts.scss";
+@use "@/scss/colors.scss";
+@use "@/scss/constants.scss";
+@use "@/scss/fonts.scss";
 
 .btn {
   font-family: fonts.$instrument-sans;

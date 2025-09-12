@@ -1,4 +1,6 @@
 @use "@/scss/colors.scss";
+@use "@/scss/fonts.scss";
+@use "@/scss/constants.scss";
 
 .form-label {
   font-family: fonts.$instrument-sans;

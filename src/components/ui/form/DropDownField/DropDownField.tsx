@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useId, useRef, useState } from "react";
 
 import DownIcon from "@/assets/svgr/Down.svg?react";
 import UpIcon from "@/assets/svgr/Up.svg?react";
@@ -7,12 +7,12 @@ import { Typography } from "@/components/typography";
 
 import dropDownFieldClasses from "./DropDownField.module.scss";
 
-type Arrow = {
-  isOpen: boolean;
+type ArrowProps = {
+  isDropdownOpen: boolean;
 };
 
-const Arrow = ({ isOpen }: Arrow) => {
-  return isOpen ? <UpIcon /> : <DownIcon />;
+const Arrow = ({ isDropdownOpen }: ArrowProps) => {
+  return isDropdownOpen ? <UpIcon /> : <DownIcon />;
 };
 
 type Option = {
@@ -21,57 +21,189 @@ type Option = {
   name: string;
 };
 
-type OptionsArray = Option[];
-
-type DropDownField = {
+type DropDownFieldProps = {
   placeholder: React.ReactNode;
-  options: OptionsArray;
+  options: Option[];
 };
 
-export const DropDownField = ({ placeholder, options }: DropDownField) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [showOptions, setShowOptions] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<Option>({
-    icon: "",
-    value: "",
-    name: "",
-  });
+export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
+  const id = useId();
 
-  const getSelectedOptionName = () => {
-    if (
-      !selectedOption ||
-      (selectedOption.icon === "" &&
-        selectedOption.name === "" &&
-        selectedOption.value === "")
-    ) {
-      return placeholder;
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [currentOption, setCurrentOption] = useState<Option | null>(null);
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  const comboboxRef = useRef<HTMLDivElement>(null);
+  const dropDownFieldRef = useRef<HTMLDivElement>(null);
+
+  const onOptionClick = (option: Option, i: number) => {
+    setCurrentOption(option);
+    setActiveIndex(i);
+    setDropdownOpen(false);
+  };
+
+  const focus = () => {
+    comboboxRef?.current?.focus();
+  };
+
+  useEffect(() => {
+    const handleClickOutsideDropDownField = (e: MouseEvent | TouchEvent) => {
+      if (
+        dropDownFieldRef.current &&
+        !dropDownFieldRef.current.contains(e.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+
+    window.addEventListener("mouseup", handleClickOutsideDropDownField);
+    window.addEventListener("touchend", handleClickOutsideDropDownField);
+
+    return () => {
+      window.removeEventListener("mouseup", handleClickOutsideDropDownField);
+      window.addEventListener("touchend", handleClickOutsideDropDownField);
+    };
+  }, [dropDownFieldRef]);
+
+  const handleKeyDownCombobox = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (isDropdownOpen) {
+      return;
     }
 
-    return selectedOption.name;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setDropdownOpen(true);
+      focus();
+      return;
+    }
+
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setDropdownOpen(true);
+      setActiveIndex(0);
+      focus();
+      return;
+    }
+
+    if (
+      e.key === "Enter" ||
+      e.key === " " ||
+      (e.altKey && e.key === "ArrowDown")
+    ) {
+      e.preventDefault();
+      setDropdownOpen(true);
+      return;
+    }
+
+    if (e.key === "Home") {
+      e.preventDefault();
+      setActiveIndex(0);
+      setDropdownOpen(true);
+      return;
+    }
+
+    if (e.key === "End") {
+      e.preventDefault();
+      setActiveIndex(options.length - 1);
+      setDropdownOpen(true);
+      return;
+    }
   };
 
-  const onOptionClick = (option: Option) => {
-    setSelectedOption(option);
-    setShowOptions(false);
-    setIsOpen(false);
-  };
+  const handleKeyDownListbox = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (isDropdownOpen) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        setCurrentOption(options[activeIndex]);
+        setDropdownOpen(false);
+        focus();
+        return;
+      }
 
-  const isSelected = (option: string) => {
-    return selectedOption.value !== option ? false : true;
+      if (e.key === "Escape") {
+        setDropdownOpen(false);
+        focus();
+        return;
+      }
+
+      if (e.key === "Tab") {
+        setCurrentOption(options[activeIndex]);
+        setDropdownOpen(false);
+        return;
+      }
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (activeIndex !== options.length - 1) {
+          setActiveIndex(activeIndex + 1);
+        }
+        return;
+      }
+
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (activeIndex > 0) {
+          setActiveIndex(activeIndex - 1);
+        }
+        return;
+      }
+
+      if (e.altKey && e.key === "ArrowUp") {
+        setCurrentOption(options[activeIndex]);
+        setDropdownOpen(false);
+        focus();
+        return;
+      }
+
+      if (e.key === "Home") {
+        e.preventDefault();
+        setActiveIndex(0);
+        return;
+      }
+
+      if (e.key === "End") {
+        e.preventDefault();
+        setActiveIndex(options.length - 1);
+        return;
+      }
+
+      if (e.key === "PageDown") {
+        if (options.length >= 10) {
+          setActiveIndex(9);
+        } else {
+          setActiveIndex(options.length - 1);
+        }
+      }
+
+      if (e.key === "PageUp") {
+        if (options.length >= 10) {
+          setActiveIndex(0);
+        } else {
+          setActiveIndex(9);
+        }
+      }
+    }
   };
 
   return (
-    <div className={dropDownFieldClasses["drop-down-field"]}>
-      <button
+    <div
+      className={dropDownFieldClasses["drop-down-field"]}
+      ref={dropDownFieldRef}
+    >
+      <div
         className={dropDownFieldClasses["drop-down-field__display-container"]}
         onClick={() => {
-          setIsOpen(!isOpen);
-          setShowOptions(!showOptions);
+          setDropdownOpen(!isDropdownOpen);
         }}
-        aria-haspopup="listbox"
-        aria-expanded={isOpen}
-        aria-controls="options-container"
-        aria-labelledby="currentlySelectedOption"
+        onKeyDown={handleKeyDownCombobox}
+        role="combobox"
+        ref={comboboxRef}
+        aria-autocomplete="none"
+        aria-expanded={isDropdownOpen}
+        aria-controls={isDropdownOpen ? id + "-optionsContainer" : undefined}
+        aria-labelledby={id + "-currentOption"}
+        aria-activedescendant={id + `-option${activeIndex}`}
+        tabIndex={isDropdownOpen ? -1 : 0}
       >
         <div
           className={
@@ -79,61 +211,72 @@ export const DropDownField = ({ placeholder, options }: DropDownField) => {
           }
         >
           <span style={{ color: "#737373" }} aria-hidden={true}>
-            {selectedOption.icon || ""}
+            {currentOption?.icon ?? ""}
           </span>
           <Typography
             component="span"
-            id="currentlySelectedOption"
+            id={id + "-currentOption"}
             aria-live="polite"
             variant="body"
             size="md"
-            children={getSelectedOptionName()}
-          />
+          >
+            {currentOption?.name ?? placeholder}
+          </Typography>
         </div>
-        <Arrow isOpen={isOpen} />
-      </button>
+        <Arrow isDropdownOpen={isDropdownOpen} />
+      </div>
 
-      {showOptions && (
+      {isDropdownOpen && (
         <div
-          id="options-container"
+          id={id + "-optionsContainer"}
           className={dropDownFieldClasses["drop-down-field__options"]}
-          aria-roledescription="listbox"
+          role="listbox"
+          tabIndex={isDropdownOpen ? 0 : -1}
+          onKeyDown={handleKeyDownListbox}
+          aria-labelledby={id + "-currentOption"}
           aria-multiselectable={false}
         >
-          {options.map((option) => (
-            <Fragment key={option.value}>
-              <button
-                aria-roledescription="option"
-                aria-labelledby="option"
-                className={clsx(
-                  dropDownFieldClasses["drop-down-field__options__option"],
-                  isSelected(option.value) &&
+          {options.map((option, i) => {
+            const isCurrentOption = option.value === currentOption?.value;
+
+            return (
+              <Fragment key={option.value}>
+                <div
+                  role="option"
+                  tabIndex={isDropdownOpen ? 0 : -1}
+                  onKeyDown={() => {}}
+                  aria-selected={i === activeIndex}
+                  aria-labelledby={id + `-option${i}`}
+                  className={clsx(
+                    dropDownFieldClasses["drop-down-field__options__option"],
+                    isCurrentOption &&
+                      dropDownFieldClasses[
+                        "drop-down-field__options__option--current"
+                      ]
+                  )}
+                  onClick={() => onOptionClick(option, i)}
+                >
+                  <span aria-hidden={true}>{option.icon}</span>
+                  <Typography
+                    component="li"
+                    id={id + `-option${i}`}
+                    variant="body"
+                    size="md"
+                  >
+                    {option.name}
+                  </Typography>
+                </div>
+                <span
+                  className={
                     dropDownFieldClasses[
-                      "drop-down-field__options__option--selected"
+                      "drop-down-field__options__option__separator"
                     ]
-                )}
-                onClick={() => onOptionClick(option)}
-              >
-                <span aria-hidden={true}>{option.icon}</span>
-                <Typography
-                  component="span"
-                  id="option"
-                  variant="body"
-                  size="md"
-                  aria-selected={isSelected(option.value) ? true : false}
-                  children={option.name}
+                  }
+                  aria-hidden={true}
                 />
-              </button>
-              <span
-                className={
-                  dropDownFieldClasses[
-                    "drop-down-field__options__option__separator"
-                  ]
-                }
-                aria-hidden={true}
-              />
-            </Fragment>
-          ))}
+              </Fragment>
+            );
+          })}
         </div>
       )}
     </div>

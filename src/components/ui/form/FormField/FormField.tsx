@@ -15,7 +15,7 @@ export const FormField = ({ icon, errorMessage, children }: FormFieldProps) => {
       {children}
       <div
         className={formFieldClasses["form__field__error-message"]}
-        aria-hidden={errorMessage ? false : true}
+        role="alert"
       >
         {errorMessage}
       </div>

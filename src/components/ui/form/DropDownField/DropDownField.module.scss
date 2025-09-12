@@ -1,6 +1,6 @@
-@use "/src/scss/colors.scss";
-@use "/src/scss/constants.scss";
-@use "/src/scss/fonts.scss";
+@use "@/scss/colors.scss";
+@use "@/scss/constants.scss";
+@use "@/scss/fonts.scss";
 
 .drop-down-field {
   position: relative;
@@ -42,7 +42,7 @@
     border-radius: constants.$border-radius;
     background-color: colors.$white;
     position: absolute;
-    z-index: 99;
+    z-index: constants.$z-index;
     top: 65px;
     overflow: auto;
     flex-wrap: wrap;
@@ -57,12 +57,16 @@
       cursor: pointer;
       color: #737373;
 
+      &[aria-selected="true"] {
+        color: colors.$dark-purple;
+      }
+
       &:hover,
       &:focus {
         color: colors.$dark-purple;
       }
 
-      &--selected {
+      &--current {
         color: colors.$dark-purple;
       }
 
