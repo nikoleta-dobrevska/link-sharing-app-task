@@ -1,0 +1,37 @@
+@use "@/scss/colors.scss";
+@use "@/scss/constants.scss";
+@use "@/scss/fonts.scss";
+
+.form__input {
+  box-sizing: constants.$box-sizing;
+  border: 1px solid colors.$light-gray;
+  border-radius: constants.$border-radius;
+  padding: 0.75rem 2.5rem;
+  background-color: colors.$white;
+  font-family: fonts.$instrument-sans;
+  font-weight: fonts.$weight-regular;
+  font-size: fonts.$body-md-font-size;
+  color: colors.$dark-gray;
+  opacity: 0.5;
+  line-height: constants.$line-height;
+  width: inherit;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: 1px solid colors.$dark-purple;
+    box-shadow: constants.$form-fields-box-shadow;
+    opacity: 1;
+  }
+
+  &--valid {
+    opacity: 1;
+  }
+
+  &--danger {
+    border: 1px solid colors.$red;
+    color: colors.$red;
+  }
+}

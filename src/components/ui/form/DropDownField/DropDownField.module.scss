@@ -1,0 +1,97 @@
+@use "@/scss/colors.scss";
+@use "@/scss/constants.scss";
+@use "@/scss/fonts.scss";
+
+.drop-down-field {
+  position: relative;
+  width: 100%;
+
+  &__display-container {
+    box-sizing: constants.$box-sizing;
+    border: 1px solid colors.$light-gray;
+    border-radius: constants.$border-radius;
+    padding: constants.$drop-down-field-padding;
+    background-color: colors.$white;
+    width: inherit;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:focus {
+      outline: 1px solid colors.$dark-purple;
+      box-shadow: constants.$form-fields-box-shadow;
+      opacity: 1;
+    }
+
+    &__tools {
+      width: inherit;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      color: colors.$dark-gray;
+
+      &__svg {
+        color: colors.$gray;
+      }
+    }
+  }
+
+  &__options {
+    box-shadow: rgba(217, 217, 217, 0.5) 0px 8px 24px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: constants.$box-sizing;
+    border: 1px solid colors.$light-gray;
+    border-radius: constants.$border-radius;
+    background-color: colors.$white;
+    position: absolute;
+    z-index: constants.$z-index;
+    top: 65px;
+    overflow: auto;
+    flex-wrap: wrap;
+
+    &__option {
+      padding: constants.$drop-down-field-padding;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background-color: colors.$white;
+      border-radius: constants.$border-radius;
+      cursor: pointer;
+      color: colors.$dark-gray;
+
+      &[aria-selected="true"] {
+        color: colors.$dark-purple;
+      }
+
+      &:hover,
+      &:focus {
+        color: colors.$dark-purple;
+      }
+
+      &--current {
+        color: colors.$dark-purple;
+        * {
+          color: inherit;
+        }
+      }
+
+      &:not(:hover, :focus, [aria-selected="true"]) &__svg {
+        color: colors.$gray;
+      }
+
+      &__separator {
+        display: flex;
+        border-bottom: 1px solid colors.$light-gray;
+        width: 96%;
+        align-self: center;
+
+        &:last-child {
+          border: unset;
+        }
+      }
+    }
+  }
+}

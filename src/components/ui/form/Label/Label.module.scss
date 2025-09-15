@@ -1,0 +1,18 @@
+@use "@/scss/colors.scss";
+@use "@/scss/fonts.scss";
+@use "@/scss/constants.scss";
+
+.form-label {
+  font-family: fonts.$instrument-sans;
+  font-weight: fonts.$weight-regular;
+  line-height: constants.$line-height;
+  font-size: fonts.$body-sm-font-size;
+
+  &--dark-gray {
+    color: colors.$dark-gray;
+  }
+
+  &--gray {
+    color: colors.$gray;
+  }
+}
