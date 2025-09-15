@@ -29,6 +29,11 @@
       display: flex;
       gap: 1rem;
       align-items: center;
+      color: colors.$dark-gray;
+
+      &__svg {
+        color: colors.$gray;
+      }
     }
   }
 
@@ -55,7 +60,7 @@
       background-color: colors.$white;
       border-radius: constants.$border-radius;
       cursor: pointer;
-      color: #737373;
+      color: colors.$dark-gray;
 
       &[aria-selected="true"] {
         color: colors.$dark-purple;
@@ -68,6 +73,13 @@
 
       &--current {
         color: colors.$dark-purple;
+        * {
+          color: inherit;
+        }
+      }
+
+      &:not(:hover, :focus, [aria-selected="true"]) &__svg {
+        color: colors.$gray;
       }
 
       &__separator {
