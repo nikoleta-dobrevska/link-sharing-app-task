@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { useId } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 import EmailIcon from "@/assets/svgr/Email.svg?react";
 import PasswordIcon from "@/assets/svgr/Password.svg?react";
@@ -10,7 +12,8 @@ import { Button } from "@/components/ui/Button";
 import { FormField } from "@/components/ui/form/FormField";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
-import { registerSchema } from "@/userSchema";
+import { registerUser } from "@/services/registerUser";
+import { type RegisterFormData, registerSchema } from "@/types";
 
 import registerClasses from "./Register.module.scss";
 
@@ -21,9 +24,23 @@ export const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(registerSchema), mode: "onChange" });
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+    mode: "onChange",
+  });
 
-  const onSubmit = () => {};
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: registerUser,
+    onSuccess: async () => {
+      navigate("/login");
+    },
+  });
+
+  const onSubmit = async (data: RegisterFormData) => {
+    mutation.mutateAsync(data);
+  };
 
   return (
     <div className={registerClasses["register"]}>
