@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useId } from "react";
+import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
@@ -19,6 +19,7 @@ import registerClasses from "./Register.module.scss";
 
 export const Register = () => {
   const passwordNote = useId();
+  const [globalErrorMsg, setGlobalErrorMsg] = useState("");
 
   const {
     register,
@@ -36,6 +37,11 @@ export const Register = () => {
     onSuccess: async () => {
       navigate("/login");
     },
+    onError: async (error) => {
+      setGlobalErrorMsg(
+        error?.message ?? "Oops, something went wrong! Please try again later."
+      );
+    },
   });
 
   const onSubmit = async (data: RegisterFormData) => {
@@ -44,6 +50,17 @@ export const Register = () => {
 
   return (
     <div className={registerClasses["register"]}>
+      {mutation.isError && (
+        <Typography
+          component="span"
+          role="alert"
+          variant="body"
+          size="md"
+          className={registerClasses["register__global-error-msg"]}
+        >
+          {globalErrorMsg}
+        </Typography>
+      )}
       <div className={registerClasses["register__heading"]}>
         <Typography
           component="h1"

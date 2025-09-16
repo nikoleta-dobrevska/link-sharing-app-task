@@ -11,6 +11,10 @@
     width: 100%;
   }
 
+  &__global-error-msg {
+    color: colors.$red;
+  }
+
   &__heading {
     display: flex;
     flex-direction: column;
@@ -54,7 +58,8 @@
     &__link {
       color: colors.$dark-purple;
 
-      &:hover {
+      &:hover,
+      &:focus {
         color: colors.$light-purple;
       }
     }
