@@ -29,11 +29,11 @@
     opacity: 1;
   }
 
-  &--valid {
+  &[aria-invalid="false"] {
     opacity: 1;
   }
 
-  &--danger {
+  &[aria-invalid="true"] {
     border: 1px solid colors.$red;
     color: colors.$red;
   }
