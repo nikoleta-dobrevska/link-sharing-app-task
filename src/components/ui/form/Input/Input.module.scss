@@ -12,9 +12,12 @@
   font-weight: fonts.$weight-regular;
   font-size: fonts.$body-md-font-size;
   color: colors.$dark-gray;
-  opacity: 0.5;
   line-height: constants.$line-height;
   width: inherit;
+
+  &::placeholder {
+    opacity: 0.5;
+  }
 
   &:hover {
     cursor: pointer;

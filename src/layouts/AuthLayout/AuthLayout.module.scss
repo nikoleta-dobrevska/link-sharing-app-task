@@ -1,0 +1,40 @@
+@use "@/scss/colors.scss";
+@use "@/scss/screens.scss";
+
+body {
+  background-color: colors.$beige;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150vh;
+
+  @include screens.mobile {
+    height: 100%;
+  }
+}
+
+.auth-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3.1rem;
+
+  @include screens.mobile {
+    padding: 2rem;
+    align-items: flex-start;
+  }
+
+  &__form {
+    background-color: colors.$white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2.8rem;
+
+    @include screens.mobile {
+      padding: 0rem;
+    }
+  }
+}
