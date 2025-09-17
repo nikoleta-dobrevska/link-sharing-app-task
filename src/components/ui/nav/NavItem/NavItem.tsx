@@ -5,11 +5,17 @@ import navItemClasses from "./NavItem.module.scss";
 
 type NavItemProps = {
   children: React.ReactNode;
+  linkLabel: string;
   isActive: boolean;
   href: string;
 };
 
-export const NavItem = ({ children, isActive, href }: NavItemProps) => {
+export const NavItem = ({
+  children,
+  linkLabel,
+  isActive,
+  href,
+}: NavItemProps) => {
   return (
     <li
       className={clsx(
@@ -17,7 +23,12 @@ export const NavItem = ({ children, isActive, href }: NavItemProps) => {
         isActive && navItemClasses[`nav-item--active`]
       )}
     >
-      <a href={href} className={navItemClasses["nav-item-link"]}>
+      <a
+        aria-labelledby={linkLabel}
+        href={href}
+        className={navItemClasses["nav-item-link"]}
+        aria-current={isActive ? "page" : undefined}
+      >
         {children}
       </a>
     </li>

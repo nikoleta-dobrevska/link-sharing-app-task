@@ -1,6 +1,7 @@
 import Icon from "@/assets/svgr/GitHub.svg?react";
 import { DropDownField } from "@/components/ui/form/DropDownField";
 import { FormField } from "@/components/ui/form/FormField";
+import { Navbar } from "@/components/ui/nav/Navbar";
 
 const data = [
   {
@@ -22,11 +23,16 @@ const data = [
 
 function App() {
   return (
-    <div style={{ width: "50%" }}>
-      <FormField>
-        <DropDownField placeholder="Example" options={data} />
-      </FormField>
-    </div>
+    <>
+      <div style={{ width: "50%" }}>
+        <FormField>
+          <DropDownField placeholder="Example" options={data} />
+        </FormField>
+      </div>
+      <div>
+        <Navbar activeIndex={1} />
+      </div>
+    </>
   );
 }
 
