@@ -46,18 +46,6 @@ export const Register = () => {
 
   return (
     <div className={registerClasses["register"]}>
-      {registerMutation?.isError && (
-        <Typography
-          component="span"
-          role="alert"
-          variant="body"
-          size="md"
-          className={registerClasses["register__global-error-msg"]}
-        >
-          {registerMutation?.error?.message ??
-            "Oops, something went wrong! Please try again later."}
-        </Typography>
-      )}
       <div className={registerClasses["register__heading"]}>
         <Typography
           component="h1"
@@ -75,6 +63,18 @@ export const Register = () => {
         >
           Let’s get you started sharing your links!
         </Typography>
+        {registerMutation?.isError && (
+          <Typography
+            component="span"
+            role="alert"
+            variant="body"
+            size="md"
+            className={registerClasses["register__global-error-msg"]}
+          >
+            {registerMutation?.error?.message ??
+              "Oops, something went wrong! Please try again later."}
+          </Typography>
+        )}
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -217,7 +217,7 @@ export const Register = () => {
       >
         Already have an account?
         <NavLink
-          to="/login"
+          to="/"
           end
           className={registerClasses["register__login-prompt__link"]}
         >
