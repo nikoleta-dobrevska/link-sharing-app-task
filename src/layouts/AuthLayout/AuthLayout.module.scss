@@ -1,28 +1,20 @@
 @use "@/scss/colors.scss";
 @use "@/scss/screens.scss";
 
-body {
-  background-color: colors.$beige;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 150vh;
-
-  @include screens.mobile {
-    height: 100%;
-  }
-}
-
 .auth-layout {
+  background-color: colors.$beige;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 3.1rem;
+  min-height: 100vh;
+  padding: 6rem 0;
 
   @include screens.mobile {
     padding: 2rem;
     align-items: flex-start;
+    height: 100%;
   }
 
   &__form {

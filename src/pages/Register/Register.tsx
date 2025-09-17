@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useId, useState } from "react";
+import { useId } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 import EmailIcon from "@/assets/svgr/Email.svg?react";
 import PasswordIcon from "@/assets/svgr/Password.svg?react";
@@ -12,14 +12,13 @@ import { Button } from "@/components/ui/Button";
 import { FormField } from "@/components/ui/form/FormField";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
+import { type RegisterFormData, registerSchema } from "@/schemas";
 import { registerUser } from "@/services/registerUser";
-import { type RegisterFormData, registerSchema } from "@/types";
 
 import registerClasses from "./Register.module.scss";
 
 export const Register = () => {
-  const passwordNote = useId();
-  const [globalErrorMsg, setGlobalErrorMsg] = useState("");
+  const id = useId();
 
   const {
     register,
@@ -32,25 +31,20 @@ export const Register = () => {
 
   const navigate = useNavigate();
 
-  const mutation = useMutation({
+  const registerMutation = useMutation({
     mutationFn: registerUser,
-    onSuccess: async () => {
+    onSuccess: () => {
       navigate("/login");
-    },
-    onError: async (error) => {
-      setGlobalErrorMsg(
-        error?.message ?? "Oops, something went wrong! Please try again later."
-      );
     },
   });
 
-  const onSubmit = async (data: RegisterFormData) => {
-    mutation.mutateAsync(data);
+  const onSubmit = (data: RegisterFormData) => {
+    registerMutation.mutate(data);
   };
 
   return (
     <div className={registerClasses["register"]}>
-      {mutation.isError && (
+      {registerMutation?.isError && (
         <Typography
           component="span"
           role="alert"
@@ -58,7 +52,8 @@ export const Register = () => {
           size="md"
           className={registerClasses["register__global-error-msg"]}
         >
-          {globalErrorMsg}
+          {registerMutation?.error?.message ??
+            "Oops, something went wrong! Please try again later."}
         </Typography>
       )}
       <div className={registerClasses["register__heading"]}>
@@ -83,8 +78,8 @@ export const Register = () => {
         onSubmit={handleSubmit(onSubmit)}
         className={registerClasses["register__form"]}
       >
-        <div className={registerClasses["register__form__field"]}>
-          <Label color="dark-gray" htmlFor="firstName">
+        <div className={registerClasses["register__form__field-group"]}>
+          <Label color="dark-gray" htmlFor={id + "-firstName"}>
             First Name
           </Label>
           <FormField
@@ -92,7 +87,7 @@ export const Register = () => {
             errorMessage={errors?.firstName?.message}
           >
             <Input
-              id="firstName"
+              id={id + "-firstName"}
               {...register("firstName")}
               aria-invalid={!!errors?.firstName}
               autoComplete="given-name"
@@ -102,8 +97,8 @@ export const Register = () => {
             />
           </FormField>
         </div>
-        <div className={registerClasses["register__form__field"]}>
-          <Label color="dark-gray" htmlFor="lastName">
+        <div className={registerClasses["register__form__field-group"]}>
+          <Label color="dark-gray" htmlFor={id + "-lastName"}>
             Last Name
           </Label>
           <FormField
@@ -111,7 +106,7 @@ export const Register = () => {
             errorMessage={errors?.lastName?.message}
           >
             <Input
-              id="lastName"
+              id={id + "-lastName"}
               {...register("lastName")}
               aria-invalid={!!errors?.lastName}
               autoComplete="family-name"
@@ -121,13 +116,13 @@ export const Register = () => {
             />
           </FormField>
         </div>
-        <div className={registerClasses["register__form__field"]}>
-          <Label color="dark-gray" htmlFor="email">
+        <div className={registerClasses["register__form__field-group"]}>
+          <Label color="dark-gray" htmlFor={id + "-email"}>
             Email address
           </Label>
           <FormField icon={<EmailIcon />} errorMessage={errors?.email?.message}>
             <Input
-              id="email"
+              id={id + "-email"}
               {...register("email")}
               aria-invalid={!!errors?.email}
               autoComplete="on"
@@ -137,8 +132,8 @@ export const Register = () => {
             />
           </FormField>
         </div>
-        <div className={registerClasses["register__form__field"]}>
-          <Label color="dark-gray" htmlFor="password">
+        <div className={registerClasses["register__form__field-group"]}>
+          <Label color="dark-gray" htmlFor={id + "-password"}>
             Create password
           </Label>
           <FormField
@@ -146,18 +141,18 @@ export const Register = () => {
             errorMessage={errors?.password?.message}
           >
             <Input
-              id="password"
+              id={id + "-password"}
               {...register("password")}
               aria-invalid={!!errors?.password}
-              aria-describedby={passwordNote}
+              aria-describedby={id + "-passwordNote"}
               type="password"
               placeholder="At least 8 characters"
               aria-required="true"
             />
           </FormField>
         </div>
-        <div className={registerClasses["register__form__field"]}>
-          <Label color="dark-gray" htmlFor="confirmPassword">
+        <div className={registerClasses["register__form__field-group"]}>
+          <Label color="dark-gray" htmlFor={id + "-confirmPassword"}>
             Confirm password
           </Label>
           <FormField
@@ -165,7 +160,7 @@ export const Register = () => {
             errorMessage={errors?.confirmPassword?.message}
           >
             <Input
-              id="confirmPassword"
+              id={id + "-confirmPassword"}
               {...register("confirmPassword")}
               aria-invalid={!!errors?.confirmPassword}
               type="password"
@@ -179,7 +174,7 @@ export const Register = () => {
           variant="body"
           size="sm"
           className={registerClasses["register__form__pass-desc"]}
-          id={passwordNote}
+          id={id + "-passwordNote"}
         >
           Password must contain at least 8 characters
         </Typography>
@@ -194,12 +189,12 @@ export const Register = () => {
         className={registerClasses["register__login-prompt"]}
       >
         Already have an account?
-        <a
+        <NavLink
+          to="/login"
           className={registerClasses["register__login-prompt__link"]}
-          href="/login"
         >
           Login
-        </a>
+        </NavLink>
       </Typography>
     </div>
   );
