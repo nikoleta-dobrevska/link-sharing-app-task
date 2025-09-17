@@ -8,7 +8,7 @@ export const AuthLayout = () => {
   return (
     <div className={authLayoutClasses["auth-layout"]}>
       <Logo />
-      <div className={authLayoutClasses["auth-layout__form"]}>
+      <div className={authLayoutClasses["auth-layout__group"]}>
         <Outlet />
       </div>
     </div>
