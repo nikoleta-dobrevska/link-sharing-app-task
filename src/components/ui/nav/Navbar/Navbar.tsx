@@ -28,7 +28,7 @@ export const Navbar = ({ activeIndex }: NavbarProps) => {
   return (
     <nav className={navbarClasses["navbar"]}>
       <div className={navbarClasses["navbar__left"]}>
-        <Logo />
+        <Logo className="logo__title--not-visible" />
       </div>
       <div className={navbarClasses["navbar__center"]}>
         {navItems.map((navItem, i) => (

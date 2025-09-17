@@ -1,0 +1,32 @@
+@use "@/scss/colors.scss";
+@use "@/scss/screens.scss";
+
+.auth-layout {
+  background-color: colors.$beige;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3.1rem;
+  min-height: 100vh;
+  padding: 6rem 0;
+
+  @include screens.mobile {
+    padding: 2rem;
+    align-items: flex-start;
+    height: 100%;
+  }
+
+  &__group {
+    background-color: colors.$white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2.8rem;
+
+    @include screens.mobile {
+      padding: 0rem;
+    }
+  }
+}
