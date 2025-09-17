@@ -59,7 +59,8 @@
       color: colors.$dark-purple;
 
       &:hover,
-      &:focus {
+      &:focus,
+      &:active {
         color: colors.$light-purple;
       }
     }

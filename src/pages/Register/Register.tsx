@@ -12,10 +12,12 @@ import { Button } from "@/components/ui/Button";
 import { FormField } from "@/components/ui/form/FormField";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
-import { type RegisterFormData, registerSchema } from "@/schemas";
+import { registerSchema } from "@/schemas";
 import { registerUser } from "@/services/registerUser";
+import { type RegisterFormData } from "@/types";
 
 import registerClasses from "./Register.module.scss";
+import inputClasses from "@/components/ui/form/Input/Input.module.scss";
 
 export const Register = () => {
   const id = useId();
@@ -89,6 +91,11 @@ export const Register = () => {
             <Input
               id={id + "-firstName"}
               {...register("firstName")}
+              className={
+                errors?.firstName
+                  ? inputClasses["form__input--invalid"]
+                  : inputClasses["form__input--valid"]
+              }
               aria-invalid={!!errors?.firstName}
               autoComplete="given-name"
               type="text"
@@ -108,6 +115,11 @@ export const Register = () => {
             <Input
               id={id + "-lastName"}
               {...register("lastName")}
+              className={
+                errors?.lastName
+                  ? inputClasses["form__input--invalid"]
+                  : inputClasses["form__input--valid"]
+              }
               aria-invalid={!!errors?.lastName}
               autoComplete="family-name"
               type="text"
@@ -125,6 +137,11 @@ export const Register = () => {
               id={id + "-email"}
               {...register("email")}
               aria-invalid={!!errors?.email}
+              className={
+                errors?.email
+                  ? inputClasses["form__input--invalid"]
+                  : inputClasses["form__input--valid"]
+              }
               autoComplete="on"
               type="email"
               placeholder="e.g. alex@email.com"
@@ -143,6 +160,11 @@ export const Register = () => {
             <Input
               id={id + "-password"}
               {...register("password")}
+              className={
+                errors?.password
+                  ? inputClasses["form__input--invalid"]
+                  : inputClasses["form__input--valid"]
+              }
               aria-invalid={!!errors?.password}
               aria-describedby={id + "-passwordNote"}
               type="password"
@@ -162,6 +184,11 @@ export const Register = () => {
             <Input
               id={id + "-confirmPassword"}
               {...register("confirmPassword")}
+              className={
+                errors?.confirmPassword
+                  ? inputClasses["form__input--invalid"]
+                  : inputClasses["form__input--valid"]
+              }
               aria-invalid={!!errors?.confirmPassword}
               type="password"
               placeholder="At least 8 characters"
@@ -191,6 +218,7 @@ export const Register = () => {
         Already have an account?
         <NavLink
           to="/login"
+          end
           className={registerClasses["register__login-prompt__link"]}
         >
           Login

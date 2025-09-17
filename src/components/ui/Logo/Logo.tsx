@@ -5,7 +5,11 @@ import { Typography } from "@/components/typography";
 
 import logoClasses from "./Logo.module.scss";
 
-export const Logo = ({ className }: { className?: string }) => {
+type LogoProps = {
+  className: string;
+};
+
+export const Logo = ({ className }: LogoProps) => {
   return (
     <div className={logoClasses["logo"]}>
       <LogoIcon aria-hidden={true} />
