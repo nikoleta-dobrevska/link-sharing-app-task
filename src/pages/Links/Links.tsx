@@ -11,20 +11,22 @@ export const Links = () => {
   return (
     <div className={linksClasses["page-layout"]}>
       <Navbar activeIndex={0} />
-      <div className={linksClasses["page-layout__center"]}>
+      <main className={linksClasses["page-layout__center"]}>
         <section className={linksClasses["page-layout__preview-section"]}>
-          <div className={linksClasses["page-layout__preview-section__icon"]}>
+          <aside
+            className={linksClasses["page-layout__preview-section__display"]}
+          >
             <RectangleIcon
               className={
-                linksClasses["page-layout__preview-section__icon__rect"]
+                linksClasses["page-layout__preview-section__display__rect"]
               }
             />
             <SubstractIcon
               className={
-                linksClasses["page-layout__preview-section__icon__sub"]
+                linksClasses["page-layout__preview-section__display__sub"]
               }
             />
-          </div>
+          </aside>
         </section>
         <section className={linksClasses["page-layout__links-section"]}>
           <div className={linksClasses["page-layout__links-section__layout"]}>
@@ -53,7 +55,7 @@ export const Links = () => {
                 linksClasses["page-layout__links-section__layout__links"]
               }
             >
-              <Button variant="secondary" size="md">
+              <Button type="button" variant="secondary" size="md">
                 + Add new link
               </Button>
               <div
@@ -94,12 +96,12 @@ export const Links = () => {
               linksClasses["page-layout__links-section__layout__save-btn"]
             }
           >
-            <Button variant="primary" size="md" disabled={true}>
+            <Button type="submit" variant="primary" size="md" disabled={true}>
               Save
             </Button>
           </div>
         </section>
-      </div>
+      </main>
     </div>
   );
 };
