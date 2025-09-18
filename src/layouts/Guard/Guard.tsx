@@ -9,9 +9,19 @@ export const Guard = () => {
 
   const verifyTokenQuery = useQuery({
     queryKey: [token],
-    queryFn: () => verifyToken(token ?? ""),
+    queryFn: () => verifyToken(token),
     enabled: !!token,
   });
+
+  if (verifyTokenQuery.isPending) {
+    return (
+      <div>
+        <p role="status" aria-live="polite">
+          Loading...
+        </p>
+      </div>
+    );
+  }
 
   if (verifyTokenQuery.isError) {
     return <ErrorPage />;
