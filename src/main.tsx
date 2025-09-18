@@ -17,7 +17,6 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Links />} />
           <Route element={<AuthLayout />}>
             <Route path="register" element={<Register />} />
           </Route>
