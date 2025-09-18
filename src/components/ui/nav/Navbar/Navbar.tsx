@@ -30,19 +30,10 @@ export const Navbar = ({ activeIndex }: NavbarProps) => {
   const id = useId();
 
   return (
-    <nav
-      className={navbarClasses["navbar"]}
-      aria-labelledby={id + "-menuLabel"}
-    >
+    <nav className={navbarClasses["navbar"]} aria-label="Main Menu">
       <div className={navbarClasses["navbar__left"]}>
         <Logo />
       </div>
-      <h2
-        id={id + "-menuLabel"}
-        className={navbarClasses["navbar__label--hidden"]}
-      >
-        Main Menu
-      </h2>
       <ul className={navbarClasses["navbar__center"]}>
         {navItems.map((navItem, i) => (
           <NavItem

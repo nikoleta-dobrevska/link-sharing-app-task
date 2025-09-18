@@ -1,6 +1,4 @@
 @use "@/scss/colors.scss";
-@use "@/scss/constants.scss";
-@use "@/scss/fonts.scss";
 @use "@/scss/screens.scss";
 
 .navbar {
@@ -10,16 +8,6 @@
   align-items: center;
   height: 4.7rem;
   padding: 1rem 1rem 1rem 1.5rem;
-
-  &__label--hidden {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-  }
 
   &__left {
     margin-left: 1rem;
@@ -32,12 +20,6 @@
   &__center {
     display: flex;
     justify-content: space-between;
-
-    &__link {
-      &:hover {
-        color: colors.$dark-purple;
-      }
-    }
   }
 
   &__preview-icon {
