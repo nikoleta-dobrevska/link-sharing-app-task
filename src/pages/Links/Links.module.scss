@@ -1,0 +1,130 @@
+@use "@/scss/colors.scss";
+@use "@/scss/constants.scss";
+@use "@/scss/screens.scss";
+
+.page-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: colors.$beige;
+  padding: 2rem;
+  gap: 1rem;
+
+  @include screens.tablet {
+    padding: 1rem;
+  }
+
+  &__center {
+    width: 100%;
+    display: flex;
+    gap: 1.5rem;
+
+    @include screens.tablet {
+      display: block;
+    }
+  }
+
+  &__preview-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: colors.$white;
+    flex: 2.5;
+    border-radius: constants.$page-elements-border-radius;
+
+    @include screens.tablet {
+      display: none;
+    }
+
+    &__icon {
+      position: relative;
+      display: inline-block;
+
+      &__rect {
+        position: static;
+      }
+
+      &__sub {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+      }
+    }
+  }
+
+  &__links-section {
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+
+    &__layout {
+      display: flex;
+      flex-direction: column;
+      background-color: colors.$white;
+      padding: 2.5rem;
+      gap: 2rem;
+      border-radius: constants.$page-elements-border-radius;
+
+      @include screens.tablet {
+        padding: 0;
+      }
+
+      &__heading {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        &__p {
+          color: colors.$gray;
+        }
+      }
+
+      &__links {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        &__group {
+          background-color: colors.$beige;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          gap: 2.5rem;
+          padding: 4rem;
+          border-radius: constants.$page-elements-border-radius;
+
+          @include screens.tablet {
+            padding: 4rem 0;
+          }
+
+          &__p {
+            color: colors.$gray;
+            text-align: center;
+            width: 80%;
+          }
+        }
+      }
+
+      &__separator {
+        border: 1px solid colors.$light-gray;
+      }
+
+      &__save-btn {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 1.5rem 2.5rem;
+        background-color: colors.$white;
+        border-radius: constants.$page-elements-border-radius;
+
+        @include screens.tablet {
+          justify-content: unset;
+          align-items: unset;
+          padding: 1rem;
+        }
+      }
+    }
+  }
+}

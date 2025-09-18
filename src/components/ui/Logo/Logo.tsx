@@ -6,7 +6,7 @@ import { Typography } from "@/components/typography";
 import logoClasses from "./Logo.module.scss";
 
 type LogoProps = {
-  className: string;
+  className?: string;
 };
 
 export const Logo = ({ className }: LogoProps) => {
