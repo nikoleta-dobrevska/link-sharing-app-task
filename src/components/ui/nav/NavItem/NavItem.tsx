@@ -17,7 +17,11 @@ export const NavItem = ({ children, isActive, href }: NavItemProps) => {
         isActive && navItemClasses[`nav-item--active`]
       )}
     >
-      <a href={href} className={navItemClasses["nav-item-link"]}>
+      <a
+        href={href}
+        className={navItemClasses["nav-item-link"]}
+        aria-current={isActive ? "page" : undefined}
+      >
         {children}
       </a>
     </li>
