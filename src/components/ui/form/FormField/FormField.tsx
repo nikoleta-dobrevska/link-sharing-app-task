@@ -13,12 +13,12 @@ export const FormField = ({ icon, errorMessage, children }: FormFieldProps) => {
         {icon}
       </div>
       {children}
-      <div
+      <p
         className={formFieldClasses["form__field__error-message"]}
         role="alert"
       >
         {errorMessage}
-      </div>
+      </p>
     </div>
   );
 };

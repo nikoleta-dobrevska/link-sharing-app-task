@@ -10,3 +10,8 @@ export const KeyboardEventKey = {
   arrowUp: "ArrowUp",
   arrowDown: "ArrowDown",
 };
+
+export const RoutePaths = {
+  register: "/register",
+  login: "/",
+};

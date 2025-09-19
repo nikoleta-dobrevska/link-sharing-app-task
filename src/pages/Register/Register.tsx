@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { FormField } from "@/components/ui/form/FormField";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
+import { RoutePaths } from "@/constants";
 import { registerSchema } from "@/schemas";
 import { registerUser } from "@/services/registerUser";
 import { type RegisterFormData } from "@/types";
@@ -46,18 +47,6 @@ export const Register = () => {
 
   return (
     <div className={registerClasses["register"]}>
-      {registerMutation?.isError && (
-        <Typography
-          component="span"
-          role="alert"
-          variant="body"
-          size="md"
-          className={registerClasses["register__global-error-msg"]}
-        >
-          {registerMutation?.error?.message ??
-            "Oops, something went wrong! Please try again later."}
-        </Typography>
-      )}
       <div className={registerClasses["register__heading"]}>
         <Typography
           component="h1"
@@ -68,13 +57,25 @@ export const Register = () => {
           Create account
         </Typography>
         <Typography
-          component="span"
+          component="p"
           variant="body"
           size="md"
           className={registerClasses["register__heading__desc"]}
         >
           Let’s get you started sharing your links!
         </Typography>
+        {registerMutation?.isError && (
+          <Typography
+            component="p"
+            role="alert"
+            variant="body"
+            size="md"
+            className={registerClasses["register__global-error-msg"]}
+          >
+            {registerMutation?.error?.message ??
+              "Oops, something went wrong! Please try again later."}
+          </Typography>
+        )}
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -217,7 +218,7 @@ export const Register = () => {
       >
         Already have an account?
         <NavLink
-          to="/login"
+          to={RoutePaths.login}
           end
           className={registerClasses["register__login-prompt__link"]}
         >
