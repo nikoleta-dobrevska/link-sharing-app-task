@@ -1,5 +1,3 @@
-import { useId } from "react";
-
 import LinksIcon from "@/assets/svgr/links.svg?react";
 import PreviewIcon from "@/assets/svgr/preview.svg?react";
 import ProfileDetailsIcon from "@/assets/svgr/profile-details.svg?react";
@@ -23,12 +21,10 @@ const navItems = [
 ];
 
 interface NavbarProps {
-  activeIndex: number;
+  activePageIndex: number;
 }
 
-export const Navbar = ({ activeIndex }: NavbarProps) => {
-  const id = useId();
-
+export const Navbar = ({ activePageIndex }: NavbarProps) => {
   return (
     <nav className={navbarClasses["navbar"]} aria-label="Main Menu">
       <div className={navbarClasses["navbar__left"]}>
@@ -39,14 +35,10 @@ export const Navbar = ({ activeIndex }: NavbarProps) => {
           <NavItem
             key={navItem.name}
             href={navItem.href}
-            linkLabel={id + `-navItem${i}Name`}
-            isActive={i === activeIndex ? true : false}
+            isActive={i === activePageIndex ? true : false}
           >
             {navItem.icon}
-            <span
-              id={id + `-navItem${i}Name`}
-              className={navbarClasses["navbar__span"]}
-            >
+            <span className={navbarClasses["navbar__span"]}>
               {navItem.name}
             </span>
           </NavItem>

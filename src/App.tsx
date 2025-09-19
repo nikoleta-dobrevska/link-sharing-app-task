@@ -30,7 +30,7 @@ function App() {
         </FormField>
       </div>
       <div>
-        <Navbar activeIndex={1} />
+        <Navbar activePageIndex={1} />
       </div>
     </>
   );
