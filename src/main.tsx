@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 
 import { queryClient } from "@/config/react-query";
+import { RoutePaths } from "@/constants";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { Login } from "@/pages/Login";
 import { Register } from "@/pages/Register";
@@ -15,9 +16,9 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<AuthLayout />}>
+          <Route path={RoutePaths.login} element={<AuthLayout />}>
             <Route index element={<Login />} />
-            <Route path="register" element={<Register />} />
+            <Route path={RoutePaths.register} element={<Register />} />
           </Route>
         </Routes>
       </BrowserRouter>

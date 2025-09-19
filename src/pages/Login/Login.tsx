@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { FormField } from "@/components/ui/form/FormField";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
+import { RoutePaths } from "@/constants";
 import { loginSchema } from "@/schemas";
 import { loginUser } from "@/services/loginUser";
 import { type LoginFormData } from "@/types";
@@ -32,8 +33,7 @@ export const Login = () => {
 
   const loginMutation = useMutation({
     mutationFn: loginUser,
-    onSuccess: (data) => {
-      const token = data;
+    onSuccess: (token) => {
       localStorage.setItem("token", token);
     },
   });
@@ -54,7 +54,7 @@ export const Login = () => {
           Login
         </Typography>
         <Typography
-          component="span"
+          component="p"
           variant="body"
           size="md"
           className={loginClasses["login__heading__desc"]}
@@ -63,7 +63,7 @@ export const Login = () => {
         </Typography>
         {loginMutation?.isError && (
           <Typography
-            component="span"
+            component="p"
             role="alert"
             variant="body"
             size="md"
@@ -133,7 +133,7 @@ export const Login = () => {
       >
         Don't have an account?
         <NavLink
-          to="/register"
+          to={RoutePaths.register}
           end
           className={loginClasses["login__register-prompt__link"]}
         >

@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { FormField } from "@/components/ui/form/FormField";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
+import { RoutePaths } from "@/constants";
 import { registerSchema } from "@/schemas";
 import { registerUser } from "@/services/registerUser";
 import { type RegisterFormData } from "@/types";
@@ -56,7 +57,7 @@ export const Register = () => {
           Create account
         </Typography>
         <Typography
-          component="span"
+          component="p"
           variant="body"
           size="md"
           className={registerClasses["register__heading__desc"]}
@@ -65,7 +66,7 @@ export const Register = () => {
         </Typography>
         {registerMutation?.isError && (
           <Typography
-            component="span"
+            component="p"
             role="alert"
             variant="body"
             size="md"
@@ -217,7 +218,7 @@ export const Register = () => {
       >
         Already have an account?
         <NavLink
-          to="/"
+          to={RoutePaths.login}
           end
           className={registerClasses["register__login-prompt__link"]}
         >
