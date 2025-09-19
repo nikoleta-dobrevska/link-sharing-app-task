@@ -56,7 +56,7 @@ export const Links = () => {
               }
             >
               <Button type="button" variant="secondary" size="md">
-                + Add new link
+                <span aria-hidden={true}>+</span> Add new link
               </Button>
               <div
                 className={

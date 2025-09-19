@@ -4,8 +4,8 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 
 import { queryClient } from "@/config/react-query";
+import { AuthGuard } from "@/layouts/AuthGuard";
 import { AuthLayout } from "@/layouts/AuthLayout";
-import { Guard } from "@/layouts/Guard";
 import { ErrorPage } from "@/pages/ErrorPage";
 import { Links } from "@/pages/Links";
 import { Register } from "@/pages/Register";
@@ -20,7 +20,7 @@ createRoot(document.getElementById("root")!).render(
           <Route element={<AuthLayout />}>
             <Route path="register" element={<Register />} />
           </Route>
-          <Route element={<Guard />} errorElement={<ErrorPage />}>
+          <Route element={<AuthGuard />} errorElement={<ErrorPage />}>
             <Route path="links" index element={<Links />} />
           </Route>
         </Routes>
