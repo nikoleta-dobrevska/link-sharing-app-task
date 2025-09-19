@@ -11,8 +11,10 @@
   &__title {
     color: colors.$dark-gray;
 
-    @include screens.mobile {
-      display: none;
+    &--not-visible {
+      @include screens.mobile {
+        display: none;
+      }
     }
   }
 }

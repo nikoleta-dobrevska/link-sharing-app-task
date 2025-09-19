@@ -28,7 +28,7 @@ export const Navbar = ({ activePageIndex }: NavbarProps) => {
   return (
     <nav className={navbarClasses["navbar"]} aria-label="Main Menu">
       <div className={navbarClasses["navbar__left"]}>
-        <Logo />
+        <Logo className="logo__title--not-visible" />
       </div>
       <ul className={navbarClasses["navbar__center"]}>
         {navItems.map((navItem, i) => (
