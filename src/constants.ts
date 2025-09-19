@@ -14,4 +14,6 @@ export const KeyboardEventKey = {
 export const RoutePaths = {
   register: "/register",
   login: "/",
+  links: "/links",
+  profileDetails: "/profile-details",
 };

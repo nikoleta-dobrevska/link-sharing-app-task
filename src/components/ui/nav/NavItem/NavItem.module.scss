@@ -12,6 +12,10 @@
   font-family: fonts.$instrument-sans;
   font-weight: fonts.$weight-bold;
 
+  &:has([aria-current="page"]) {
+    background-color: colors.$lavender;
+  }
+
   .nav-item-link {
     display: flex;
     justify-content: center;
@@ -24,12 +28,8 @@
     &:active {
       color: colors.$dark-purple;
     }
-  }
 
-  &--active {
-    background-color: colors.$lavender;
-
-    .nav-item-link {
+    &[aria-current="page"] {
       color: colors.$dark-purple;
     }
   }
