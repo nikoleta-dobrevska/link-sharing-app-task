@@ -1,29 +1,39 @@
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router";
 
-import { ErrorPage } from "@/pages/ErrorPage";
-import { verifyToken } from "@/services/verifyToken";
+import { LOCAL_STORAGE_UPDATED_CUSTOM_EVENT } from "@/constants";
+import { getLocalStorageItem } from "@/localStorage";
 
 export const AuthGuard = () => {
   const [token, setToken] = useState<string | null>(null);
-  const existingToken = localStorage.getItem("token");
 
-  setToken(existingToken);
+  useEffect(() => {
+    setToken(getLocalStorageItem("token"));
+  }, []);
 
-  const verifyTokenQuery = useQuery({
-    queryKey: [token],
-    queryFn: () => verifyToken(token),
-    enabled: !!token,
-  });
+  useEffect(() => {
+    const handleLocalStorageTokenChange = (
+      localStorageEvent: CustomEvent<{ key: string }>
+    ) => {
+      if (localStorageEvent.detail.key !== "token") {
+        return;
+      }
 
-  if (verifyTokenQuery.isPending) {
-    return <p>Loading...</p>;
-  }
+      const token = getLocalStorageItem("token");
 
-  if (verifyTokenQuery.isError) {
-    return <ErrorPage />;
-  }
+      setToken(token);
+    };
+
+    window.addEventListener(
+      LOCAL_STORAGE_UPDATED_CUSTOM_EVENT as keyof WindowEventMap,
+      handleLocalStorageTokenChange as unknown as (event: Event) => void
+    );
+
+    return window.removeEventListener(
+      LOCAL_STORAGE_UPDATED_CUSTOM_EVENT as keyof WindowEventMap,
+      handleLocalStorageTokenChange as unknown as (event: Event) => void
+    );
+  }, [token]);
 
   return <Outlet />;
 };

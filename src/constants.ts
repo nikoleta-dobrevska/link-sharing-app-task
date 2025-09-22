@@ -10,3 +10,5 @@ export const KeyboardEventKey = {
   arrowUp: "ArrowUp",
   arrowDown: "ArrowDown",
 };
+
+export const LOCAL_STORAGE_UPDATED_CUSTOM_EVENT = "localStorageUpdated";
