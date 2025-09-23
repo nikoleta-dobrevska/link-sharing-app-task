@@ -14,6 +14,7 @@ export const KeyboardEventKey = {
 export const RoutePaths = {
   register: "/register",
   login: "/",
+  links: "/links",
 };
 
 export const LOCAL_STORAGE_UPDATED_CUSTOM_EVENT = "localStorageUpdated";
