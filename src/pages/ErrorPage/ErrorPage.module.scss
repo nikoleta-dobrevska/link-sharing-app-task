@@ -1,0 +1,35 @@
+@use "@/scss/colors.scss";
+@use "@/scss/screens.scss";
+
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: colors.$beige;
+
+  @include screens.mobile {
+    padding: 2rem;
+    align-items: flex-start;
+    height: 100%;
+  }
+
+  &__msg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: colors.$red;
+    text-align: center;
+
+    &__link {
+      color: colors.$dark-purple;
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: colors.$light-purple;
+      }
+    }
+  }
+}

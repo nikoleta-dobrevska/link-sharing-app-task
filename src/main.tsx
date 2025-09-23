@@ -5,7 +5,10 @@ import { BrowserRouter, Route, Routes } from "react-router";
 
 import { queryClient } from "@/config/react-query";
 import { RoutePaths } from "@/constants";
+import { AuthGuard } from "@/layouts/AuthGuard";
 import { AuthLayout } from "@/layouts/AuthLayout";
+import { ErrorPage } from "@/pages/ErrorPage";
+import { Links } from "@/pages/Links";
 import { Login } from "@/pages/Login";
 import { Register } from "@/pages/Register";
 
@@ -19,6 +22,9 @@ createRoot(document.getElementById("root")!).render(
           <Route path={RoutePaths.login} element={<AuthLayout />}>
             <Route index element={<Login />} />
             <Route path={RoutePaths.register} element={<Register />} />
+          </Route>
+          <Route element={<AuthGuard />} errorElement={<ErrorPage />}>
+            <Route path="links" index element={<Links />} />
           </Route>
         </Routes>
       </BrowserRouter>
