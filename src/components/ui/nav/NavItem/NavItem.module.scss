@@ -12,11 +12,11 @@
   font-family: fonts.$instrument-sans;
   font-weight: fonts.$weight-bold;
 
-  &:has([aria-current="page"]) {
+  &:has(.active) {
     background-color: colors.$lavender;
   }
 
-  .nav-item-link {
+  &__link {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,7 +29,7 @@
       color: colors.$dark-purple;
     }
 
-    &[aria-current="page"] {
+    &.active {
       color: colors.$dark-purple;
     }
   }

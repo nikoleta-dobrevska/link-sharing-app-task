@@ -11,8 +11,15 @@ type NavItemProps = {
 
 export const NavItem = ({ children, to }: NavItemProps) => {
   return (
-    <li className={clsx(navItemClasses["nav-item"])}>
-      <NavLink to={to} className={navItemClasses["nav-item-link"]}>
+    <li className={navItemClasses["nav-item"]}>
+      <NavLink
+        to={to}
+        className={({ isActive }) =>
+          isActive
+            ? clsx(navItemClasses["nav-item__link"], navItemClasses["active"])
+            : navItemClasses["nav-item__link"]
+        }
+      >
         {children}
       </NavLink>
     </li>
