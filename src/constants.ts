@@ -11,4 +11,9 @@ export const KeyboardEventKey = {
   arrowDown: "ArrowDown",
 };
 
+export const RoutePaths = {
+  register: "/register",
+  login: "/",
+};
+
 export const LOCAL_STORAGE_UPDATED_CUSTOM_EVENT = "localStorageUpdated";

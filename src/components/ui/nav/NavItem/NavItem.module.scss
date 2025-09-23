@@ -19,7 +19,9 @@
     gap: 0.5rem;
     color: colors.$gray;
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
       color: colors.$dark-purple;
     }
   }

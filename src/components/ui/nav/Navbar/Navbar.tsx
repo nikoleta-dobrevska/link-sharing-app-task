@@ -21,20 +21,21 @@ const navItems = [
 ];
 
 interface NavbarProps {
-  activeIndex: number;
+  activePageIndex: number;
 }
 
-export const Navbar = ({ activeIndex }: NavbarProps) => {
+export const Navbar = ({ activePageIndex }: NavbarProps) => {
   return (
-    <nav className={navbarClasses["navbar"]}>
+    <nav className={navbarClasses["navbar"]} aria-label="Main Menu">
       <div className={navbarClasses["navbar__left"]}>
         <Logo className="logo__title--not-visible" />
       </div>
-      <div className={navbarClasses["navbar__center"]}>
+      <ul className={navbarClasses["navbar__center"]}>
         {navItems.map((navItem, i) => (
           <NavItem
+            key={navItem.name}
             href={navItem.href}
-            isActive={i === activeIndex ? true : false}
+            isActive={i === activePageIndex ? true : false}
           >
             {navItem.icon}
             <span className={navbarClasses["navbar__span"]}>
@@ -42,7 +43,7 @@ export const Navbar = ({ activeIndex }: NavbarProps) => {
             </span>
           </NavItem>
         ))}
-      </div>
+      </ul>
       <div className={navbarClasses["navbar__right"]}>
         <Button type="button" variant="secondary" size="md">
           <PreviewIcon

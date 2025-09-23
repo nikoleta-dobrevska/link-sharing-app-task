@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { type RegisterFormData } from "@/schemas";
+import { type RegisterFormData } from "@/types";
 
 export const registerUser = async (data: RegisterFormData) => {
   const response = await axios.post(

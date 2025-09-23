@@ -20,3 +20,14 @@ export const registerSchema = z
       path: ["confirmPassword"],
     })
   );
+
+export const loginSchema = z.object({
+  email: z
+    .string()
+    .check(
+      z.trim(),
+      z.minLength(1, "Can't be empty"),
+      z.email("Invalid email address")
+    ),
+  password: z.string().check(z.minLength(8, "Please check again")),
+});

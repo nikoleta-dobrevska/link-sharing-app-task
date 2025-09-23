@@ -1,0 +1,64 @@
+@use "@/scss/colors.scss";
+@use "@/scss/screens.scss";
+
+.login {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: min(100%, 400px);
+
+  &__global-error-msg {
+    color: colors.$red;
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    &__h1 {
+      color: colors.$dark-gray;
+    }
+
+    &__desc {
+      color: colors.$gray;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    &__field-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__pass-desc {
+      color: colors.$gray;
+    }
+  }
+
+  &__register-prompt {
+    color: colors.$gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+
+    @include screens.mobile {
+      flex-direction: column;
+    }
+
+    &__link {
+      color: colors.$dark-purple;
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: colors.$light-purple;
+      }
+    }
+  }
+}
