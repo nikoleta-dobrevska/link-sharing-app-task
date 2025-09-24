@@ -15,9 +15,10 @@ export const NavItem = ({ children, to }: NavItemProps) => {
       <NavLink
         to={to}
         className={({ isActive }) =>
-          isActive
-            ? clsx(navItemClasses["nav-item__link"], navItemClasses["active"])
-            : navItemClasses["nav-item__link"]
+          clsx(
+            navItemClasses["nav-item__link"],
+            isActive && navItemClasses["active"]
+          )
         }
       >
         {children}
