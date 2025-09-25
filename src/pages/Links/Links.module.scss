@@ -30,6 +30,7 @@
     align-items: center;
     background-color: colors.$white;
     flex: 2.5;
+    padding: 6rem 0;
     border-radius: constants.$page-elements-border-radius;
 
     @include screens.tablet {
@@ -63,6 +64,7 @@
       background-color: colors.$white;
       padding: 2.5rem;
       gap: 2rem;
+      height: 100%;
       border-radius: constants.$page-elements-border-radius;
 
       @include screens.tablet {
@@ -114,12 +116,12 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        align-items: center;
+        align-items: flex-end;
         padding: 1.5rem 2.5rem;
         background-color: colors.$white;
         border-radius: constants.$page-elements-border-radius;
 
-        @include screens.tablet {
+        @include screens.mobile {
           justify-content: unset;
           align-items: unset;
           padding: 1rem;

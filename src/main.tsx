@@ -24,7 +24,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path={RoutePaths.register} element={<Register />} />
           </Route>
           <Route element={<AuthGuard />} errorElement={<ErrorPage />}>
-            <Route path="links" index element={<Links />} />
+            <Route path={RoutePaths.links} index element={<Links />} />
           </Route>
         </Routes>
       </BrowserRouter>

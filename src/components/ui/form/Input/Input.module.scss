@@ -14,9 +14,15 @@
   color: colors.$dark-gray;
   line-height: constants.$line-height;
   width: inherit;
+  height: 48px;
 
   &::placeholder {
     opacity: 0.5;
+  }
+
+  &:-webkit-autofill {
+    line-height: constants.$line-height !important;
+    font-size: 1rem !important;
   }
 
   &:hover {

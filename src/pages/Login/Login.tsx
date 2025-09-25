@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useId } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 import EmailIcon from "@/assets/svgr/Email.svg?react";
 import PasswordIcon from "@/assets/svgr/Password.svg?react";
@@ -12,6 +12,7 @@ import { FormField } from "@/components/ui/form/FormField";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
 import { RoutePaths } from "@/constants";
+import { setLocalStorageItem } from "@/localStorage";
 import { loginSchema } from "@/schemas";
 import { loginUser } from "@/services/loginUser";
 import { type LoginFormData } from "@/types";
@@ -21,6 +22,8 @@ import inputClasses from "@/components/ui/form/Input/Input.module.scss";
 
 export const Login = () => {
   const id = useId();
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -34,7 +37,8 @@ export const Login = () => {
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (token) => {
-      localStorage.setItem("token", token);
+      setLocalStorageItem("token", token);
+      navigate("/links");
     },
   });
 
