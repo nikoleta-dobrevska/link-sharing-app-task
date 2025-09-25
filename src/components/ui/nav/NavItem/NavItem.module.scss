@@ -6,30 +6,26 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  gap: 0.5rem;
-  padding: constants.$button-padding;
-  border-radius: constants.$border-radius;
-  font-family: fonts.$instrument-sans;
-  font-weight: fonts.$weight-bold;
 
-  .nav-item-link {
+  &__link {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
     color: colors.$gray;
+    padding: constants.$button-padding;
+    border-radius: constants.$border-radius;
+    font-family: fonts.$instrument-sans;
+    font-weight: fonts.$weight-bold;
 
     &:hover,
     &:focus,
     &:active {
       color: colors.$dark-purple;
     }
-  }
 
-  &--active {
-    background-color: colors.$lavender;
-
-    .nav-item-link {
+    &.active {
+      background-color: colors.$lavender;
       color: colors.$dark-purple;
     }
   }

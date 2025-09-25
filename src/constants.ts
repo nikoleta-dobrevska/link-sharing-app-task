@@ -15,6 +15,7 @@ export const RoutePaths = {
   register: "/register",
   login: "/",
   links: "/links",
+  profileDetails: "/profile-details",
 };
 
 export const LOCAL_STORAGE_UPDATED_CUSTOM_EVENT = "localStorageUpdated";
