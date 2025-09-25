@@ -1,8 +1,7 @@
-import PhoneIcon from "@/assets/svgr/Phone.svg?react";
 import RectangleIcon from "@/assets/svgr/Rectangle 15.svg?react";
 import SubstractIcon from "@/assets/svgr/Subtract.svg?react";
+import { LinksList } from "@/components/LinksList";
 import { Typography } from "@/components/typography";
-import { Button } from "@/components/ui/Button";
 import { Navbar } from "@/components/ui/nav/Navbar";
 
 import linksClasses from "./Links.module.scss";
@@ -10,7 +9,7 @@ import linksClasses from "./Links.module.scss";
 export const Links = () => {
   return (
     <div className={linksClasses["page-layout"]}>
-      <Navbar activeIndex={0} />
+      <Navbar />
       <main className={linksClasses["page-layout__center"]}>
         <section className={linksClasses["page-layout__preview-section"]}>
           <aside
@@ -54,51 +53,8 @@ export const Links = () => {
               className={
                 linksClasses["page-layout__links-section__layout__links"]
               }
-            >
-              <Button type="button" variant="secondary" size="md">
-                <span aria-hidden={true}>+</span> Add new link
-              </Button>
-              <div
-                className={
-                  linksClasses[
-                    "page-layout__links-section__layout__links__group"
-                  ]
-                }
-              >
-                <PhoneIcon />
-                <Typography component="h2" variant="heading" size="md">
-                  Let's get you started
-                </Typography>
-                <Typography
-                  component="p"
-                  variant="body"
-                  size="md"
-                  className={
-                    linksClasses[
-                      "page-layout__links-section__layout__links__group__p"
-                    ]
-                  }
-                >
-                  Use the “Add new link” button to get started. Once you have
-                  more than one link, you can reorder and edit them. We’re here
-                  to help you share your profiles with everyone!
-                </Typography>
-              </div>
-            </div>
-          </div>
-          <span
-            className={
-              linksClasses["page-layout__links-section__layout__separator"]
-            }
-          />
-          <div
-            className={
-              linksClasses["page-layout__links-section__layout__save-btn"]
-            }
-          >
-            <Button type="submit" variant="primary" size="md" disabled={true}>
-              Save
-            </Button>
+            />
+            <LinksList />
           </div>
         </section>
       </main>

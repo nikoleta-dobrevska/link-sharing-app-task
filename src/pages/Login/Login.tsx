@@ -38,7 +38,7 @@ export const Login = () => {
     mutationFn: loginUser,
     onSuccess: (token) => {
       setLocalStorageItem("token", token);
-      navigate("/links");
+      navigate(RoutePaths.links);
     },
   });
 

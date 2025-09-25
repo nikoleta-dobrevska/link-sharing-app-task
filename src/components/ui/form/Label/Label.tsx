@@ -6,7 +6,7 @@ import labelClasses from "./Label.module.scss";
 
 type LabelProps = {
   children: React.ReactNode;
-  htmlFor: string;
+  htmlFor?: string;
   color: "dark-gray" | "gray";
 };
 

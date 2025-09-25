@@ -17,21 +17,26 @@ const Arrow = ({ isDropdownOpen }: ArrowProps) => {
 };
 
 type Option = {
-  icon: React.ReactNode;
+  src: string;
   value: string;
   name: string;
 };
 
 type DropDownFieldProps = {
   placeholder: React.ReactNode;
+  onChange: (option: Option) => void;
   options: Option[];
 };
 
-export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
+export const DropDownField = ({
+  placeholder,
+  onChange,
+  options,
+}: DropDownFieldProps) => {
   const id = useId();
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [currentOption, setCurrentOption] = useState<Option | null>(null);
+  const [currentOption, setCurrentOption] = useState<Option>(options[0]);
   const [visualFocusIndex, setVisualFocusIndex] = useState(-1);
 
   const comboboxRef = useRef<HTMLDivElement>(null);
@@ -41,6 +46,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
     setCurrentOption(option);
     setVisualFocusIndex(i);
     setDropdownOpen(false);
+    onChange(option);
   };
 
   const focusCombobox = () => {
@@ -107,6 +113,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
 
       if (isDropdownOpen) {
         setCurrentOption(options[visualFocusIndex]);
+        onChange(options[visualFocusIndex]);
         setDropdownOpen(false);
         focusCombobox();
         return;
@@ -140,6 +147,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
     if (isDropdownOpen) {
       if (e.key === KeyboardEventKey.tab) {
         setCurrentOption(options[visualFocusIndex]);
+        onChange(options[visualFocusIndex]);
         setDropdownOpen(false);
         return;
       }
@@ -152,6 +160,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
 
       if (e.altKey && e.key === KeyboardEventKey.arrowUp) {
         setCurrentOption(options[visualFocusIndex]);
+        onChange(options[visualFocusIndex]);
         setDropdownOpen(false);
         focusCombobox();
         return;
@@ -208,7 +217,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
             }
             aria-hidden={true}
           >
-            {currentOption?.icon ?? ""}
+            <img alt="" src={currentOption?.src} />
           </span>
           <Typography
             component="span"
@@ -259,7 +268,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
                     }
                     aria-hidden={true}
                   >
-                    {option.icon}
+                    <img alt="" src={currentOption?.src} />
                   </span>
                   <Typography
                     component="li"

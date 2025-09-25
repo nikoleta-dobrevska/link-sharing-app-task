@@ -31,3 +31,30 @@ export const loginSchema = z.object({
     ),
   password: z.string().check(z.minLength(8, "Please check again")),
 });
+
+export const linkSchema = z
+  .object({
+    linkProvider: z.object({
+      id: z.number(),
+      allowedDomains: z.array(z.string()),
+    }),
+    link: z
+      .string()
+      .check(z.minLength(1, "Can't be empty"), z.url("Enter a URL address")),
+  })
+  .check(
+    z.refine(
+      (data) =>
+        data.linkProvider.allowedDomains.some((domain) =>
+          data.link.includes(domain)
+        ),
+      {
+        message: "Please check the URL",
+        path: ["link"],
+      }
+    )
+  );
+
+export const linksSchema = z.object({
+  links: z.array(linkSchema),
+});
