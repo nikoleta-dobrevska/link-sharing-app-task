@@ -26,24 +26,24 @@ type DropDownFieldProps = {
   placeholder: React.ReactNode;
   onChange: (option: Option) => void;
   options: Option[];
+  selected?: Option | null;
 };
 
 export const DropDownField = ({
   placeholder,
   onChange,
   options,
+  selected,
 }: DropDownFieldProps) => {
   const id = useId();
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [currentOption, setCurrentOption] = useState<Option>(options[0]);
   const [visualFocusIndex, setVisualFocusIndex] = useState(-1);
 
   const comboboxRef = useRef<HTMLDivElement>(null);
   const dropDownFieldRef = useRef<HTMLDivElement>(null);
 
   const onOptionClick = (option: Option, i: number) => {
-    setCurrentOption(option);
     setVisualFocusIndex(i);
     setDropdownOpen(false);
     onChange(option);
@@ -112,7 +112,6 @@ export const DropDownField = ({
       e.preventDefault();
 
       if (isDropdownOpen) {
-        setCurrentOption(options[visualFocusIndex]);
         onChange(options[visualFocusIndex]);
         setDropdownOpen(false);
         focusCombobox();
@@ -146,7 +145,6 @@ export const DropDownField = ({
 
     if (isDropdownOpen) {
       if (e.key === KeyboardEventKey.tab) {
-        setCurrentOption(options[visualFocusIndex]);
         onChange(options[visualFocusIndex]);
         setDropdownOpen(false);
         return;
@@ -159,7 +157,6 @@ export const DropDownField = ({
       }
 
       if (e.altKey && e.key === KeyboardEventKey.arrowUp) {
-        setCurrentOption(options[visualFocusIndex]);
         onChange(options[visualFocusIndex]);
         setDropdownOpen(false);
         focusCombobox();
@@ -217,7 +214,7 @@ export const DropDownField = ({
             }
             aria-hidden={true}
           >
-            <img alt="" src={currentOption?.src} />
+            <img alt="" src={selected?.src} />
           </span>
           <Typography
             component="span"
@@ -226,7 +223,7 @@ export const DropDownField = ({
             variant="body"
             size="md"
           >
-            {currentOption?.name ?? placeholder}
+            {selected?.name ?? placeholder}
           </Typography>
         </div>
         <Arrow isDropdownOpen={isDropdownOpen} />
@@ -242,7 +239,7 @@ export const DropDownField = ({
           aria-multiselectable={false}
         >
           {options.map((option, i) => {
-            const isCurrentOption = option.value === currentOption?.value;
+            const isCurrentOption = option.value === selected?.value;
 
             return (
               <Fragment key={option.value}>
@@ -268,7 +265,7 @@ export const DropDownField = ({
                     }
                     aria-hidden={true}
                   >
-                    <img alt="" src={currentOption?.src} />
+                    <img alt="" src={option?.src} />
                   </span>
                   <Typography
                     component="li"

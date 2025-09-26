@@ -36,6 +36,12 @@ export const linkSchema = z
   .object({
     linkProvider: z.object({
       id: z.number(),
+      iconName: z.string(),
+      src: z.string().check(z.minLength(0)),
+      name: z.string().check(z.minLength(0)),
+      value: z.string().check(z.minLength(0)),
+      backgroundColor: z.string(),
+      textColor: z.string(),
       allowedDomains: z.array(z.string()),
     }),
     link: z

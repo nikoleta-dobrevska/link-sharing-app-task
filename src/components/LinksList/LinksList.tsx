@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 
 import LinksIcon from "@/assets/svgr/links.svg?react";
@@ -22,20 +23,7 @@ import linksListClasses from "./LinksList.module.scss";
 import inputClasses from "@/components/ui/form/Input/Input.module.scss";
 
 export const LinksList = () => {
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LinksFormData>({
-    resolver: zodResolver(linksSchema),
-    mode: "onChange",
-  });
-
-  const { fields, append } = useFieldArray({
-    control,
-    name: "links",
-  });
+  const [showDescription, setShowDescription] = useState(true);
 
   const fetchAllLinkProvidersQuery = useQuery({
     queryKey: ["linkProviders"],
@@ -47,7 +35,13 @@ export const LinksList = () => {
     queryFn: fetchAllLinks,
   });
 
-  type linkProvider = {
+  type UserLinksResponse = {
+    linkProviderId: number;
+    link: string;
+    order: number;
+  };
+
+  type LinkProvider = {
     id: number;
     iconName: string;
     src: string;
@@ -58,7 +52,7 @@ export const LinksList = () => {
   };
 
   const linkProviders = fetchAllLinkProvidersQuery?.data?.map(
-    (linkProviders: linkProvider) => ({
+    (linkProviders: LinkProvider) => ({
       id: linkProviders.id,
       iconName: linkProviders.iconName,
       src: `${import.meta.env.VITE_API_URL}/static/icons/${linkProviders.iconName}`,
@@ -69,6 +63,40 @@ export const LinksList = () => {
       allowedDomains: linkProviders.allowedDomains,
     })
   );
+
+  const getFullLinkProvider = (id: number) => {
+    const currentLinkProvider = linkProviders.find(
+      (obj: LinkProvider) => obj.id === id
+    );
+
+    return currentLinkProvider;
+  };
+
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LinksFormData>({
+    resolver: zodResolver(linksSchema),
+    mode: "onChange",
+    values: {
+      links:
+        fetchAllUserLinksQuery?.data?.map((link: UserLinksResponse) => {
+          const provider = getFullLinkProvider(link.linkProviderId);
+          return {
+            linkProvider: provider,
+            link: link.link,
+          };
+        }) ?? [],
+    },
+    reValidateMode: "onChange",
+  });
+
+  const { fields, append } = useFieldArray({
+    control,
+    name: "links",
+  });
 
   const createOrUpdateUserLinksMutation = useMutation({
     mutationFn: createOrUpdateUserLinks,
@@ -95,41 +123,42 @@ export const LinksList = () => {
           type="button"
           variant="secondary"
           size="md"
-          onClick={() => append({ linkProvider: linkProviders[0], link: "" })}
+          onClick={() => {
+            setShowDescription(false);
+            append({ linkProvider: linkProviders[0], link: "" });
+          }}
         >
           <span aria-hidden={true}>+</span> Add new link
         </Button>
-
         <form onSubmit={handleSubmit(onSubmit)}>
           {fetchAllLinkProvidersQuery?.data &&
-          fetchAllUserLinksQuery?.data?.length > 0 ? (
             fields.map((field, index) => (
               <div key={field.id}>
                 <button
                   type="button"
-                  onClick={() => deleteLinkMutation.mutate(index)}
+                  onClick={() =>
+                    deleteLinkMutation.mutate(field.linkProvider.id)
+                  }
                 >
                   Remove
                 </button>
-
                 <Label color="dark-gray">Platform</Label>
                 <FormField>
                   <Controller
                     control={control}
                     name={`links.${index}.linkProvider`}
                     rules={{ required: "true" }}
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange, value } }) => (
                       <DropDownField
                         onChange={onChange}
+                        selected={value}
                         options={linkProviders}
                         placeholder="Choose platform"
                       />
                     )}
                   />
                 </FormField>
-                <Label color="dark-gray" htmlFor="">
-                  Link {index + 1}
-                </Label>
+                <Label color="dark-gray">Link {index + 1}</Label>
                 <FormField
                   icon={<LinksIcon />}
                   errorMessage={errors?.links?.[index]?.link?.message}
@@ -148,8 +177,8 @@ export const LinksList = () => {
                   />
                 </FormField>
               </div>
-            ))
-          ) : (
+            ))}
+          {fetchAllUserLinksQuery?.data?.length <= 0 && showDescription && (
             <div
               className={
                 linksListClasses[
@@ -191,7 +220,9 @@ export const LinksList = () => {
               type="submit"
               variant="primary"
               size="md"
-              disabled={!!fetchAllUserLinksQuery?.data}
+              disabled={
+                showDescription && fetchAllUserLinksQuery?.data?.length <= 0
+              }
             >
               Save
             </Button>
