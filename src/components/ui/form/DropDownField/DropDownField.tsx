@@ -17,12 +17,12 @@ const Arrow = ({ isDropdownOpen }: ArrowProps) => {
 };
 
 type Option = {
-  src: string;
-  value: string;
   name: string;
+  iconSrc: string;
 };
 
 type DropDownFieldProps = {
+  dropDownFieldId: string;
   placeholder: React.ReactNode;
   onChange: (option: Option) => void;
   options: Option[];
@@ -30,6 +30,7 @@ type DropDownFieldProps = {
 };
 
 export const DropDownField = ({
+  dropDownFieldId,
   placeholder,
   onChange,
   options,
@@ -187,6 +188,7 @@ export const DropDownField = ({
       ref={dropDownFieldRef}
     >
       <div
+        id={id + `-${dropDownFieldId}`}
         className={dropDownFieldClasses["drop-down-field__display-container"]}
         onClick={() => {
           setDropdownOpen(!isDropdownOpen);
@@ -214,7 +216,7 @@ export const DropDownField = ({
             }
             aria-hidden={true}
           >
-            <img alt="" src={selected?.src} />
+            <img alt="" src={selected?.iconSrc} />
           </span>
           <Typography
             component="span"
@@ -239,10 +241,10 @@ export const DropDownField = ({
           aria-multiselectable={false}
         >
           {options.map((option, i) => {
-            const isCurrentOption = option.value === selected?.value;
+            const isCurrentOption = option.name === selected?.name;
 
             return (
-              <Fragment key={option.value}>
+              <Fragment key={option.name}>
                 {/*eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus*/}
                 <div
                   role="option"
@@ -265,7 +267,7 @@ export const DropDownField = ({
                     }
                     aria-hidden={true}
                   >
-                    <img alt="" src={option?.src} />
+                    <img alt="" src={option?.iconSrc} />
                   </span>
                   <Typography
                     component="li"

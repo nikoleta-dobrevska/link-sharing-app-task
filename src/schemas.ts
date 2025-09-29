@@ -32,21 +32,38 @@ export const loginSchema = z.object({
   password: z.string().check(z.minLength(8, "Please check again")),
 });
 
+export const linkProviderSchema = z.pipe(
+  z.object({
+    id: z.number(),
+    iconName: z.string(),
+    name: z.string(),
+    backgroundColor: z.string(),
+    textColor: z.string(),
+    allowedDomains: z.array(z.string()),
+  }),
+  z.transform(
+    ({ id, iconName, name, backgroundColor, textColor, allowedDomains }) => ({
+      id: id,
+      iconName,
+      iconSrc: `${import.meta.env.VITE_API_URL}/static/icons/${iconName}`,
+      name: name,
+      backgroundColor: backgroundColor,
+      textColor: textColor,
+      allowedDomains: allowedDomains,
+    })
+  )
+);
+
+export const linkProvidersArray = z.array(linkProviderSchema);
+
 export const linkSchema = z
+  .string()
+  .check(z.minLength(1, "Can't be empty"), z.url("Enter a valid URL address"));
+
+export const linkItemSchema = z
   .object({
-    linkProvider: z.object({
-      id: z.number(),
-      iconName: z.string(),
-      src: z.string().check(z.minLength(0)),
-      name: z.string().check(z.minLength(0)),
-      value: z.string().check(z.minLength(0)),
-      backgroundColor: z.string(),
-      textColor: z.string(),
-      allowedDomains: z.array(z.string()),
-    }),
-    link: z
-      .string()
-      .check(z.minLength(1, "Can't be empty"), z.url("Enter a URL address")),
+    linkProvider: linkProviderSchema,
+    link: linkSchema,
   })
   .check(
     z.refine(
@@ -62,5 +79,13 @@ export const linkSchema = z
   );
 
 export const linksSchema = z.object({
-  links: z.array(linkSchema),
+  links: z.array(linkItemSchema),
 });
+
+export const userLinksResponseSchema = z.object({
+  linkProviderId: z.number(),
+  link: z.string(),
+  order: z.number(),
+});
+
+export const userLinksArray = z.array(userLinksResponseSchema);
