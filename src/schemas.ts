@@ -32,7 +32,7 @@ export const loginSchema = z.object({
   password: z.string().check(z.minLength(8, "Please check again")),
 });
 
-export const linkProviderSchema = z.pipe(
+const linkProviderResponseSchema = z.pipe(
   z.object({
     id: z.number(),
     iconName: z.string(),
@@ -44,7 +44,6 @@ export const linkProviderSchema = z.pipe(
   z.transform(
     ({ id, iconName, name, backgroundColor, textColor, allowedDomains }) => ({
       id: id,
-      iconName,
       iconSrc: `${import.meta.env.VITE_API_URL}/static/icons/${iconName}`,
       name: name,
       backgroundColor: backgroundColor,
@@ -53,6 +52,22 @@ export const linkProviderSchema = z.pipe(
     })
   )
 );
+
+export const linkProvidersResponseSchemaArray = z.array(
+  linkProviderResponseSchema
+);
+
+export const linkProviderSchema: z.ZodMiniType<
+  z.infer<typeof linkProviderResponseSchema>,
+  z.infer<typeof linkProviderResponseSchema>
+> = z.object({
+  id: z.number(),
+  iconSrc: z.string(),
+  name: z.string(),
+  backgroundColor: z.string(),
+  textColor: z.string(),
+  allowedDomains: z.array(z.string()),
+});
 
 export const linkProvidersArray = z.array(linkProviderSchema);
 

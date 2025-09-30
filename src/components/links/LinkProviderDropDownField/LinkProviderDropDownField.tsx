@@ -20,7 +20,7 @@ export const LinkProviderDropDownField = ({
     <DropDownField
       dropDownFieldId={dropDownFieldId}
       placeholder={placeholder}
-      onChange={() => onChange}
+      onChange={(selected) => onChange(selected as LinkProviderData)}
       options={options}
       selected={selected}
     />

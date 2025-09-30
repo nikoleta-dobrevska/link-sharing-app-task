@@ -1,6 +1,6 @@
 import RectangleIcon from "@/assets/svgr/Rectangle 15.svg?react";
 import SubstractIcon from "@/assets/svgr/Subtract.svg?react";
-import { LinksList } from "@/components/LinksList";
+import { LinksList } from "@/components/links/LinksList";
 import { Typography } from "@/components/typography";
 import { Navbar } from "@/components/ui/nav/Navbar";
 

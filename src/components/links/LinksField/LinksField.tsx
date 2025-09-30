@@ -9,7 +9,7 @@ import {
 } from "react-hook-form";
 
 import LinksIcon from "@/assets/svgr/links.svg?react";
-import { LinkProviderDropDownField } from "@/components/LinkProviderDropDownField";
+import { LinkProviderDropDownField } from "@/components/links/LinkProviderDropDownField";
 import { FormField } from "@/components/ui/form/FormField";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";

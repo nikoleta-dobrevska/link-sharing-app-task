@@ -3,8 +3,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 
-import { LinksField } from "@/components/LinksField";
-import { NoLinksDescription } from "@/components/NoLinksDescription";
+import { LinksField } from "@/components/links/LinksField";
+import { NoLinksDescription } from "@/components/links/NoLinksDescription";
 import { Button } from "@/components/ui/Button";
 import { queryClient } from "@/config/react-query";
 import { linksSchema } from "@/schemas";
@@ -29,30 +29,32 @@ export const LinksList = () => {
     queryFn: fetchAllLinks,
   });
 
+  const initialFormValues = useMemo(
+    () => ({
+      links:
+        (userLinks &&
+          linkProviders &&
+          userLinks?.map((link) => {
+            const provider = linkProviders?.[link.linkProviderId - 1];
+
+            return {
+              linkProvider: provider,
+              link: link.link,
+            };
+          })) ??
+        [],
+    }),
+    [userLinks, linkProviders]
+  );
+
   const {
     control,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LinksFormData>({
+  } = useForm({
     resolver: zodResolver(linksSchema),
-    values: {
-      links:
-        useMemo(
-          () =>
-            userLinks &&
-            linkProviders &&
-            userLinks?.map((link) => {
-              const provider = linkProviders?.[link.linkProviderId - 1];
-
-              return {
-                linkProvider: provider,
-                link: link.link,
-              };
-            }),
-          [userLinks, linkProviders]
-        ) ?? [],
-    },
+    values: initialFormValues,
     mode: "onChange",
     reValidateMode: "onChange",
   });

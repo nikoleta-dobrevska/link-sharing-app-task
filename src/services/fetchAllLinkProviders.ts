@@ -1,5 +1,5 @@
 import { apiClientAuthorized } from "@/config/apiClientAuthorized";
-import { linkProvidersArray } from "@/schemas";
+import { linkProvidersResponseSchemaArray } from "@/schemas";
 
 export const fetchAllLinkProviders = async ({
   signal,
@@ -8,7 +8,9 @@ export const fetchAllLinkProviders = async ({
 }) => {
   const response = await apiClientAuthorized.get("/link-providers", { signal });
 
-  const validatedResponse = linkProvidersArray.safeParse(response.data);
+  const validatedResponse = linkProvidersResponseSchemaArray.safeParse(
+    response.data
+  );
 
   if (!validatedResponse?.success) {
     return;
