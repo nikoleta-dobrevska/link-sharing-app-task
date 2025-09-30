@@ -1,0 +1,40 @@
+@use "@/scss/colors.scss";
+@use "@/scss/screens.scss";
+
+.links-list {
+  display: flex;
+  flex-direction: column;
+
+  &__add-btn {
+    margin: 0 2rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    height: 485px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 2rem;
+  }
+
+  &__separator {
+    border: 0.5px solid colors.$light-gray;
+  }
+
+  &__save-btn {
+    align-self: flex-end;
+    font-weight: 600;
+    margin: 1.5rem 2.5rem;
+
+    @include screens.tablet {
+      align-self: unset;
+    }
+  }
+}

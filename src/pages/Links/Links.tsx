@@ -34,7 +34,16 @@ export const Links = () => {
                 linksClasses["page-layout__links-section__layout__heading"]
               }
             >
-              <Typography component="h1" variant="heading" size="md">
+              <Typography
+                component="h1"
+                variant="heading"
+                size="md"
+                className={
+                  linksClasses[
+                    "page-layout__links-section__layout__heading__h1"
+                  ]
+                }
+              >
                 Customize your links
               </Typography>
               <Typography
@@ -49,11 +58,6 @@ export const Links = () => {
                 with the world!
               </Typography>
             </div>
-            <div
-              className={
-                linksClasses["page-layout__links-section__layout__links"]
-              }
-            />
             <LinksList />
           </div>
         </section>

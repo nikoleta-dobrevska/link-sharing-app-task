@@ -56,7 +56,7 @@ export const LinksList = () => {
     resolver: zodResolver(linksSchema),
     values: initialFormValues,
     mode: "onChange",
-    reValidateMode: "onChange",
+    reValidateMode: "onSubmit",
   });
 
   const { fields, append } = useFieldArray({
@@ -83,7 +83,7 @@ export const LinksList = () => {
   };
 
   return (
-    <div>
+    <div className={linksListClasses["links-list"]}>
       <Button
         type="button"
         variant="secondary"
@@ -94,36 +94,40 @@ export const LinksList = () => {
             append({ linkProvider: linkProviders[0], link: "" });
           }
         }}
+        className={linksListClasses["links-list__add-btn"]}
       >
         <span aria-hidden={true}>+</span> Add new link
       </Button>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {linkProviders &&
-          fields.map((field, index) => (
-            <LinksField
-              key={field.id}
-              index={index}
-              errorMessage={errors?.links?.[index]?.link?.message}
-              control={control}
-              linkProviders={linkProviders}
-              register={register}
-              deleteLinkMutation={deleteLinkMutation}
-              field={field}
-            />
-          ))}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={linksListClasses["links-list__form"]}
+      >
+        <div className={linksListClasses["links-list__fields"]}>
+          {linkProviders &&
+            fields.map((field, index) => (
+              <LinksField
+                key={field.id}
+                index={index}
+                errorMessage={errors?.links?.[index]?.link?.message}
+                control={control}
+                linkProviders={linkProviders}
+                register={register}
+                deleteLinkMutation={deleteLinkMutation}
+                field={field}
+              />
+            ))}
+        </div>
+
         {userLinks && userLinks?.length <= 0 && showDescription && (
           <NoLinksDescription />
         )}
-        <span
-          className={
-            linksListClasses["page-layout__links-section__layout__separator"]
-          }
-        />
+        <span className={linksListClasses["links-list__separator"]} />
         <Button
           type="submit"
           variant="primary"
           size="md"
           disabled={showDescription && userLinks && userLinks?.length <= 0}
+          className={linksListClasses["links-list__save-btn"]}
         >
           Save
         </Button>

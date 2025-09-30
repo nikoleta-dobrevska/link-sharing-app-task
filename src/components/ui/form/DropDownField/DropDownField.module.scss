@@ -73,13 +73,15 @@
 
       &--current {
         color: colors.$dark-purple;
-        * {
-          color: inherit;
-        }
       }
 
-      &:not(:hover, :focus, [aria-selected="true"]) &__svg {
-        color: colors.$gray;
+      &__icon {
+        filter: invert(47%) sepia(98%) saturate(7134%) hue-rotate(247deg)
+          brightness(104%) contrast(109%);
+      }
+
+      &:not(:hover, :focus, [aria-selected="true"], &--current) &__icon {
+        filter: none;
       }
 
       &__separator {

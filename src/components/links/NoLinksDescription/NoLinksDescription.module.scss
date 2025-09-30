@@ -1,0 +1,24 @@
+@use "@/scss/colors.scss";
+@use "@/scss/constants.scss";
+@use "@/scss/screens.scss";
+
+.no-links-desc {
+  background-color: colors.$beige;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 4rem;
+  border-radius: constants.$page-elements-border-radius;
+
+  @include screens.tablet {
+    padding: 4rem 0;
+  }
+
+  &__p {
+    color: colors.$gray;
+    text-align: center;
+    width: 90%;
+  }
+}

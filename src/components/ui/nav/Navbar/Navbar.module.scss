@@ -10,6 +10,12 @@
   height: 4.7rem;
   border-radius: constants.$page-elements-border-radius;
 
+  &__logo {
+    @include screens.mobile {
+      display: none;
+    }
+  }
+
   &__left {
     margin-left: 1rem;
   }

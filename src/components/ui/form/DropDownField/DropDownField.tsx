@@ -39,7 +39,9 @@ export const DropDownField = ({
   const id = useId();
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [visualFocusIndex, setVisualFocusIndex] = useState(-1);
+  const [visualFocusIndex, setVisualFocusIndex] = useState(
+    selected ? options.findIndex((option) => option === selected) : 0
+  );
 
   const comboboxRef = useRef<HTMLDivElement>(null);
   const dropDownFieldRef = useRef<HTMLDivElement>(null);
@@ -208,14 +210,7 @@ export const DropDownField = ({
             dropDownFieldClasses["drop-down-field__display-container__tools"]
           }
         >
-          <span
-            className={
-              dropDownFieldClasses[
-                "drop-down-field__display-container__tools__svg"
-              ]
-            }
-            aria-hidden={true}
-          >
+          <span aria-hidden={true}>
             <img alt="" src={selected?.iconSrc} />
           </span>
           <Typography
@@ -259,15 +254,16 @@ export const DropDownField = ({
                   )}
                   onClick={() => onOptionClick(option, i)}
                 >
-                  <span
-                    className={
-                      dropDownFieldClasses[
-                        "drop-down-field__options__option__svg"
-                      ]
-                    }
-                    aria-hidden={true}
-                  >
-                    <img alt="" src={option?.iconSrc} />
+                  <span aria-hidden={true}>
+                    <img
+                      alt=""
+                      src={option?.iconSrc}
+                      className={
+                        dropDownFieldClasses[
+                          "drop-down-field__options__option__icon"
+                        ]
+                      }
+                    />
                   </span>
                   <Typography
                     component="li"
