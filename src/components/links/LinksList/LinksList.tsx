@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 
 import { LinksField } from "@/components/links/LinksField";
@@ -17,8 +17,6 @@ import { type LinksFormData } from "@/types";
 import linksListClasses from "./LinksList.module.scss";
 
 export const LinksList = () => {
-  const [showDescription, setShowDescription] = useState(true);
-
   const { data: linkProviders } = useQuery({
     queryKey: ["linkProviders"],
     queryFn: fetchAllLinkProviders,
@@ -89,7 +87,6 @@ export const LinksList = () => {
         variant="secondary"
         size="md"
         onClick={() => {
-          setShowDescription(false);
           if (linkProviders) {
             append({ linkProvider: linkProviders[0], link: "" });
           }
@@ -111,9 +108,7 @@ export const LinksList = () => {
               field={field}
             />
           ))}
-        {userLinks && userLinks?.length <= 0 && showDescription && (
-          <NoLinksDescription />
-        )}
+        {userLinks && userLinks?.length <= 0 && <NoLinksDescription />}
         <span
           className={
             linksListClasses["page-layout__links-section__layout__separator"]
@@ -123,7 +118,7 @@ export const LinksList = () => {
           type="submit"
           variant="primary"
           size="md"
-          disabled={showDescription && userLinks && userLinks?.length <= 0}
+          disabled={userLinks && userLinks?.length <= 0}
         >
           Save
         </Button>
