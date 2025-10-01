@@ -1,5 +1,4 @@
 import { type UseMutationResult } from "@tanstack/react-query";
-import { clsx } from "clsx";
 import { useId } from "react";
 import {
   type Control,
@@ -84,11 +83,11 @@ export const LinksField = ({
           {...register(`links.${index}.link`)}
           aria-required="true"
           aria-invalid={!!errorMessage}
-          className={clsx(
+          className={
             errorMessage
               ? linksFieldClasses["link-field__input--invalid"]
               : linksFieldClasses["link-field__input--valid"]
-          )}
+          }
           type="text"
           placeholder="e.g. https://www.github.com/johnappleseed"
         />

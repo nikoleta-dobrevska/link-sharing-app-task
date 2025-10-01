@@ -39,7 +39,7 @@ export const DropDownField = ({
   const id = useId();
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [visualFocusIndex, setVisualFocusIndex] = useState(
+  const [visualFocusIndex, setVisualFocusIndex] = useState(() =>
     selected ? options.findIndex((option) => option === selected) : 0
   );
 
@@ -210,8 +210,8 @@ export const DropDownField = ({
             dropDownFieldClasses["drop-down-field__display-container__tools"]
           }
         >
-          <span aria-hidden={true}>
-            <img alt="" src={selected?.iconSrc} />
+          <span>
+            <img aria-hidden="true" alt="" src={selected?.iconSrc} />
           </span>
           <Typography
             component="span"
@@ -254,8 +254,9 @@ export const DropDownField = ({
                   )}
                   onClick={() => onOptionClick(option, i)}
                 >
-                  <span aria-hidden={true}>
+                  <span>
                     <img
+                      aria-hidden="true"
                       alt=""
                       src={option?.iconSrc}
                       className={
