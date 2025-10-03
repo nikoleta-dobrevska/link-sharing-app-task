@@ -50,3 +50,11 @@
   z-index: 0;
   filter: brightness(50%);
 }
+
+.error-msg {
+  font-family: fonts.$instrument-sans;
+  font-weight: fonts.$weight-regular;
+  font-size: fonts.$body-sm-font-size;
+  color: colors.$red;
+  line-height: constants.$line-height;
+}
