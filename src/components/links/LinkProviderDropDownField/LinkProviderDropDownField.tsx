@@ -1,12 +1,8 @@
-import { useMemo } from "react";
-
-import { DropDownField } from "@/components/ui/form/DropDownField";
+import {
+  DropDownField,
+  type Option,
+} from "@/components/ui/form/DropDownField/DropDownField";
 import { type LinkProviderData } from "@/types";
-
-type Option = {
-  name: string;
-  src: string;
-};
 
 function mapLinkProviderToOption(linkProvider: LinkProviderData): Option {
   return {
@@ -15,7 +11,7 @@ function mapLinkProviderToOption(linkProvider: LinkProviderData): Option {
   };
 }
 
-type DropDownFieldProps = {
+type LinkProviderDropDownFieldProps = {
   dropDownFieldId: string;
   placeholder: React.ReactNode;
   onChange: (option: LinkProviderData) => void;
@@ -29,21 +25,13 @@ export const LinkProviderDropDownField = ({
   onChange,
   options,
   selected,
-}: DropDownFieldProps) => {
+}: LinkProviderDropDownFieldProps) => {
   return (
     <DropDownField
       dropDownFieldId={dropDownFieldId}
       placeholder={placeholder}
-      options={useMemo(() => {
-        const mappedOptions = options.map((option) =>
-          mapLinkProviderToOption(option)
-        );
-
-        return mappedOptions;
-      }, [options])}
-      selected={useMemo(() => {
-        return selected ? mapLinkProviderToOption(selected) : undefined;
-      }, [selected])}
+      options={options.map((option) => mapLinkProviderToOption(option))}
+      selected={selected ? mapLinkProviderToOption(selected) : undefined}
       onChange={(option) => {
         const selected = options.find((sel) => option.name === sel.name);
 

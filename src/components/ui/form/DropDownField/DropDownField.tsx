@@ -16,7 +16,7 @@ const Arrow = ({ isDropdownOpen }: ArrowProps) => {
   return isDropdownOpen ? <UpIcon /> : <DownIcon />;
 };
 
-type Option = {
+export type Option = {
   name: string;
   src: string;
 };
