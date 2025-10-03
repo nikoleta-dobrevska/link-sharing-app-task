@@ -16,31 +16,38 @@ const Arrow = ({ isDropdownOpen }: ArrowProps) => {
   return isDropdownOpen ? <UpIcon /> : <DownIcon />;
 };
 
-type Option = {
-  icon: React.ReactNode;
-  value: string;
+export type Option = {
   name: string;
+  src: string;
 };
 
 type DropDownFieldProps = {
+  dropDownFieldId: string;
   placeholder: React.ReactNode;
+  onChange: (option: Option) => void;
   options: Option[];
+  selected?: Option | null;
 };
 
-export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
+export const DropDownField = ({
+  dropDownFieldId,
+  placeholder,
+  onChange,
+  options,
+  selected,
+}: DropDownFieldProps) => {
   const id = useId();
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [currentOption, setCurrentOption] = useState<Option | null>(null);
   const [visualFocusIndex, setVisualFocusIndex] = useState(-1);
 
   const comboboxRef = useRef<HTMLDivElement>(null);
   const dropDownFieldRef = useRef<HTMLDivElement>(null);
 
   const onOptionClick = (option: Option, i: number) => {
-    setCurrentOption(option);
     setVisualFocusIndex(i);
     setDropdownOpen(false);
+    onChange(option);
   };
 
   const focusCombobox = () => {
@@ -106,7 +113,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
       e.preventDefault();
 
       if (isDropdownOpen) {
-        setCurrentOption(options[visualFocusIndex]);
+        onChange(options[visualFocusIndex]);
         setDropdownOpen(false);
         focusCombobox();
         return;
@@ -139,7 +146,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
 
     if (isDropdownOpen) {
       if (e.key === KeyboardEventKey.tab) {
-        setCurrentOption(options[visualFocusIndex]);
+        onChange(options[visualFocusIndex]);
         setDropdownOpen(false);
         return;
       }
@@ -151,7 +158,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
       }
 
       if (e.altKey && e.key === KeyboardEventKey.arrowUp) {
-        setCurrentOption(options[visualFocusIndex]);
+        onChange(options[visualFocusIndex]);
         setDropdownOpen(false);
         focusCombobox();
         return;
@@ -181,6 +188,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
       ref={dropDownFieldRef}
     >
       <div
+        id={id + `-${dropDownFieldId}`}
         className={dropDownFieldClasses["drop-down-field__display-container"]}
         onClick={() => {
           setDropdownOpen(!isDropdownOpen);
@@ -208,7 +216,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
             }
             aria-hidden={true}
           >
-            {currentOption?.icon ?? ""}
+            <img alt="" src={selected?.src} />
           </span>
           <Typography
             component="span"
@@ -217,7 +225,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
             variant="body"
             size="md"
           >
-            {currentOption?.name ?? placeholder}
+            {selected?.name ?? placeholder}
           </Typography>
         </div>
         <Arrow isDropdownOpen={isDropdownOpen} />
@@ -233,10 +241,10 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
           aria-multiselectable={false}
         >
           {options.map((option, i) => {
-            const isCurrentOption = option.value === currentOption?.value;
+            const isCurrentOption = option.name === selected?.name;
 
             return (
-              <Fragment key={option.value}>
+              <Fragment key={option.name}>
                 {/*eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus*/}
                 <div
                   role="option"
@@ -259,7 +267,7 @@ export const DropDownField = ({ placeholder, options }: DropDownFieldProps) => {
                     }
                     aria-hidden={true}
                   >
-                    {option.icon}
+                    <img alt="" src={option?.src} />
                   </span>
                   <Typography
                     component="li"

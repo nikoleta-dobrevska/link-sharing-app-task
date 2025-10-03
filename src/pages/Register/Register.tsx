@@ -37,7 +37,7 @@ export const Register = () => {
   const registerMutation = useMutation({
     mutationFn: registerUser,
     onSuccess: () => {
-      navigate("/login");
+      navigate(RoutePaths.login);
     },
   });
 
