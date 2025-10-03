@@ -1,10 +1,8 @@
-import { type UseMutationResult } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { useId } from "react";
 import {
   type Control,
   Controller,
-  type FieldArrayWithId,
   type UseFormRegister,
 } from "react-hook-form";
 
@@ -21,8 +19,7 @@ type LinksFieldProps = {
   control: Control<LinksFormData>;
   linkProviders: Array<LinkProviderData>;
   register: UseFormRegister<LinksFormData>;
-  deleteLinkMutation: UseMutationResult<unknown, Error, number, unknown>;
-  field: FieldArrayWithId<LinksFormData>;
+  onRemove: () => void;
 };
 
 export const LinksField = ({
@@ -31,17 +28,13 @@ export const LinksField = ({
   control,
   linkProviders,
   register,
-  deleteLinkMutation,
-  field,
+  onRemove,
 }: LinksFieldProps) => {
   const id = useId();
 
   return (
     <div>
-      <button
-        type="button"
-        onClick={() => deleteLinkMutation.mutate(field.linkProvider.id)}
-      >
+      <button type="button" onClick={onRemove}>
         Remove
       </button>
       <Label htmlFor={id + `-platform`} color="dark-gray">

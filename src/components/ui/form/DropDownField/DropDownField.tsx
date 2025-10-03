@@ -18,7 +18,7 @@ const Arrow = ({ isDropdownOpen }: ArrowProps) => {
 
 type Option = {
   name: string;
-  iconSrc: string;
+  src: string;
 };
 
 type DropDownFieldProps = {
@@ -216,7 +216,7 @@ export const DropDownField = ({
             }
             aria-hidden={true}
           >
-            <img alt="" src={selected?.iconSrc} />
+            <img alt="" src={selected?.src} />
           </span>
           <Typography
             component="span"
@@ -267,7 +267,7 @@ export const DropDownField = ({
                     }
                     aria-hidden={true}
                   >
-                    <img alt="" src={option?.iconSrc} />
+                    <img alt="" src={option?.src} />
                   </span>
                   <Typography
                     component="li"

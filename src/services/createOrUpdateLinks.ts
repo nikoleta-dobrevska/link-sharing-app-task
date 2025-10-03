@@ -1,20 +1,18 @@
 import { apiClientAuthorized } from "@/config/apiClientAuthorized";
-import { type LinksFormData } from "@/types";
-
-type UserLinkPayload = {
-  linkProviderId: number;
-  link: string;
-};
+import { type LinksFormData, type UserLinksResponseData } from "@/types";
 
 export const createOrUpdateUserLinks = async (data: LinksFormData) => {
-  const userLinkPayload: UserLinkPayload[] = data.links.map((item) => ({
-    linkProviderId: item.linkProvider.id,
-    link: item.link,
-  }));
+  const userLinksPayload: UserLinksResponseData = data.links.map(
+    (item, index) => ({
+      linkProviderId: item.linkProvider.id,
+      link: item.link,
+      order: index,
+    })
+  );
 
   const response = await apiClientAuthorized.put(
     "/user-links",
-    userLinkPayload
+    userLinksPayload
   );
 
   return response.data;

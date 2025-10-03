@@ -57,7 +57,7 @@ export const LinksList = () => {
     reValidateMode: "onChange",
   });
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     control,
     name: "links",
   });
@@ -77,6 +77,19 @@ export const LinksList = () => {
   });
 
   const onSubmit = (data: LinksFormData) => {
+    userLinks?.forEach((userLink) => {
+      const isNotEdited = data.links.some(
+        (d) =>
+          d.linkProvider.id === userLink.linkProviderId &&
+          d.link === userLink.link
+      );
+
+      if (!isNotEdited) {
+        update(userLink.order, data.links[userLink.order]);
+        deleteLinkMutation.mutate(userLink.linkProviderId);
+      }
+    });
+
     createOrUpdateUserLinksMutation.mutate(data);
   };
 
@@ -104,8 +117,17 @@ export const LinksList = () => {
               control={control}
               linkProviders={linkProviders}
               register={register}
-              deleteLinkMutation={deleteLinkMutation}
-              field={field}
+              onRemove={() => {
+                remove(index);
+
+                const hasBeenAdded = userLinks?.some(
+                  (link) => link.link === field.link
+                );
+
+                if (hasBeenAdded) {
+                  deleteLinkMutation.mutate(field.linkProvider.id);
+                }
+              }}
             />
           ))}
         {userLinks && userLinks?.length <= 0 && <NoLinksDescription />}
