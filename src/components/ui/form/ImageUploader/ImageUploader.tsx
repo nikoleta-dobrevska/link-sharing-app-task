@@ -7,7 +7,7 @@ import { Typography } from "@/components/typography";
 import imageUploaderClasses from "./ImageUploader.module.scss";
 
 type ImageUploaderProps = {
-  errorMessage: string;
+  errorMessage: string | undefined;
 };
 
 export const ImageUploader = ({ errorMessage }: ImageUploaderProps) => {
@@ -63,5 +63,3 @@ export const ImageUploader = ({ errorMessage }: ImageUploaderProps) => {
     </>
   );
 };
-
-//add id
