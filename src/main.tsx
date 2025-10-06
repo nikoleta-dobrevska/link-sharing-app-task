@@ -10,6 +10,7 @@ import { AuthLayout } from "@/layouts/AuthLayout";
 import { ErrorPage } from "@/pages/ErrorPage";
 import { Links } from "@/pages/Links";
 import { Login } from "@/pages/Login";
+import { ProfileDetails } from "@/pages/ProfileDetails";
 import { Register } from "@/pages/Register";
 
 import "@/scss/reset.scss";
@@ -25,6 +26,10 @@ createRoot(document.getElementById("root")!).render(
           </Route>
           <Route element={<AuthGuard />} errorElement={<ErrorPage />}>
             <Route path={RoutePaths.links} index element={<Links />} />
+            <Route
+              path={RoutePaths.profileDetails}
+              element={<ProfileDetails />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
