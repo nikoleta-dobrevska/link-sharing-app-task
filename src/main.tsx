@@ -3,6 +3,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 
+import { ImageUploader } from "@/components/ui/form/ImageUploader";
 import { queryClient } from "@/config/react-query";
 import { RoutePaths } from "@/constants";
 import { AuthGuard } from "@/layouts/AuthGuard";
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
+          <Route path="/image" element={<ImageUploader errorMessage="err" />} />
           <Route path={RoutePaths.login} element={<AuthLayout />}>
             <Route index element={<Login />} />
             <Route path={RoutePaths.register} element={<Register />} />
