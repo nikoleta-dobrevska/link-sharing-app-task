@@ -104,3 +104,11 @@ export const userLinksResponseSchema = z.object({
 });
 
 export const userLinksArray = z.array(userLinksResponseSchema);
+
+export const profileDetailsSchema = z.object({
+  email: z.string().check(z.trim(), z.email("Invalid email address")),
+  firstName: z.string().check(z.trim(), z.minLength(1, "Can't be empty")),
+  lastName: z.string().check(z.trim(), z.minLength(1, "Can't be empty")),
+  profilePicture: z.optional(z.file()),
+  //will add the image schema object here for additional validation of the image file
+});

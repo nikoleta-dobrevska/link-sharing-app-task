@@ -1,4 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useId } from "react";
 import { useForm } from "react-hook-form";
 
@@ -7,7 +8,10 @@ import { Button } from "@/components/ui/Button";
 import { FormField } from "@/components/ui/form/FormField";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
+import { profileDetailsSchema } from "@/schemas";
 import { getAuthenticatedUserProfile } from "@/services/getAuthenticatedUserProfile";
+import { updateProfileData } from "@/services/updateProfileData";
+import { type ProfileDetailsData } from "@/types";
 
 export const ProfileDetailsForm = () => {
   const id = useId();
@@ -22,11 +26,24 @@ export const ProfileDetailsForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    resolver: zodResolver(profileDetailsSchema),
     mode: "onChange",
     reValidateMode: "onChange",
+    values: {
+      firstName: authenticatedUserProfileData?.firstName,
+      lastName: authenticatedUserProfileData?.lastName,
+      email: authenticatedUserProfileData?.email,
+      //add profile picture path here too
+    },
   });
 
-  const onSubmit = () => {};
+  const updateProfileDetailsMutation = useMutation({
+    mutationFn: updateProfileData,
+  });
+
+  const onSubmit = (data: ProfileDetailsData) => {
+    updateProfileDetailsMutation.mutate(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -47,12 +64,10 @@ export const ProfileDetailsForm = () => {
           <Label htmlFor={id + "-firstName"} color="gray">
             First name*
           </Label>
-          <FormField //errorMessage={errors?.firstName?.message}
-          >
+          <FormField errorMessage={errors?.firstName?.message}>
             <Input
               {...register("firstName")}
               id={id + "-firstName"}
-              defaultValue={authenticatedUserProfileData?.firstName}
               aria-required="true"
               className={
                 errors?.firstName
@@ -69,15 +84,13 @@ export const ProfileDetailsForm = () => {
           <Label htmlFor={id + "-lastName"} color="gray">
             Last name*
           </Label>
-          <FormField //errorMessage={errors?.lastName?.message}
-          >
+          <FormField errorMessage={errors?.lastName?.message}>
             <Input
               {...register("lastName")}
               id={id + "-lastName"}
               className={
                 errors?.lastName ? "form__input--invalid" : "form__input--valid"
               }
-              defaultValue={authenticatedUserProfileData?.lastName}
               aria-invalid={!!errors?.lastName}
               aria-required="true"
               type="text"
@@ -89,15 +102,13 @@ export const ProfileDetailsForm = () => {
           <Label htmlFor={id + "-email"} color="gray">
             Email
           </Label>
-          <FormField //errorMessage={errors?.email?.message}
-          >
+          <FormField errorMessage={errors?.email?.message}>
             <Input
               {...register("email")}
               id={id + "-email"}
               className={
                 errors?.email ? "form__input--invalid" : "form__input--valid"
               }
-              defaultValue={authenticatedUserProfileData?.email}
               aria-invalid={!!errors?.email}
               aria-required="false"
               type="email"
