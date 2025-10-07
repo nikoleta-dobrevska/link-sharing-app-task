@@ -102,24 +102,24 @@ export const LinksList = () => {
         onSubmit={handleSubmit(onSubmit)}
         className={linksListClasses["links-list__form"]}
       >
-        <div className={linksListClasses["links-list__fields"]}>
-          {linkProviders &&
-            fields.map((field, index) => (
-              <LinksField
-                key={field.id}
-                index={index}
-                errorMessage={errors?.links?.[index]?.link?.message}
-                control={control}
-                linkProviders={linkProviders}
-                register={register}
-                deleteLinkMutation={deleteLinkMutation}
-                field={field}
-              />
-            ))}
-        </div>
-
-        {userLinks && userLinks?.length <= 0 && showDescription && (
+        {userLinks && userLinks?.length <= 0 && showDescription ? (
           <NoLinksDescription />
+        ) : (
+          <div className={linksListClasses["links-list__fields"]}>
+            {linkProviders &&
+              fields.map((field, index) => (
+                <LinksField
+                  key={field.id}
+                  index={index}
+                  errorMessage={errors?.links?.[index]?.link?.message}
+                  control={control}
+                  linkProviders={linkProviders}
+                  register={register}
+                  deleteLinkMutation={deleteLinkMutation}
+                  field={field}
+                />
+              ))}
+          </div>
         )}
         <span className={linksListClasses["links-list__separator"]} />
         <Button

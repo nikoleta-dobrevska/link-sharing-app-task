@@ -210,9 +210,7 @@ export const DropDownField = ({
             dropDownFieldClasses["drop-down-field__display-container__tools"]
           }
         >
-          <span>
-            <img aria-hidden="true" alt="" src={selected?.iconSrc} />
-          </span>
+          <img aria-hidden="true" alt="" src={selected?.iconSrc} />
           <Typography
             component="span"
             id={id + "-currentOption"}
@@ -254,18 +252,16 @@ export const DropDownField = ({
                   )}
                   onClick={() => onOptionClick(option, i)}
                 >
-                  <span>
-                    <img
-                      aria-hidden="true"
-                      alt=""
-                      src={option?.iconSrc}
-                      className={
-                        dropDownFieldClasses[
-                          "drop-down-field__options__option__icon"
-                        ]
-                      }
-                    />
-                  </span>
+                  <img
+                    aria-hidden="true"
+                    alt=""
+                    src={option?.iconSrc}
+                    className={
+                      dropDownFieldClasses[
+                        "drop-down-field__options__option__icon"
+                      ]
+                    }
+                  />
                   <Typography
                     component="li"
                     id={id + `-option${i}`}

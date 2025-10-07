@@ -19,13 +19,15 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    height: 31rem;
+    height: 100vh;
     overflow: hidden auto;
     padding: 2rem;
   }
 
   &__separator {
-    border: 0.5px solid colors.$light-gray;
+    height: 1px;
+    width: 100%;
+    background-color: colors.$light-gray;
   }
 
   &__save-btn {
