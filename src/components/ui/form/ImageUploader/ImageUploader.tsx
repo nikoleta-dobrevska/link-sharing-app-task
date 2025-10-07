@@ -23,6 +23,15 @@ export const ImageUploader = ({ errorMessage }: ImageUploaderProps) => {
 
   return (
     <>
+      <input
+        ref={inputRef}
+        className={imageUploaderClasses["img-uploader__file"]}
+        onChange={handleImagePreview}
+        type="file"
+        accept="image/png, image/jpeg, image/jpg"
+        aria-required="true"
+        aria-invalid={!!errorMessage}
+      />
       <button
         className={clsx(
           imageUploaderClasses["img-uploader"],
@@ -30,15 +39,6 @@ export const ImageUploader = ({ errorMessage }: ImageUploaderProps) => {
         )}
         onClick={() => inputRef?.current?.click()}
       >
-        <input
-          ref={inputRef}
-          className={imageUploaderClasses["img-uploader__file"]}
-          onChange={handleImagePreview}
-          type="file"
-          accept="image/png, image/jpeg, image/jpg"
-          aria-required="true"
-          aria-invalid={!!errorMessage}
-        />
         {preview && (
           <img
             src={preview}
