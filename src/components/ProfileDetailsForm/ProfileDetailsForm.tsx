@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useId } from "react";
+import { useId, useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 import { Typography } from "@/components/typography";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { FormField } from "@/components/ui/form/FormField";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
+import { queryClient } from "@/config/react-query";
 import { profileDetailsSchema } from "@/schemas";
 import { getAuthenticatedUserProfile } from "@/services/getAuthenticatedUserProfile";
 import { updateProfileData } from "@/services/updateProfileData";
@@ -25,20 +26,28 @@ export const ProfileDetailsForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<ProfileDetailsData>({
     resolver: zodResolver(profileDetailsSchema),
     mode: "onChange",
     reValidateMode: "onChange",
-    values: {
-      firstName: authenticatedUserProfileData?.firstName,
-      lastName: authenticatedUserProfileData?.lastName,
-      email: authenticatedUserProfileData?.email,
-      //add profile picture path here too
-    },
+    values: useMemo(
+      () => ({
+        firstName: authenticatedUserProfileData?.firstName,
+        lastName: authenticatedUserProfileData?.lastName,
+        email: authenticatedUserProfileData?.email,
+        //profilePicture: authenticatedUserProfileData?.profilePicture,
+      }),
+      [authenticatedUserProfileData]
+    ),
   });
 
   const updateProfileDetailsMutation = useMutation({
     mutationFn: updateProfileData,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["authenticatedUserProfileData"],
+      });
+    },
   });
 
   const onSubmit = (data: ProfileDetailsData) => {
