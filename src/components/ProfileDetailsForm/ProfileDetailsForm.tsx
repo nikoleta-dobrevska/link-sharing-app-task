@@ -31,12 +31,7 @@ export const ProfileDetailsForm = () => {
     mode: "onChange",
     reValidateMode: "onChange",
     values: useMemo(
-      () => ({
-        firstName: authenticatedUserProfileData?.firstName,
-        lastName: authenticatedUserProfileData?.lastName,
-        email: authenticatedUserProfileData?.email,
-        //profilePicture: authenticatedUserProfileData?.profilePicture,
-      }),
+      () => authenticatedUserProfileData,
       [authenticatedUserProfileData]
     ),
   });
@@ -56,33 +51,31 @@ export const ProfileDetailsForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <fieldset>
-        <div>
-          <Label htmlFor={id + "-profilePicture"} color="gray">
-            Profile picture
-          </Label>
-          {/*controller for image uploader 
+      <div>
+        <Label htmlFor={id + "-profilePicture"} color="gray">
+          Profile picture
+        </Label>
+        {/*controller for image uploader 
           load profile picture path here*/}
-          <Typography component="p" variant="body" size="sm">
-            Image must be below 1024x1024px. Use PNG or JPG format.
-          </Typography>
-        </div>
-      </fieldset>
-      <fieldset>
+        <Typography component="p" variant="body" size="sm">
+          Image must be below 1024x1024px. Use PNG or JPG format.
+        </Typography>
+      </div>
+      <div>
         <div>
           <Label htmlFor={id + "-firstName"} color="gray">
-            First name*
+            First name<span aria-hidden="true">*</span>
           </Label>
           <FormField errorMessage={errors?.firstName?.message}>
             <Input
               {...register("firstName")}
               id={id + "-firstName"}
               aria-required="true"
-              className={
+              /*className={
                 errors?.firstName
                   ? "form__input--invalid"
                   : "form__input--valid"
-              }
+              }*/
               aria-invalid={!!errors?.firstName}
               type="text"
               placeholder="e.g. John"
@@ -91,15 +84,15 @@ export const ProfileDetailsForm = () => {
         </div>
         <div>
           <Label htmlFor={id + "-lastName"} color="gray">
-            Last name*
+            Last name<span aria-hidden="true">*</span>
           </Label>
           <FormField errorMessage={errors?.lastName?.message}>
             <Input
               {...register("lastName")}
               id={id + "-lastName"}
-              className={
+              /*className={
                 errors?.lastName ? "form__input--invalid" : "form__input--valid"
-              }
+              }*/
               aria-invalid={!!errors?.lastName}
               aria-required="true"
               type="text"
@@ -115,9 +108,9 @@ export const ProfileDetailsForm = () => {
             <Input
               {...register("email")}
               id={id + "-email"}
-              className={
+              /*className={
                 errors?.email ? "form__input--invalid" : "form__input--valid"
-              }
+              }*/
               aria-invalid={!!errors?.email}
               aria-required="false"
               type="email"
@@ -125,7 +118,7 @@ export const ProfileDetailsForm = () => {
             />
           </FormField>
         </div>
-      </fieldset>
+      </div>
       <Button variant="primary" type="submit" size="md">
         Save
       </Button>
