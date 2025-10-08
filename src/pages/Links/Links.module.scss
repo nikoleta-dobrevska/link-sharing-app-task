@@ -1,91 +1,11 @@
 @use "@/scss/colors.scss";
-@use "@/scss/constants.scss";
-@use "@/scss/screens.scss";
 
-.page-layout {
+.heading {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background-color: colors.$beige;
-  padding: 2rem;
   gap: 1rem;
 
-  @include screens.tablet {
-    padding: 1rem;
-  }
-
-  &__center {
-    width: 100%;
-    display: flex;
-    gap: 1.5rem;
-
-    @include screens.tablet {
-      display: block;
-    }
-  }
-
-  &__preview-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: colors.$white;
-    flex: 2.2;
-    padding: 6rem 0;
-    border-radius: constants.$page-elements-border-radius;
-
-    @include screens.tablet {
-      display: none;
-    }
-
-    &__display {
-      position: relative;
-      display: inline-block;
-
-      &__rect {
-        position: static;
-      }
-
-      &__sub {
-        position: absolute;
-        left: 10px;
-        top: 10px;
-      }
-    }
-  }
-
-  &__links-section {
-    display: flex;
-    flex-direction: column;
-    flex: 3;
-
-    &__layout {
-      display: flex;
-      flex-direction: column;
-      background-color: colors.$white;
-      gap: 2rem;
-      height: 100%;
-      border-radius: constants.$page-elements-border-radius;
-
-      &__heading {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        padding: 2rem 2rem 0 2rem;
-
-        @include screens.mobile {
-          padding: 1.5rem 1.5rem 0 1.5rem;
-        }
-
-        &__h1 {
-          @include screens.mobile {
-            font-size: 1.5rem;
-          }
-        }
-
-        &__p {
-          color: colors.$gray;
-        }
-      }
-    }
+  &__subheading {
+    color: colors.$gray;
   }
 }

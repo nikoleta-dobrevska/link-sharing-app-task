@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 
 import { LinksField } from "@/components/links/LinksField";
@@ -17,8 +17,6 @@ import { type LinksFormData } from "@/types";
 import linksListClasses from "./LinksList.module.scss";
 
 export const LinksList = () => {
-  const [showDescription, setShowDescription] = useState(true);
-
   const { data: linkProviders } = useQuery({
     queryKey: ["linkProviders"],
     queryFn: fetchAllLinkProviders,
@@ -59,7 +57,7 @@ export const LinksList = () => {
     reValidateMode: "onSubmit",
   });
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     control,
     name: "links",
   });
@@ -79,6 +77,19 @@ export const LinksList = () => {
   });
 
   const onSubmit = (data: LinksFormData) => {
+    userLinks?.forEach((userLink) => {
+      const isNotEdited = data.links.some(
+        (d) =>
+          d.linkProvider.id === userLink.linkProviderId &&
+          d.link === userLink.link
+      );
+
+      if (!isNotEdited) {
+        update(userLink.order, data.links[userLink.order]);
+        deleteLinkMutation.mutate(userLink.linkProviderId);
+      }
+    });
+
     createOrUpdateUserLinksMutation.mutate(data);
   };
 
@@ -89,7 +100,6 @@ export const LinksList = () => {
         variant="secondary"
         size="md"
         onClick={() => {
-          setShowDescription(false);
           if (linkProviders) {
             append({ linkProvider: linkProviders[0], link: "" });
           }
@@ -102,7 +112,7 @@ export const LinksList = () => {
         onSubmit={handleSubmit(onSubmit)}
         className={linksListClasses["links-list__form"]}
       >
-        {userLinks && userLinks?.length <= 0 && showDescription ? (
+        {userLinks && userLinks?.length <= 0 ? (
           <NoLinksDescription />
         ) : (
           <div className={linksListClasses["links-list__fields"]}>
@@ -115,8 +125,17 @@ export const LinksList = () => {
                   control={control}
                   linkProviders={linkProviders}
                   register={register}
-                  deleteLinkMutation={deleteLinkMutation}
-                  field={field}
+                  onRemove={() => {
+                    remove(index);
+
+                    const hasBeenAdded = userLinks?.some(
+                      (link) => link.link === field.link
+                    );
+
+                    if (hasBeenAdded) {
+                      deleteLinkMutation.mutate(field.linkProvider.id);
+                    }
+                  }}
                 />
               ))}
           </div>
@@ -126,7 +145,7 @@ export const LinksList = () => {
           type="submit"
           variant="primary"
           size="md"
-          disabled={showDescription && userLinks && userLinks?.length <= 0}
+          disabled={userLinks && userLinks?.length <= 0}
           className={linksListClasses["links-list__save-btn"]}
         >
           Save

@@ -1,0 +1,81 @@
+@use "@/scss/colors.scss";
+@use "@/scss/constants.scss";
+@use "@/scss/fonts.scss";
+
+.img-uploader {
+  background-color: colors.$lavender;
+  border-radius: constants.$page-elements-border-radius;
+  color: colors.$dark-purple;
+  width: 12rem;
+  height: 12rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.75rem;
+  cursor: pointer;
+  position: relative;
+
+  &--has-preview {
+    color: colors.$white;
+
+    .img-uploader__svg,
+    .img-uploader__text {
+      opacity: 0;
+    }
+
+    &:hover {
+      .img-uploader__text,
+      .img-uploader__svg {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__file {
+    @include constants.screen-reader-only;
+
+    &::file-selector-button {
+      @include constants.screen-reader-only;
+    }
+  }
+
+  &__svg {
+    opacity: 1;
+    color: inherit;
+    z-index: 1;
+    position: relative;
+  }
+
+  &__text {
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    z-index: 1;
+    position: relative;
+  }
+}
+
+.preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  z-index: 0;
+
+  &:hover {
+    filter: brightness(50%);
+  }
+}
+
+.error-msg {
+  font-family: fonts.$instrument-sans;
+  font-weight: fonts.$weight-regular;
+  font-size: fonts.$body-sm-font-size;
+  color: colors.$red;
+  line-height: constants.$line-height;
+}

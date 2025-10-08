@@ -1,7 +1,17 @@
-import { DropDownField } from "@/components/ui/form/DropDownField";
+import {
+  DropDownField,
+  type Option,
+} from "@/components/ui/form/DropDownField/DropDownField";
 import { type LinkProviderData } from "@/types";
 
-type DropDownFieldProps = {
+function mapLinkProviderToOption(linkProvider: LinkProviderData): Option {
+  return {
+    name: linkProvider.name,
+    src: linkProvider.iconSrc,
+  };
+}
+
+type LinkProviderDropDownFieldProps = {
   dropDownFieldId: string;
   placeholder: React.ReactNode;
   onChange: (option: LinkProviderData) => void;
@@ -15,14 +25,20 @@ export const LinkProviderDropDownField = ({
   onChange,
   options,
   selected,
-}: DropDownFieldProps) => {
+}: LinkProviderDropDownFieldProps) => {
   return (
     <DropDownField
       dropDownFieldId={dropDownFieldId}
       placeholder={placeholder}
-      onChange={(selected) => onChange(selected as LinkProviderData)}
-      options={options}
-      selected={selected}
+      options={options.map((option) => mapLinkProviderToOption(option))}
+      selected={selected ? mapLinkProviderToOption(selected) : undefined}
+      onChange={(option) => {
+        const selected = options.find((sel) => option.name === sel.name);
+
+        if (selected) {
+          onChange(selected);
+        }
+      }}
     />
   );
 };

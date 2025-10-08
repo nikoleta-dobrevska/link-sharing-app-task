@@ -16,9 +16,9 @@ const Arrow = ({ isDropdownOpen }: ArrowProps) => {
   return isDropdownOpen ? <UpIcon /> : <DownIcon />;
 };
 
-type Option = {
+export type Option = {
   name: string;
-  iconSrc: string;
+  src: string;
 };
 
 type DropDownFieldProps = {
@@ -210,7 +210,7 @@ export const DropDownField = ({
             dropDownFieldClasses["drop-down-field__display-container__tools"]
           }
         >
-          <img aria-hidden="true" alt="" src={selected?.iconSrc} />
+          <img aria-hidden="true" alt="" src={selected?.src} />
           <Typography
             component="span"
             id={id + "-currentOption"}
@@ -255,7 +255,7 @@ export const DropDownField = ({
                   <img
                     aria-hidden="true"
                     alt=""
-                    src={option?.iconSrc}
+                    src={option?.src}
                     className={
                       dropDownFieldClasses[
                         "drop-down-field__options__option__icon"
