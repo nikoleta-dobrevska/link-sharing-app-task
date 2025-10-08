@@ -1,9 +1,11 @@
 import PhoneIcon from "@/assets/svgr/Phone.svg?react";
 import { Typography } from "@/components/typography";
 
+import noLinksDescriptionClasses from "./NoLinksDescription.module.scss";
+
 export const NoLinksDescription = () => {
   return (
-    <div className="page-layout__links-section__layout__links__group">
+    <div className={noLinksDescriptionClasses["no-links-desc"]}>
       <PhoneIcon />
       <Typography component="h2" variant="heading" size="md">
         Let's get you started
@@ -12,7 +14,7 @@ export const NoLinksDescription = () => {
         component="p"
         variant="body"
         size="md"
-        className="page-layout__links-section__layout__links__group__p"
+        className={noLinksDescriptionClasses["no-links-desc__p"]}
       >
         Use the “Add new link” button to get started. Once you have more than
         one link, you can reorder and edit them. We’re here to help you share
