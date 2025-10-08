@@ -1,0 +1,65 @@
+@use "@/scss/colors.scss";
+@use "@/scss/fonts.scss";
+@use "@/scss/constants.scss";
+@use "@/scss/screens.scss";
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__separator {
+    height: 1px;
+    width: 100%;
+    background-color: colors.$light-gray;
+  }
+
+  &__save-btn {
+    align-self: flex-end;
+    font-weight: fonts.$weight-bold;
+
+    @include screens.tablet {
+      align-self: unset;
+    }
+  }
+}
+
+.image-controller {
+  background-color: colors.$beige;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-radius: constants.$page-elements-border-radius;
+
+  &__label {
+    font-size: fonts.$body-md-font-size;
+  }
+
+  &__req {
+    word-wrap: break-word;
+    color: colors.$gray;
+  }
+}
+
+.fields {
+  background-color: colors.$beige;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.5rem;
+  border-radius: constants.$page-elements-border-radius;
+}
+
+.field {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  padding-block: 1rem;
+
+  &__label {
+    width: 15rem;
+    font-weight: fonts.$weight-regular;
+    font-size: fonts.$body-md-font-size;
+  }
+}

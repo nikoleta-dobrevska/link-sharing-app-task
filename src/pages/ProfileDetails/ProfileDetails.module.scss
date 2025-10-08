@@ -1,0 +1,11 @@
+@use "@/scss/colors.scss";
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__subheading {
+    color: colors.$gray;
+  }
+}

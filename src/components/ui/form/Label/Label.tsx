@@ -8,15 +8,17 @@ type LabelProps = {
   children: React.ReactNode;
   htmlFor: string;
   color: "dark-gray" | "gray";
+  className?: string;
 };
 
-export const Label = ({ children, htmlFor, color }: LabelProps) => {
+export const Label = ({ children, htmlFor, color, className }: LabelProps) => {
   return (
     <label
       htmlFor={htmlFor}
       className={clsx(
         labelClasses["form-label"],
-        labelClasses[`form-label--${color}`]
+        labelClasses[`form-label--${color}`],
+        className
       )}
     >
       {children}

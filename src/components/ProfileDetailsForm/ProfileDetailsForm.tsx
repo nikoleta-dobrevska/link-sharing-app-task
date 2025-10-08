@@ -14,6 +14,8 @@ import { getAuthenticatedUserProfile } from "@/services/getAuthenticatedUserProf
 import { updateProfileData } from "@/services/updateProfileData";
 import { type ProfileDetailsData } from "@/types";
 
+import profileDetailsFormClasses from "./ProfileDetailsForm.module.scss";
+
 export const ProfileDetailsForm = () => {
   const id = useId();
 
@@ -50,20 +52,36 @@ export const ProfileDetailsForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <Label htmlFor={id + "-profilePicture"} color="gray">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={profileDetailsFormClasses["form"]}
+    >
+      <div className={profileDetailsFormClasses["image-controller"]}>
+        <Label
+          htmlFor={id + "-profilePicture"}
+          color="gray"
+          className={profileDetailsFormClasses["image-controller__label"]}
+        >
           Profile picture
         </Label>
         {/*controller for image uploader 
           load profile picture path here*/}
-        <Typography component="p" variant="body" size="sm">
+        <Typography
+          component="p"
+          variant="body"
+          size="sm"
+          className={profileDetailsFormClasses["image-controller__req"]}
+        >
           Image must be below 1024x1024px. Use PNG or JPG format.
         </Typography>
       </div>
-      <div>
-        <div>
-          <Label htmlFor={id + "-firstName"} color="gray">
+      <div className={profileDetailsFormClasses["fields"]}>
+        <div className={profileDetailsFormClasses["field"]}>
+          <Label
+            htmlFor={id + "-firstName"}
+            color="gray"
+            className={profileDetailsFormClasses["field__label"]}
+          >
             First name<span aria-hidden="true">*</span>
           </Label>
           <FormField errorMessage={errors?.firstName?.message}>
@@ -82,8 +100,12 @@ export const ProfileDetailsForm = () => {
             />
           </FormField>
         </div>
-        <div>
-          <Label htmlFor={id + "-lastName"} color="gray">
+        <div className={profileDetailsFormClasses["field"]}>
+          <Label
+            htmlFor={id + "-lastName"}
+            color="gray"
+            className={profileDetailsFormClasses["field__label"]}
+          >
             Last name<span aria-hidden="true">*</span>
           </Label>
           <FormField errorMessage={errors?.lastName?.message}>
@@ -100,8 +122,12 @@ export const ProfileDetailsForm = () => {
             />
           </FormField>
         </div>
-        <div>
-          <Label htmlFor={id + "-email"} color="gray">
+        <div className={profileDetailsFormClasses["field"]}>
+          <Label
+            htmlFor={id + "-email"}
+            color="gray"
+            className={profileDetailsFormClasses["field__label"]}
+          >
             Email
           </Label>
           <FormField errorMessage={errors?.email?.message}>
@@ -119,7 +145,13 @@ export const ProfileDetailsForm = () => {
           </FormField>
         </div>
       </div>
-      <Button variant="primary" type="submit" size="md">
+      <span className={profileDetailsFormClasses["form__separator"]} />
+      <Button
+        variant="primary"
+        type="submit"
+        size="md"
+        className={profileDetailsFormClasses["form__save-btn"]}
+      >
         Save
       </Button>
     </form>
