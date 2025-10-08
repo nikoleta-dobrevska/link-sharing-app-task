@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { clsx } from "clsx";
 import { useId, useMemo } from "react";
 import { useForm } from "react-hook-form";
 
@@ -89,11 +90,11 @@ export const ProfileDetailsForm = () => {
               {...register("firstName")}
               id={id + "-firstName"}
               aria-required="true"
-              /*className={
-                errors?.firstName
-                  ? "form__input--invalid"
-                  : "form__input--valid"
-              }*/
+              className={clsx(
+                profileDetailsFormClasses["field__input"],
+                errors?.firstName &&
+                  profileDetailsFormClasses["field__input--invalid"]
+              )}
               aria-invalid={!!errors?.firstName}
               type="text"
               placeholder="e.g. John"
@@ -112,9 +113,11 @@ export const ProfileDetailsForm = () => {
             <Input
               {...register("lastName")}
               id={id + "-lastName"}
-              /*className={
-                errors?.lastName ? "form__input--invalid" : "form__input--valid"
-              }*/
+              className={clsx(
+                profileDetailsFormClasses["field__input"],
+                errors?.lastName &&
+                  profileDetailsFormClasses["field__input--invalid"]
+              )}
               aria-invalid={!!errors?.lastName}
               aria-required="true"
               type="text"
@@ -134,9 +137,11 @@ export const ProfileDetailsForm = () => {
             <Input
               {...register("email")}
               id={id + "-email"}
-              /*className={
-                errors?.email ? "form__input--invalid" : "form__input--valid"
-              }*/
+              className={clsx(
+                profileDetailsFormClasses["field__input"],
+                errors?.email &&
+                  profileDetailsFormClasses["field__input--invalid"]
+              )}
               aria-invalid={!!errors?.email}
               aria-required="false"
               type="email"
