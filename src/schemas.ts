@@ -112,3 +112,10 @@ export const profileDetailsSchema = z.object({
   //profilePicture: z.optional(z.file()),
   //will add the image schema object here for additional validation of the image file
 });
+
+export const authenticatedUserSchema = z.object({
+  profilePicture: z.optional(z.string()),
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.email(),
+});
