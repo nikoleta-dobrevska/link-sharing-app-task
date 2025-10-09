@@ -12,11 +12,7 @@ export const updateProfileData = async (data: ProfileDetailsData) => {
   formData.append("lastName", data.lastName);
   formData.append("email", data.email);
 
-  const response = await apiClientAuthorized.put("/profile", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const response = await apiClientAuthorized.put("/profile", formData);
 
   return response.data;
 };
