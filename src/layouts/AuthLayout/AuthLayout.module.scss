@@ -9,6 +9,7 @@
   align-items: center;
   gap: 3.1rem;
   padding-block: 5rem;
+  height: 100vh;
 
   @include screens.mobile {
     padding: 2rem;

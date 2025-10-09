@@ -80,9 +80,7 @@ export const LinksField = ({
           aria-required="true"
           aria-invalid={!!errorMessage}
           className={
-            errorMessage
-              ? linksFieldClasses["link-field__input--invalid"]
-              : linksFieldClasses["link-field__input--valid"]
+            errorMessage && linksFieldClasses["link-field__input--invalid"]
           }
           type="text"
           placeholder="e.g. https://www.github.com/johnappleseed"

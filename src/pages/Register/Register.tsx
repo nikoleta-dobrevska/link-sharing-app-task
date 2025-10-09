@@ -18,7 +18,6 @@ import { registerUser } from "@/services/registerUser";
 import { type RegisterFormData } from "@/types";
 
 import registerClasses from "./Register.module.scss";
-import inputClasses from "@/components/ui/form/Input/Input.module.scss";
 
 export const Register = () => {
   const id = useId();
@@ -93,9 +92,7 @@ export const Register = () => {
               id={id + "-firstName"}
               {...register("firstName")}
               className={
-                errors?.firstName
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
+                errors?.firstName && registerClasses["form__input--invalid"]
               }
               aria-invalid={!!errors?.firstName}
               autoComplete="given-name"
@@ -117,9 +114,7 @@ export const Register = () => {
               id={id + "-lastName"}
               {...register("lastName")}
               className={
-                errors?.lastName
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
+                errors?.lastName && registerClasses["form__input--invalid"]
               }
               aria-invalid={!!errors?.lastName}
               autoComplete="family-name"
@@ -139,9 +134,7 @@ export const Register = () => {
               {...register("email")}
               aria-invalid={!!errors?.email}
               className={
-                errors?.email
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
+                errors?.email && registerClasses["form__input--invalid"]
               }
               autoComplete="on"
               type="email"
@@ -162,9 +155,7 @@ export const Register = () => {
               id={id + "-password"}
               {...register("password")}
               className={
-                errors?.password
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
+                errors?.password && registerClasses["form__input--invalid"]
               }
               aria-invalid={!!errors?.password}
               aria-describedby={id + "-passwordNote"}
@@ -186,9 +177,8 @@ export const Register = () => {
               id={id + "-confirmPassword"}
               {...register("confirmPassword")}
               className={
-                errors?.confirmPassword
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
+                errors?.confirmPassword &&
+                registerClasses["form__input--invalid"]
               }
               aria-invalid={!!errors?.confirmPassword}
               type="password"

@@ -38,6 +38,11 @@
     &__pass-desc {
       color: colors.$gray;
     }
+
+    &__input--invalid {
+      border: 1px solid colors.$red;
+      color: colors.$red;
+    }
   }
 
   &__register-prompt {
