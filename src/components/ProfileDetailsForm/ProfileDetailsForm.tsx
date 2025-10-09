@@ -1,12 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
-import { useId } from "react";
-import { useForm } from "react-hook-form";
+import { useId, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/Button";
 import { FormField } from "@/components/ui/form/FormField";
+import { ImageUploader } from "@/components/ui/form/ImageUploader";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
 import { queryClient } from "@/config/react-query";
@@ -18,6 +19,8 @@ import { type ProfileDetailsData } from "@/types";
 import profileDetailsFormClasses from "./ProfileDetailsForm.module.scss";
 
 export const ProfileDetailsForm = () => {
+  const [preview, setPreview] = useState<string | undefined>(undefined);
+
   const id = useId();
 
   const { data: authenticatedUserProfileData } = useQuery({
@@ -28,12 +31,17 @@ export const ProfileDetailsForm = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<ProfileDetailsData>({
     resolver: zodResolver(profileDetailsSchema),
     mode: "onChange",
     reValidateMode: "onChange",
-    values: authenticatedUserProfileData,
+    values: {
+      firstName: authenticatedUserProfileData?.firstName ?? "",
+      lastName: authenticatedUserProfileData?.lastName ?? "",
+      email: authenticatedUserProfileData?.email ?? "",
+    },
   });
 
   const updateProfileDetailsMutation = useMutation({
@@ -62,13 +70,32 @@ export const ProfileDetailsForm = () => {
         >
           Profile picture
         </Label>
-        {/*controller for image uploader 
-          load profile picture path here*/}
+        <Controller
+          control={control}
+          name="profilePicture"
+          render={({ field: { onChange, name } }) => (
+            <ImageUploader
+              id={id + "-profilePicture"}
+              name={name}
+              ariaDescribedBy={id + "-profilePictureNote"}
+              preview={preview ?? authenticatedUserProfileData?.profilePicture}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (e.target.files) {
+                  const file = e.target.files?.[0];
+                  setPreview(URL.createObjectURL(file));
+                  onChange(file);
+                }
+              }}
+              errorMessage={errors?.profilePicture?.message}
+            />
+          )}
+        />
         <Typography
           component="p"
           variant="body"
           size="sm"
           className={profileDetailsFormClasses["image-controller__text"]}
+          id={id + "-profilePictureNote"}
         >
           Image must be below 1024x1024px. Use PNG or JPG format.
         </Typography>

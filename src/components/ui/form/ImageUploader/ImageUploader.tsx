@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 import ImageIcon from "@/assets/svgr/Image.svg?react";
 import { Typography } from "@/components/typography";
@@ -7,26 +7,31 @@ import { Typography } from "@/components/typography";
 import imageUploaderClasses from "./ImageUploader.module.scss";
 
 type ImageUploaderProps = {
+  id: string;
+  ariaDescribedBy: string;
+  name: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
   errorMessage: string | undefined;
+  preview: string | undefined;
 };
 
-export const ImageUploader = ({ errorMessage }: ImageUploaderProps) => {
-  const [preview, setPreview] = useState<string | undefined>(undefined);
-
+export const ImageUploader = ({
+  id,
+  ariaDescribedBy,
+  errorMessage,
+  onChange,
+  preview,
+}: ImageUploaderProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setPreview(URL.createObjectURL(e.target.files[0]));
-    }
-  };
 
   return (
     <>
       <input
+        id={id}
         ref={inputRef}
+        aria-describedby={ariaDescribedBy}
         className={imageUploaderClasses["img-uploader__file"]}
-        onChange={handleImagePreview}
+        onChange={onChange}
         type="file"
         accept="image/png, image/jpeg, image/jpg"
         aria-required="true"
@@ -38,6 +43,7 @@ export const ImageUploader = ({ errorMessage }: ImageUploaderProps) => {
           preview && imageUploaderClasses["img-uploader--has-preview"]
         )}
         onClick={() => inputRef?.current?.click()}
+        type="button"
       >
         {preview && (
           <img
