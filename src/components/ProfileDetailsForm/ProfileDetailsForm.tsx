@@ -71,7 +71,7 @@ export const ProfileDetailsForm = () => {
           component="p"
           variant="body"
           size="sm"
-          className={profileDetailsFormClasses["image-controller__req"]}
+          className={profileDetailsFormClasses["image-controller__text"]}
         >
           Image must be below 1024x1024px. Use PNG or JPG format.
         </Typography>

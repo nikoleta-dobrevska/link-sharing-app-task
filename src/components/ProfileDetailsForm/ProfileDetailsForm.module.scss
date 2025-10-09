@@ -16,7 +16,6 @@
 
   &__save-btn {
     align-self: flex-end;
-    font-weight: fonts.$weight-bold;
 
     @include screens.tablet {
       align-self: unset;
@@ -41,7 +40,7 @@
     font-size: fonts.$body-md-font-size;
   }
 
-  &__req {
+  &__text {
     word-wrap: break-word;
     color: colors.$gray;
   }
@@ -59,6 +58,7 @@
 .field {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   gap: 1rem;
   padding-block: 1rem;
 
