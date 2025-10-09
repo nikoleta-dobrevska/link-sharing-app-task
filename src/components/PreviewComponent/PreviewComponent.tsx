@@ -4,6 +4,7 @@ import { useLocation } from "react-router";
 
 import ArrowRightIcon from "@/assets/svgr/ArrowRight.svg?react";
 import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
+import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
 import { Typography } from "@/components/typography";
 import { fetchAllLinkProviders } from "@/services/fetchAllLinkProviders";
 import { fetchAllLinks } from "@/services/fetchAllLinks";
@@ -18,16 +19,20 @@ export const PreviewComponent = () => {
   const { data: authenticatedUserProfileData } = useQuery({
     queryKey: ["authenticatedUserProfileData"],
     queryFn: getAuthenticatedUserProfile,
-  });
-
-  const { data: userLinks } = useQuery({
-    queryKey: ["links"],
-    queryFn: fetchAllLinks,
+    staleTime: Infinity,
   });
 
   const { data: linkProviders } = useQuery({
     queryKey: ["linkProviders"],
     queryFn: fetchAllLinkProviders,
+    staleTime: Infinity,
+  });
+
+  const { data: userLinks } = useQuery({
+    queryKey: ["links"],
+    queryFn: fetchAllLinks,
+    enabled: !!linkProviders,
+    staleTime: Infinity,
   });
 
   return (
@@ -74,14 +79,15 @@ export const PreviewComponent = () => {
       </div>
       <div className={previewComponentClasses["user-links"]}>
         {userLinks?.map((userLink) => {
-          const lp = linkProviders?.find(
-            (l) => l.id === userLink.linkProviderId
+          const currentLinkProvider = linkProviders?.find(
+            (linkProvider) => linkProvider.id === userLink.linkProviderId
           );
+
           return (
             <a
               key={userLink?.linkProviderId}
               href={`${userLink?.link}`}
-              aria-label={`User's ${lp?.name} link, opens a new tab`}
+              aria-label={`User's ${currentLinkProvider?.name} link, opens a new tab`}
               target="_blank"
               rel="noopener noreferrer"
               className={clsx(
@@ -90,17 +96,25 @@ export const PreviewComponent = () => {
                   previewComponentClasses["user-link--not-in-preview"]
               )}
               style={{
-                backgroundColor: `${lp?.backgroundColor}`,
-                color: `${lp?.textColor}`,
+                backgroundColor: `${currentLinkProvider?.backgroundColor}`,
+                color: `${currentLinkProvider?.textColor}`,
+                border:
+                  currentLinkProvider?.name === "Frontend Mentor"
+                    ? "1px solid #D9D9D9"
+                    : "none",
               }}
             >
               <div className={previewComponentClasses["user-link__name"]}>
-                <img
-                  src={lp?.iconSrc}
-                  alt=""
-                  className={previewComponentClasses["user-link__icon"]}
-                />
-                {lp?.name}
+                {currentLinkProvider?.name === "Frontend Mentor" ? (
+                  <FrontendMentorIcon aria-hidden="true" />
+                ) : (
+                  <img
+                    src={currentLinkProvider?.iconSrc}
+                    alt=""
+                    className={previewComponentClasses["user-link__icon"]}
+                  />
+                )}
+                {currentLinkProvider?.name}
               </div>
               <ArrowRightIcon aria-hidden="true" />
             </a>
