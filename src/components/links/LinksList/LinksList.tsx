@@ -54,7 +54,7 @@ export const LinksList = () => {
     resolver: zodResolver(linksSchema),
     values: initialFormValues,
     mode: "onChange",
-    reValidateMode: "onChange",
+    reValidateMode: "onSubmit",
   });
 
   const { fields, append, remove, update } = useFieldArray({
@@ -94,7 +94,7 @@ export const LinksList = () => {
   };
 
   return (
-    <div>
+    <div className={linksListClasses["links-list"]}>
       <Button
         type="button"
         variant="secondary"
@@ -104,43 +104,49 @@ export const LinksList = () => {
             append({ linkProvider: linkProviders[0], link: "" });
           }
         }}
+        className={linksListClasses["links-list__add-btn"]}
       >
         <span aria-hidden={true}>+</span> Add new link
       </Button>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {linkProviders &&
-          fields.map((field, index) => (
-            <LinksField
-              key={field.id}
-              index={index}
-              errorMessage={errors?.links?.[index]?.link?.message}
-              control={control}
-              linkProviders={linkProviders}
-              register={register}
-              onRemove={() => {
-                remove(index);
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={linksListClasses["links-list__form"]}
+      >
+        {userLinks && userLinks?.length <= 0 ? (
+          <NoLinksDescription />
+        ) : (
+          <div className={linksListClasses["links-list__fields"]}>
+            {linkProviders &&
+              fields.map((field, index) => (
+                <LinksField
+                  key={field.id}
+                  index={index}
+                  errorMessage={errors?.links?.[index]?.link?.message}
+                  control={control}
+                  linkProviders={linkProviders}
+                  register={register}
+                  onRemove={() => {
+                    remove(index);
 
-                const hasBeenAdded = userLinks?.some(
-                  (link) => link.link === field.link
-                );
+                    const hasBeenAdded = userLinks?.some(
+                      (link) => link.link === field.link
+                    );
 
-                if (hasBeenAdded) {
-                  deleteLinkMutation.mutate(field.linkProvider.id);
-                }
-              }}
-            />
-          ))}
-        {userLinks && userLinks?.length <= 0 && <NoLinksDescription />}
-        <span
-          className={
-            linksListClasses["page-layout__links-section__layout__separator"]
-          }
-        />
+                    if (hasBeenAdded) {
+                      deleteLinkMutation.mutate(field.linkProvider.id);
+                    }
+                  }}
+                />
+              ))}
+          </div>
+        )}
+        <span className={linksListClasses["links-list__separator"]} />
         <Button
           type="submit"
           variant="primary"
           size="md"
           disabled={userLinks && userLinks?.length <= 0}
+          className={linksListClasses["links-list__save-btn"]}
         >
           Save
         </Button>

@@ -1,5 +1,4 @@
 @use "@/scss/colors.scss";
-@use "@/scss/screens.scss";
 
 .logo {
   width: fit-content;
@@ -10,11 +9,5 @@
 
   &__title {
     color: colors.$dark-gray;
-
-    &--not-visible {
-      @include screens.mobile {
-        display: none;
-      }
-    }
   }
 }

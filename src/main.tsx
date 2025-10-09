@@ -7,6 +7,7 @@ import { queryClient } from "@/config/react-query";
 import { RoutePaths } from "@/constants";
 import { AuthGuard } from "@/layouts/AuthGuard";
 import { AuthLayout } from "@/layouts/AuthLayout";
+import { PagesLayout } from "@/layouts/PagesLayout";
 import { ErrorPage } from "@/pages/ErrorPage";
 import { Links } from "@/pages/Links";
 import { Login } from "@/pages/Login";
@@ -25,11 +26,13 @@ createRoot(document.getElementById("root")!).render(
             <Route path={RoutePaths.register} element={<Register />} />
           </Route>
           <Route element={<AuthGuard />} errorElement={<ErrorPage />}>
-            <Route path={RoutePaths.links} index element={<Links />} />
-            <Route
-              path={RoutePaths.profileDetails}
-              element={<ProfileDetails />}
-            />
+            <Route element={<PagesLayout />} errorElement={<ErrorPage />}>
+              <Route path={RoutePaths.links} index element={<Links />} />
+              <Route
+                path={RoutePaths.profileDetails}
+                element={<ProfileDetails />}
+              />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
