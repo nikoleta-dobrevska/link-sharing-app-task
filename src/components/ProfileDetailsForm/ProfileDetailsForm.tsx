@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
-import { useId, useMemo } from "react";
+import { useId } from "react";
 import { useForm } from "react-hook-form";
 
 import { Typography } from "@/components/typography";
@@ -33,10 +33,7 @@ export const ProfileDetailsForm = () => {
     resolver: zodResolver(profileDetailsSchema),
     mode: "onChange",
     reValidateMode: "onChange",
-    values: useMemo(
-      () => authenticatedUserProfileData,
-      [authenticatedUserProfileData]
-    ),
+    values: authenticatedUserProfileData,
   });
 
   const updateProfileDetailsMutation = useMutation({

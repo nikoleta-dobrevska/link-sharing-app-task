@@ -1,4 +1,3 @@
-import { clsx } from "clsx";
 import { useId } from "react";
 import {
   type Control,
@@ -7,11 +6,14 @@ import {
 } from "react-hook-form";
 
 import LinksIcon from "@/assets/svgr/links.svg?react";
+import StripesIcon from "@/assets/svgr/Stripes.svg?react";
 import { LinkProviderDropDownField } from "@/components/links/LinkProviderDropDownField";
 import { FormField } from "@/components/ui/form/FormField";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
 import { type LinkProviderData, type LinksFormData } from "@/types";
+
+import linksFieldClasses from "./LinksField.module.scss";
 
 type LinksFieldProps = {
   index: number;
@@ -33,10 +35,22 @@ export const LinksField = ({
   const id = useId();
 
   return (
-    <div>
-      <button type="button" onClick={onRemove}>
-        Remove
-      </button>
+    <div className={linksFieldClasses["link-field"]}>
+      <div className={linksFieldClasses["link-field__row"]}>
+        <div className={linksFieldClasses["link-field__name"]}>
+          <StripesIcon aria-hidden={true} />
+          <span className={linksFieldClasses["link-field__name--gray"]}>
+            Link #{index + 1}
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={onRemove}
+          className={linksFieldClasses["link-field__remove-btn"]}
+        >
+          Remove
+        </button>
+      </div>
       <Label htmlFor={id + `-platform`} color="dark-gray">
         Platform
       </Label>
@@ -57,7 +71,7 @@ export const LinksField = ({
         />
       </FormField>
       <Label htmlFor={id + `link-${index}`} color="dark-gray">
-        Link {index + 1}
+        Link
       </Label>
       <FormField icon={<LinksIcon />} errorMessage={errorMessage}>
         <Input
@@ -65,9 +79,11 @@ export const LinksField = ({
           {...register(`links.${index}.link`)}
           aria-required="true"
           aria-invalid={!!errorMessage}
-          className={clsx(
-            errorMessage ? ["form__input--invalid"] : ["form__input--valid"]
-          )}
+          className={
+            errorMessage
+              ? linksFieldClasses["link-field__input--invalid"]
+              : linksFieldClasses["link-field__input--valid"]
+          }
           type="text"
           placeholder="e.g. https://www.github.com/johnappleseed"
         />

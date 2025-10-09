@@ -1,0 +1,52 @@
+@use "@/scss/colors.scss";
+@use "@/scss/constants.scss";
+@use "@/scss/screens.scss";
+@use "@/scss/fonts.scss";
+
+.link-field {
+  display: flex;
+  flex-direction: column;
+  background-color: colors.$beige;
+  gap: 0.5rem;
+  border-radius: constants.$page-elements-border-radius;
+  padding: 1.25rem;
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &--gray {
+      font-family: fonts.$instrument-sans;
+      font-weight: fonts.$weight-bold;
+      color: colors.$gray;
+    }
+  }
+
+  &__remove-btn {
+    background-color: unset;
+    font-family: fonts.$instrument-sans;
+    cursor: pointer;
+    font-size: fonts.$body-md-font-size;
+    color: colors.$gray;
+    font-weight: fonts.$weight-regular;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: colors.$dark-gray;
+    }
+  }
+
+  &__input--invalid {
+    border: 1px solid colors.$red;
+    color: colors.$red;
+  }
+}

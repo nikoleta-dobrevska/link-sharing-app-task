@@ -19,3 +19,5 @@ export const RoutePaths = {
 };
 
 export const LOCAL_STORAGE_UPDATED_CUSTOM_EVENT = "localStorageUpdated";
+
+export const PROFILE_PICTURE_SIZE_LIMIT = 5 * 1024 * 1024;

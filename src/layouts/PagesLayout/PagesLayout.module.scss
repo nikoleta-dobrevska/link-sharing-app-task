@@ -1,0 +1,75 @@
+@use "@/scss/colors.scss";
+@use "@/scss/constants.scss";
+@use "@/scss/screens.scss";
+
+.page-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: colors.$beige;
+  padding: 2rem;
+  gap: 1rem;
+
+  @include screens.tablet {
+    padding: 1rem;
+  }
+}
+
+.main {
+  width: 100%;
+  display: flex;
+  gap: 1.5rem;
+
+  @include screens.tablet {
+    display: block;
+  }
+}
+
+.preview-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: colors.$white;
+  flex: 2.5;
+  padding-block: 6rem;
+  border-radius: constants.$page-elements-border-radius;
+
+  @include screens.tablet {
+    display: none;
+  }
+
+  &__display {
+    position: relative;
+    display: inline-block;
+
+    &--static {
+      position: static;
+    }
+
+    &--absolute {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+  }
+}
+
+.page-section {
+  display: flex;
+  flex-direction: column;
+  flex: 3;
+
+  &__elements {
+    display: flex;
+    flex-direction: column;
+    background-color: colors.$white;
+    padding: 2.5rem;
+    gap: 2rem;
+    height: 100%;
+    border-radius: constants.$page-elements-border-radius;
+
+    @include screens.tablet {
+      padding: 0;
+    }
+  }
+}
