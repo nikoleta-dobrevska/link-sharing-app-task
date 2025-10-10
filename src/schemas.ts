@@ -136,9 +136,19 @@ export const profileDetailsSchema = z.object({
   profilePicture: profilePictureSchema,
 });
 
-export const authenticatedUserSchema = z.object({
-  profilePicture: z.optional(z.string()),
-  firstName: z.string(),
-  lastName: z.string(),
-  email: z.email(),
-});
+export const authenticatedUserSchema = z.pipe(
+  z.object({
+    profilePicturePath: z.nullable(z.string()),
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.email(),
+  }),
+  z.transform(({ profilePicturePath, firstName, lastName, email }) => ({
+    profilePicturePath: profilePicturePath
+      ? `${import.meta.env.VITE_API_URL}/${profilePicturePath}`
+      : null,
+    firstName,
+    lastName,
+    email,
+  }))
+);

@@ -2,6 +2,12 @@
 @use "@/scss/constants.scss";
 @use "@/scss/fonts.scss";
 
+.img-uploader-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .img-uploader {
   background-color: colors.$lavender;
   border-radius: constants.$page-elements-border-radius;
@@ -28,6 +34,10 @@
       .img-uploader__text,
       .img-uploader__svg {
         opacity: 1;
+      }
+
+      .preview {
+        filter: brightness(50%);
       }
     }
   }
@@ -66,10 +76,6 @@
   object-fit: cover;
   border-radius: inherit;
   z-index: 0;
-
-  &:hover {
-    filter: brightness(50%);
-  }
 }
 
 .error-msg {
@@ -78,4 +84,33 @@
   font-size: fonts.$body-sm-font-size;
   color: colors.$red;
   line-height: constants.$line-height;
+}
+
+.remove-btn,
+.delete-btn {
+  background-color: unset;
+  font-family: fonts.$instrument-sans;
+  cursor: pointer;
+  font-size: fonts.$body-md-font-size;
+  font-weight: fonts.$weight-regular;
+}
+
+.remove-btn {
+  color: colors.$gray;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: colors.$dark-gray;
+  }
+}
+
+.delete-btn {
+  color: colors.$red;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: #8b0000;
+  }
 }

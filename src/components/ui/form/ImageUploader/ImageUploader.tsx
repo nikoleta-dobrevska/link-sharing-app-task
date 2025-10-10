@@ -12,7 +12,11 @@ type ImageUploaderProps = {
   name: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   errorMessage: string | undefined;
-  preview: string | undefined;
+  preview: string | null;
+  onRemovePreview: () => void;
+  hideDeleteButton: boolean;
+  hideRemovePreviewButton: boolean;
+  onDeleteProfilePicture: () => void;
 };
 
 export const ImageUploader = ({
@@ -21,11 +25,15 @@ export const ImageUploader = ({
   errorMessage,
   onChange,
   preview,
+  onRemovePreview,
+  hideDeleteButton,
+  hideRemovePreviewButton,
+  onDeleteProfilePicture,
 }: ImageUploaderProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   return (
-    <>
+    <div className={imageUploaderClasses["img-uploader-container"]}>
       <input
         id={id}
         ref={inputRef}
@@ -66,6 +74,24 @@ export const ImageUploader = ({
       <p className={imageUploaderClasses["error-msg"]} role="alert">
         {errorMessage}
       </p>
-    </>
+      {!hideRemovePreviewButton && (
+        <button
+          onClick={onRemovePreview}
+          className={imageUploaderClasses["remove-btn"]}
+          type="button"
+        >
+          Remove Preview
+        </button>
+      )}
+      {!hideDeleteButton && (
+        <button
+          onClick={onDeleteProfilePicture}
+          className={imageUploaderClasses["delete-btn"]}
+          type="button"
+        >
+          Delete Picture
+        </button>
+      )}
+    </div>
   );
 };
