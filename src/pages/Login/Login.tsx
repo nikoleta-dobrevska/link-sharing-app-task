@@ -88,8 +88,8 @@ export const Login = () => {
             <Input
               id={id + "-email"}
               {...register("email")}
+              invalid={!!errors.email}
               aria-invalid={!!errors?.email}
-              className={errors?.email && loginClasses["form__input--invalid"]}
               autoComplete="on"
               type="email"
               placeholder="e.g. alex@email.com"
@@ -108,10 +108,8 @@ export const Login = () => {
             <Input
               id={id + "-password"}
               {...register("password")}
+              invalid={!!errors.password}
               aria-invalid={!!errors?.password}
-              className={
-                errors?.password && loginClasses["form__input--invalid"]
-              }
               type="password"
               placeholder="Enter your password"
               aria-required="true"

@@ -91,9 +91,7 @@ export const Register = () => {
             <Input
               id={id + "-firstName"}
               {...register("firstName")}
-              className={
-                errors?.firstName && registerClasses["form__input--invalid"]
-              }
+              invalid={!!errors?.firstName}
               aria-invalid={!!errors?.firstName}
               autoComplete="given-name"
               type="text"
@@ -113,9 +111,7 @@ export const Register = () => {
             <Input
               id={id + "-lastName"}
               {...register("lastName")}
-              className={
-                errors?.lastName && registerClasses["form__input--invalid"]
-              }
+              invalid={!!errors?.lastName}
               aria-invalid={!!errors?.lastName}
               autoComplete="family-name"
               type="text"
@@ -133,9 +129,7 @@ export const Register = () => {
               id={id + "-email"}
               {...register("email")}
               aria-invalid={!!errors?.email}
-              className={
-                errors?.email && registerClasses["form__input--invalid"]
-              }
+              invalid={!!errors.email}
               autoComplete="on"
               type="email"
               placeholder="e.g. alex@email.com"
@@ -154,9 +148,7 @@ export const Register = () => {
             <Input
               id={id + "-password"}
               {...register("password")}
-              className={
-                errors?.password && registerClasses["form__input--invalid"]
-              }
+              invalid={!!errors.password}
               aria-invalid={!!errors?.password}
               aria-describedby={id + "-passwordNote"}
               type="password"
@@ -176,10 +168,7 @@ export const Register = () => {
             <Input
               id={id + "-confirmPassword"}
               {...register("confirmPassword")}
-              className={
-                errors?.confirmPassword &&
-                registerClasses["form__input--invalid"]
-              }
+              invalid={!!errors.confirmPassword}
               aria-invalid={!!errors?.confirmPassword}
               type="password"
               placeholder="At least 8 characters"
