@@ -34,7 +34,7 @@ export const ImageUploader = ({
         onChange={onChange}
         type="file"
         accept="image/png, image/jpeg, image/jpg"
-        aria-required="true"
+        aria-required="false"
         aria-invalid={!!errorMessage}
       />
       <button
