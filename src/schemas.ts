@@ -125,3 +125,10 @@ export const profilePictureSchema = z.object({
     })
   ),
 });
+
+export const authenticatedUserSchema = z.object({
+  profilePicture: z.optional(z.string()),
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.email(),
+});

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
-import { useLocation } from "react-router";
+import { useMemo } from "react";
 
 import ArrowRightIcon from "@/assets/svgr/ArrowRight.svg?react";
 import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
@@ -12,42 +12,91 @@ import { getAuthenticatedUserProfile } from "@/services/getAuthenticatedUserProf
 
 import previewComponentClasses from "./PreviewComponent.module.scss";
 
-export const PreviewComponent = () => {
-  const location = useLocation();
-  const { pathname } = location;
+type PreviewComponentProps = {
+  variant: string;
+};
 
+export const PreviewComponent = ({ variant }: PreviewComponentProps) => {
   const { data: authenticatedUserProfileData } = useQuery({
     queryKey: ["authenticatedUserProfileData"],
     queryFn: getAuthenticatedUserProfile,
-    staleTime: Infinity,
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000,
   });
 
   const { data: linkProviders } = useQuery({
     queryKey: ["linkProviders"],
     queryFn: fetchAllLinkProviders,
-    staleTime: Infinity,
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000,
   });
 
   const { data: userLinks } = useQuery({
     queryKey: ["links"],
     queryFn: fetchAllLinks,
     enabled: !!linkProviders,
-    staleTime: Infinity,
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000,
   });
+
+  const linkElements = useMemo(() => {
+    return userLinks?.map((userLink) => {
+      const currentLinkProvider = linkProviders?.find(
+        (linkProvider) => linkProvider.id === userLink.linkProviderId
+      );
+
+      return (
+        <a
+          key={userLink?.linkProviderId}
+          href={`${userLink?.link}`}
+          aria-label={`User's ${currentLinkProvider?.name} link, opens a new tab`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={clsx(
+            previewComponentClasses["user-link"],
+            variant !== "/preview" &&
+              previewComponentClasses["user-link--not-in-preview"]
+          )}
+          style={{
+            backgroundColor: `${currentLinkProvider?.backgroundColor}`,
+            color: `${currentLinkProvider?.textColor}`,
+            border:
+              currentLinkProvider?.name === "Frontend Mentor"
+                ? "1px solid #D9D9D9"
+                : "none",
+          }}
+        >
+          <div className={previewComponentClasses["user-link__name"]}>
+            {currentLinkProvider?.name === "Frontend Mentor" ? (
+              <FrontendMentorIcon aria-hidden="true" />
+            ) : (
+              <img
+                src={currentLinkProvider?.iconSrc}
+                alt=""
+                className={previewComponentClasses["user-link__icon"]}
+              />
+            )}
+            {currentLinkProvider?.name}
+          </div>
+          <ArrowRightIcon aria-hidden="true" />
+        </a>
+      );
+    });
+  }, [linkProviders, userLinks, variant]);
 
   return (
     <div
       className={clsx(
         previewComponentClasses["user-data"],
-        pathname !== "/preview" &&
+        variant !== "/preview" &&
           previewComponentClasses["user-data--not-in-preview"]
       )}
     >
       <div className={previewComponentClasses["user-info"]}>
-        {authenticatedUserProfileData?.profilePictuePath ? (
+        {authenticatedUserProfileData?.profilePicture ? (
           <img
             alt=""
-            src={authenticatedUserProfileData?.profilePictuePath}
+            src={authenticatedUserProfileData?.profilePicture}
             className={previewComponentClasses["profile-pic"]}
           />
         ) : (
@@ -61,7 +110,7 @@ export const PreviewComponent = () => {
           variant="heading"
           size="md"
           className={
-            pathname !== "/preview" &&
+            variant !== "/preview" &&
             previewComponentClasses["names--not-in-preview"]
           }
         >
@@ -78,51 +127,10 @@ export const PreviewComponent = () => {
         </Typography>
       </div>
       <div className={previewComponentClasses["user-links"]}>
-        {userLinks?.map((userLink) => {
-          const currentLinkProvider = linkProviders?.find(
-            (linkProvider) => linkProvider.id === userLink.linkProviderId
-          );
+        {linkElements}
 
-          return (
-            <a
-              key={userLink?.linkProviderId}
-              href={`${userLink?.link}`}
-              aria-label={`User's ${currentLinkProvider?.name} link, opens a new tab`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={clsx(
-                previewComponentClasses["user-link"],
-                pathname !== "/preview" &&
-                  previewComponentClasses["user-link--not-in-preview"]
-              )}
-              style={{
-                backgroundColor: `${currentLinkProvider?.backgroundColor}`,
-                color: `${currentLinkProvider?.textColor}`,
-                border:
-                  currentLinkProvider?.name === "Frontend Mentor"
-                    ? "1px solid #D9D9D9"
-                    : "none",
-              }}
-            >
-              <div className={previewComponentClasses["user-link__name"]}>
-                {currentLinkProvider?.name === "Frontend Mentor" ? (
-                  <FrontendMentorIcon aria-hidden="true" />
-                ) : (
-                  <img
-                    src={currentLinkProvider?.iconSrc}
-                    alt=""
-                    className={previewComponentClasses["user-link__icon"]}
-                  />
-                )}
-                {currentLinkProvider?.name}
-              </div>
-              <ArrowRightIcon aria-hidden="true" />
-            </a>
-          );
-        })}
-
-        {pathname === "/links" &&
-          userLinks?.length &&
+        {variant === "/links" &&
+          userLinks?.length !== undefined &&
           userLinks?.length <= 5 &&
           Array.from({
             length: 5 - userLinks?.length,

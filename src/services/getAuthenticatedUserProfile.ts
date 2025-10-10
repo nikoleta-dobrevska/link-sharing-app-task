@@ -1,4 +1,5 @@
 import { apiClientAuthorized } from "@/config/apiClientAuthorized";
+import { authenticatedUserSchema } from "@/schemas";
 
 export const getAuthenticatedUserProfile = async ({
   signal,
@@ -7,5 +8,11 @@ export const getAuthenticatedUserProfile = async ({
 }) => {
   const response = await apiClientAuthorized.get("/profile", { signal });
 
-  return response.data;
+  const validatedResponse = authenticatedUserSchema.safeParse(response.data);
+
+  if (!validatedResponse?.success) {
+    return;
+  }
+
+  return validatedResponse?.data;
 };
