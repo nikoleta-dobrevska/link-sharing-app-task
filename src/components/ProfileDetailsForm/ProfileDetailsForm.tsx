@@ -123,7 +123,9 @@ export const ProfileDetailsForm = () => {
                 }
                 hideRemovePreviewButton={
                   preview === null ||
-                  preview === authenticatedUserProfileData?.profilePicturePath
+                  preview ===
+                    authenticatedUserProfileData?.profilePicturePath ||
+                  !authenticatedUserProfileData?.profilePicturePath
                 }
                 onDeleteProfilePicture={onDeleteProfilePicture}
                 errorMessage={errors?.profilePicture?.message}
