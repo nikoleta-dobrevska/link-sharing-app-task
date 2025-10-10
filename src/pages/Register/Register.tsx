@@ -18,7 +18,6 @@ import { registerUser } from "@/services/registerUser";
 import { type RegisterFormData } from "@/types";
 
 import registerClasses from "./Register.module.scss";
-import inputClasses from "@/components/ui/form/Input/Input.module.scss";
 
 export const Register = () => {
   const id = useId();
@@ -92,11 +91,7 @@ export const Register = () => {
             <Input
               id={id + "-firstName"}
               {...register("firstName")}
-              className={
-                errors?.firstName
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
-              }
+              invalid={!!errors?.firstName}
               aria-invalid={!!errors?.firstName}
               autoComplete="given-name"
               type="text"
@@ -116,11 +111,7 @@ export const Register = () => {
             <Input
               id={id + "-lastName"}
               {...register("lastName")}
-              className={
-                errors?.lastName
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
-              }
+              invalid={!!errors?.lastName}
               aria-invalid={!!errors?.lastName}
               autoComplete="family-name"
               type="text"
@@ -138,11 +129,7 @@ export const Register = () => {
               id={id + "-email"}
               {...register("email")}
               aria-invalid={!!errors?.email}
-              className={
-                errors?.email
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
-              }
+              invalid={!!errors.email}
               autoComplete="on"
               type="email"
               placeholder="e.g. alex@email.com"
@@ -161,11 +148,7 @@ export const Register = () => {
             <Input
               id={id + "-password"}
               {...register("password")}
-              className={
-                errors?.password
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
-              }
+              invalid={!!errors.password}
               aria-invalid={!!errors?.password}
               aria-describedby={id + "-passwordNote"}
               type="password"
@@ -185,11 +168,7 @@ export const Register = () => {
             <Input
               id={id + "-confirmPassword"}
               {...register("confirmPassword")}
-              className={
-                errors?.confirmPassword
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
-              }
+              invalid={!!errors.confirmPassword}
               aria-invalid={!!errors?.confirmPassword}
               type="password"
               placeholder="At least 8 characters"

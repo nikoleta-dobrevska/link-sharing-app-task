@@ -19,9 +19,9 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    height: 100vh;
+    height: 32rem;
     overflow: hidden auto;
-    padding: 2rem;
+    margin: 2rem 2rem 0 2rem;
   }
 
   &__separator {
@@ -32,7 +32,6 @@
 
   &__save-btn {
     align-self: flex-end;
-    font-weight: fonts.$weight-bold;
     margin: 1.5rem 2.5rem;
 
     @include screens.tablet {

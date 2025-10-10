@@ -18,7 +18,6 @@ import { loginUser } from "@/services/loginUser";
 import { type LoginFormData } from "@/types";
 
 import loginClasses from "./Login.module.scss";
-import inputClasses from "@/components/ui/form/Input/Input.module.scss";
 
 export const Login = () => {
   const id = useId();
@@ -89,12 +88,8 @@ export const Login = () => {
             <Input
               id={id + "-email"}
               {...register("email")}
+              invalid={!!errors.email}
               aria-invalid={!!errors?.email}
-              className={
-                errors?.email
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
-              }
               autoComplete="on"
               type="email"
               placeholder="e.g. alex@email.com"
@@ -113,12 +108,8 @@ export const Login = () => {
             <Input
               id={id + "-password"}
               {...register("password")}
+              invalid={!!errors.password}
               aria-invalid={!!errors?.password}
-              className={
-                errors?.password
-                  ? inputClasses["form__input--invalid"]
-                  : inputClasses["form__input--valid"]
-              }
               type="password"
               placeholder="Enter your password"
               aria-required="true"

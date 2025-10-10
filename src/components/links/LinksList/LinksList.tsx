@@ -3,8 +3,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 
+import { EmptyLinksList } from "@/components/links/EmptyLinksList";
 import { LinksField } from "@/components/links/LinksField";
-import { NoLinksDescription } from "@/components/links/NoLinksDescription";
 import { Button } from "@/components/ui/Button";
 import { queryClient } from "@/config/react-query";
 import { linksSchema } from "@/schemas";
@@ -113,7 +113,7 @@ export const LinksList = () => {
         className={linksListClasses["links-list__form"]}
       >
         {userLinks && userLinks?.length <= 0 ? (
-          <NoLinksDescription />
+          <EmptyLinksList />
         ) : (
           <div className={linksListClasses["links-list__fields"]}>
             {linkProviders &&
