@@ -231,6 +231,7 @@ export const ProfileDetailsForm = () => {
         autoClose={4000}
         hideProgressBar={true}
         newestOnTop={true}
+        role="status"
         closeOnClick={false}
         rtl={false}
         closeButton={false}
