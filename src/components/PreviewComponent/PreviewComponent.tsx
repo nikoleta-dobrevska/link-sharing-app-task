@@ -6,6 +6,7 @@ import ArrowRightIcon from "@/assets/svgr/ArrowRight.svg?react";
 import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
 import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
 import { Typography } from "@/components/typography";
+import { RoutePaths } from "@/constants";
 import { fetchAllLinkProviders } from "@/services/fetchAllLinkProviders";
 import { fetchAllLinks } from "@/services/fetchAllLinks";
 import { getAuthenticatedUserProfile } from "@/services/getAuthenticatedUserProfile";
@@ -54,7 +55,7 @@ export const PreviewComponent = ({ variant }: PreviewComponentProps) => {
           rel="noopener noreferrer"
           className={clsx(
             previewComponentClasses["user-link"],
-            variant !== "/preview" &&
+            variant !== RoutePaths.preview &&
               previewComponentClasses["user-link--not-in-preview"]
           )}
           style={{
@@ -88,7 +89,7 @@ export const PreviewComponent = ({ variant }: PreviewComponentProps) => {
     <div
       className={clsx(
         previewComponentClasses["user-data"],
-        variant !== "/preview" &&
+        variant !== RoutePaths.preview &&
           previewComponentClasses["user-data--not-in-preview"]
       )}
     >
@@ -110,7 +111,7 @@ export const PreviewComponent = ({ variant }: PreviewComponentProps) => {
           variant="heading"
           size="md"
           className={
-            variant !== "/preview" &&
+            variant !== RoutePaths.preview &&
             previewComponentClasses["names--not-in-preview"]
           }
         >
@@ -129,7 +130,7 @@ export const PreviewComponent = ({ variant }: PreviewComponentProps) => {
       <div className={previewComponentClasses["user-links"]}>
         {linkElements}
 
-        {variant === "/links" &&
+        {variant === RoutePaths.links &&
           userLinks?.length !== undefined &&
           userLinks?.length <= 5 &&
           Array.from({

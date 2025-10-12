@@ -16,6 +16,7 @@ export const RoutePaths = {
   login: "/",
   links: "/links",
   profileDetails: "/profile-details",
+  preview: "/preview",
 };
 
 export const LOCAL_STORAGE_UPDATED_CUSTOM_EVENT = "localStorageUpdated";
