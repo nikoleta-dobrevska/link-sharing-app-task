@@ -72,11 +72,7 @@ export const ProfileDetailsForm = () => {
   };
 
   const onRemovePreview = () => {
-    if (authenticatedUserProfileData?.profilePicturePath) {
-      setPreview(authenticatedUserProfileData?.profilePicturePath);
-    } else {
-      setPreview(null);
-    }
+    setPreview(authenticatedUserProfileData?.profilePicturePath ?? null);
   };
 
   const onDeleteProfilePicture = () => {
@@ -89,54 +85,71 @@ export const ProfileDetailsForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         className={profileDetailsFormClasses["form"]}
       >
-        <div className={profileDetailsFormClasses["image-controller"]}>
+        <div className={profileDetailsFormClasses["image-container"]}>
           <Label
             htmlFor={id + "-profilePicture"}
             color="gray"
-            className={profileDetailsFormClasses["image-controller__label"]}
+            className={profileDetailsFormClasses["image-container__label"]}
           >
             Profile picture
           </Label>
-          <Controller
-            control={control}
-            name="profilePicture"
-            render={({ field: { onChange, name } }) => (
-              <ImageUploader
-                id={id + "-profilePicture"}
-                name={name}
-                ariaDescribedBy={id + "-profilePictureNote"}
-                preview={
-                  preview ??
-                  authenticatedUserProfileData?.profilePicturePath ??
-                  null
-                }
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  if (e.target.files) {
-                    const file = e.target.files?.[0];
-                    setPreview(URL.createObjectURL(file));
-                    onChange(file);
+          <div
+            className={profileDetailsFormClasses["image-container__controller"]}
+          >
+            <Controller
+              control={control}
+              name="profilePicture"
+              render={({ field: { onChange, name } }) => (
+                <ImageUploader
+                  id={id + "-profilePicture"}
+                  name={name}
+                  ariaDescribedBy={id + "-profilePictureNote"}
+                  ariaRequired={false}
+                  preview={
+                    preview ??
+                    authenticatedUserProfileData?.profilePicturePath ??
+                    null
                   }
-                }}
-                onRemovePreview={onRemovePreview}
-                hideDeleteButton={
-                  !authenticatedUserProfileData?.profilePicturePath
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    if (e.target.files) {
+                      const file = e.target.files?.[0];
+                      setPreview(URL.createObjectURL(file));
+                      onChange(file);
+                    }
+                  }}
+                  errorMessage={errors?.profilePicture?.message}
+                />
+              )}
+            />
+            {preview !== null &&
+              preview !== authenticatedUserProfileData?.profilePicturePath && (
+                <button
+                  onClick={onRemovePreview}
+                  className={
+                    profileDetailsFormClasses["image-container__remove-btn"]
+                  }
+                  type="button"
+                >
+                  Remove Preview
+                </button>
+              )}
+            {authenticatedUserProfileData?.profilePicturePath && (
+              <button
+                onClick={onDeleteProfilePicture}
+                className={
+                  profileDetailsFormClasses["image-container__delete-btn"]
                 }
-                hideRemovePreviewButton={
-                  preview === null ||
-                  preview ===
-                    authenticatedUserProfileData?.profilePicturePath ||
-                  !authenticatedUserProfileData?.profilePicturePath
-                }
-                onDeleteProfilePicture={onDeleteProfilePicture}
-                errorMessage={errors?.profilePicture?.message}
-              />
+                type="button"
+              >
+                Delete Picture
+              </button>
             )}
-          />
+          </div>
           <Typography
             component="p"
             variant="body"
             size="sm"
-            className={profileDetailsFormClasses["image-controller__text"]}
+            className={profileDetailsFormClasses["image-container__text"]}
             id={id + "-profilePictureNote"}
           >
             Image must be below 1024x1024px. Use PNG or JPG format.
@@ -234,6 +247,7 @@ export const ProfileDetailsForm = () => {
         role="status"
         closeOnClick={false}
         rtl={false}
+        className={profileDetailsFormClasses["toast"]}
         closeButton={false}
         icon={<FloppyDiscIcon aria-hidden="true" />}
         theme="dark"

@@ -23,7 +23,7 @@
   }
 }
 
-.image-controller {
+.image-container {
   background-color: colors.$beige;
   display: flex;
   justify-content: space-between;
@@ -39,6 +39,41 @@
   &__label {
     font-size: fonts.$body-md-font-size;
     width: 19rem;
+  }
+
+  &__controller {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__remove-btn,
+  &__delete-btn {
+    background-color: unset;
+    font-family: fonts.$instrument-sans;
+    cursor: pointer;
+    font-size: fonts.$body-md-font-size;
+    font-weight: fonts.$weight-regular;
+  }
+
+  &__remove-btn {
+    color: colors.$gray;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: colors.$dark-gray;
+    }
+  }
+
+  &__delete-btn {
+    color: colors.$red;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: #8b0000;
+    }
   }
 
   &__text {
