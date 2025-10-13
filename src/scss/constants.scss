@@ -11,6 +11,7 @@ $box-sizing: border-box;
 $form-fields-box-shadow: rgba(99, 60, 255, 0.25) 0rem 0.4rem 1.7rem 0rem;
 
 $z-index: 99;
+$z-index-above: 100;
 
 @mixin screen-reader-only {
   clip: rect(0 0 0 0);
