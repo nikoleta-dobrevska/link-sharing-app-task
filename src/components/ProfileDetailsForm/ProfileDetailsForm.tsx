@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
-import { useId, useState } from "react";
+import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Slide, toast, ToastContainer } from "react-toastify";
 
@@ -22,8 +22,6 @@ import { type ProfileDetailsData } from "@/types";
 import profileDetailsFormClasses from "./ProfileDetailsForm.module.scss";
 
 export const ProfileDetailsForm = () => {
-  const [preview, setPreview] = useState<string | null>(null);
-
   const id = useId();
 
   const { data: authenticatedUserProfileData } = useQuery({
@@ -36,6 +34,8 @@ export const ProfileDetailsForm = () => {
     handleSubmit,
     control,
     formState: { errors },
+    watch,
+    setValue,
   } = useForm<ProfileDetailsData>({
     resolver: zodResolver(profileDetailsSchema),
     mode: "onChange",
@@ -47,6 +47,8 @@ export const ProfileDetailsForm = () => {
     },
   });
 
+  const preview = watch("profilePicture");
+
   const updateProfileDetailsMutation = useMutation({
     mutationFn: updateProfileData,
     onSuccess: async () => {
@@ -55,6 +57,8 @@ export const ProfileDetailsForm = () => {
       });
 
       toast.success("Your changes have been successfully saved!");
+
+      removePreview();
     },
   });
 
@@ -64,6 +68,8 @@ export const ProfileDetailsForm = () => {
       await queryClient.invalidateQueries({
         queryKey: ["authenticatedUserProfileData"],
       });
+
+      removePreview();
     },
   });
 
@@ -71,13 +77,20 @@ export const ProfileDetailsForm = () => {
     updateProfileDetailsMutation.mutate(data);
   };
 
-  const onRemovePreview = () => {
-    setPreview(authenticatedUserProfileData?.profilePicturePath ?? null);
+  const removePreview = () => {
+    if (previewUrl !== undefined) {
+      setValue("profilePicture", undefined);
+      URL.revokeObjectURL(previewUrl);
+    }
   };
 
   const onDeleteProfilePicture = () => {
     deleteProfilePictureMutation.mutate();
   };
+
+  const previewUrl = useMemo(() => {
+    return preview && URL.createObjectURL(preview);
+  }, [preview]);
 
   return (
     <>
@@ -106,14 +119,13 @@ export const ProfileDetailsForm = () => {
                   ariaDescribedBy={id + "-profilePictureNote"}
                   ariaRequired={false}
                   preview={
-                    preview ??
+                    previewUrl ??
                     authenticatedUserProfileData?.profilePicturePath ??
-                    null
+                    undefined
                   }
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     if (e.target.files) {
                       const file = e.target.files?.[0];
-                      setPreview(URL.createObjectURL(file));
                       onChange(file);
                     }
                   }}
@@ -121,18 +133,17 @@ export const ProfileDetailsForm = () => {
                 />
               )}
             />
-            {preview !== null &&
-              preview !== authenticatedUserProfileData?.profilePicturePath && (
-                <button
-                  onClick={onRemovePreview}
-                  className={
-                    profileDetailsFormClasses["image-container__remove-btn"]
-                  }
-                  type="button"
-                >
-                  Remove Preview
-                </button>
-              )}
+            {preview && (
+              <button
+                onClick={removePreview}
+                className={
+                  profileDetailsFormClasses["image-container__remove-btn"]
+                }
+                type="button"
+              >
+                Remove Preview
+              </button>
+            )}
             {authenticatedUserProfileData?.profilePicturePath && (
               <button
                 onClick={onDeleteProfilePicture}
@@ -247,21 +258,11 @@ export const ProfileDetailsForm = () => {
         role="status"
         closeOnClick={false}
         rtl={false}
-        className={profileDetailsFormClasses["toast"]}
         closeButton={false}
         icon={<FloppyDiscIcon aria-hidden="true" />}
-        theme="dark"
         transition={Slide}
-        toastStyle={{
-          fontFamily: "Instrument Sans, sans-serif",
-          fontSize: "1rem",
-          fontWeight: "600",
-          backgroundColor: "#333333",
-          width: "100%",
-          borderRadius: "0.75rem",
-          padding: "1rem 1.5rem",
-          lineHeight: "150%",
-        }}
+        theme="dark"
+        toastClassName={profileDetailsFormClasses["toast"]}
       />
     </>
   );

@@ -13,7 +13,7 @@ type ImageUploaderProps = {
   name: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   errorMessage: string | undefined;
-  preview: string | null;
+  preview: string | undefined;
 };
 
 export const ImageUploader = ({

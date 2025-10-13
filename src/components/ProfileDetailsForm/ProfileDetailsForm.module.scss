@@ -120,3 +120,13 @@
     }
   }
 }
+
+.toast {
+  padding: 1rem 1.5rem;
+  background-color: colors.$dark-gray;
+  border-radius: 0.75rem;
+  font-weight: fonts.$weight-semi-bold;
+  font-size: fonts.$body-md-font-size;
+  width: 100%;
+  font-family: fonts.$instrument-sans;
+}
