@@ -19,7 +19,7 @@ type LinkProviderUserLinkPair = {
   currentLinkProvider?: LinkProviderData;
 };
 
-type LinkProviderUserLinkPairs = LinkProviderUserLinkPair[];
+type LinkProviderUserLinkPairs = LinkProviderUserLinkPair[] | undefined;
 
 type Variant = keyof typeof RoutePaths;
 type VariantValues = (typeof RoutePaths)[Variant];
@@ -52,10 +52,6 @@ export const PreviewComponent = ({ variant }: PreviewComponentProps) => {
   });
 
   const linkProviderUserLinkPairs = useMemo(() => {
-    if (!linkProviders || !userLinks) {
-      return [];
-    }
-
     const pairs: LinkProviderUserLinkPairs = userLinks?.map((userLink) => {
       const currentLinkProvider = linkProviders?.find(
         (linkProvider) => linkProvider.id === userLink.linkProviderId
@@ -113,44 +109,47 @@ export const PreviewComponent = ({ variant }: PreviewComponentProps) => {
         </Typography>
       </div>
       <div className={previewComponentClasses["user-links"]}>
-        {linkProviderUserLinkPairs.map((linkProviderUserLinkPairs) => (
-          <a
-            key={linkProviderUserLinkPairs?.userLink?.linkProviderId}
-            href={`${linkProviderUserLinkPairs?.userLink?.link}`}
-            aria-label={`User's ${linkProviderUserLinkPairs?.currentLinkProvider?.name} link, opens a new tab`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={clsx(
-              previewComponentClasses["user-link"],
-              variant !== RoutePaths.preview &&
-                previewComponentClasses["user-link--not-in-preview"]
-            )}
-            style={{
-              backgroundColor: `${linkProviderUserLinkPairs.currentLinkProvider?.backgroundColor}`,
-              color: `${linkProviderUserLinkPairs?.currentLinkProvider?.textColor}`,
-              border:
-                linkProviderUserLinkPairs?.currentLinkProvider?.name ===
-                "Frontend Mentor"
-                  ? "1px solid #D9D9D9"
-                  : "none",
-            }}
-          >
-            <div className={previewComponentClasses["user-link__name"]}>
-              {linkProviderUserLinkPairs?.currentLinkProvider?.name ===
-              "Frontend Mentor" ? (
-                <FrontendMentorIcon aria-hidden="true" />
-              ) : (
-                <img
-                  src={linkProviderUserLinkPairs?.currentLinkProvider?.iconSrc}
-                  alt=""
-                  className={previewComponentClasses["user-link__icon"]}
-                />
+        {linkProviderUserLinkPairs &&
+          linkProviderUserLinkPairs.map((linkProviderUserLinkPairs) => (
+            <a
+              key={linkProviderUserLinkPairs?.userLink?.linkProviderId}
+              href={`${linkProviderUserLinkPairs?.userLink?.link}`}
+              aria-label={`User's ${linkProviderUserLinkPairs?.currentLinkProvider?.name} link, opens a new tab`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={clsx(
+                previewComponentClasses["user-link"],
+                variant !== RoutePaths.preview &&
+                  previewComponentClasses["user-link--not-in-preview"]
               )}
-              {linkProviderUserLinkPairs?.currentLinkProvider?.name}
-            </div>
-            <ArrowRightIcon aria-hidden="true" />
-          </a>
-        ))}
+              style={{
+                backgroundColor: `${linkProviderUserLinkPairs.currentLinkProvider?.backgroundColor}`,
+                color: `${linkProviderUserLinkPairs?.currentLinkProvider?.textColor}`,
+                border:
+                  linkProviderUserLinkPairs?.currentLinkProvider?.name ===
+                  "Frontend Mentor"
+                    ? "1px solid #D9D9D9"
+                    : "none",
+              }}
+            >
+              <div className={previewComponentClasses["user-link__name"]}>
+                {linkProviderUserLinkPairs?.currentLinkProvider?.name ===
+                "Frontend Mentor" ? (
+                  <FrontendMentorIcon aria-hidden="true" />
+                ) : (
+                  <img
+                    src={
+                      linkProviderUserLinkPairs?.currentLinkProvider?.iconSrc
+                    }
+                    alt=""
+                    className={previewComponentClasses["user-link__icon"]}
+                  />
+                )}
+                {linkProviderUserLinkPairs?.currentLinkProvider?.name}
+              </div>
+              <ArrowRightIcon aria-hidden="true" />
+            </a>
+          ))}
         {variant === RoutePaths.links &&
           userLinks?.length !== undefined &&
           userLinks?.length <= 5 &&
