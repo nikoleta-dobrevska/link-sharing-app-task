@@ -10,6 +10,7 @@ import {
   type profilePictureSchema,
   type registerSchema,
   type userLinksArray,
+  type userLinksResponseSchema,
 } from "@/schemas";
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
@@ -21,3 +22,4 @@ export type UserLinksResponseData = z.infer<typeof userLinksArray>;
 export type ProfileDetailsData = z.infer<typeof profileDetailsSchema>;
 export type AuthenticatedUserData = z.infer<typeof authenticatedUserSchema>;
 export type ProfilePictureData = z.infer<typeof profilePictureSchema>;
+export type UserLinkData = z.infer<typeof userLinksResponseSchema>;
