@@ -29,6 +29,10 @@
       .img-uploader__svg {
         opacity: 1;
       }
+
+      .preview {
+        filter: brightness(50%);
+      }
     }
   }
 
@@ -66,10 +70,6 @@
   object-fit: cover;
   border-radius: inherit;
   z-index: 0;
-
-  &:hover {
-    filter: brightness(50%);
-  }
 }
 
 .error-msg {

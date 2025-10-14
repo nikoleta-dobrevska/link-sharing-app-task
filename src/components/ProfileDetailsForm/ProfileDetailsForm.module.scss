@@ -23,12 +23,12 @@
   }
 }
 
-.image-controller {
+.image-container {
   background-color: colors.$beige;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: constants.$page-elements-border-radius;
   margin-inline: 2rem;
 
@@ -39,11 +39,48 @@
 
   &__label {
     font-size: fonts.$body-md-font-size;
+    width: 19rem;
+  }
+
+  &__controller {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__remove-btn,
+  &__delete-btn {
+    background-color: unset;
+    font-family: fonts.$instrument-sans;
+    cursor: pointer;
+    font-size: fonts.$body-md-font-size;
+    font-weight: fonts.$weight-regular;
+  }
+
+  &__remove-btn {
+    color: colors.$gray;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: colors.$dark-gray;
+    }
+  }
+
+  &__delete-btn {
+    color: colors.$red;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: #8b0000;
+    }
   }
 
   &__text {
     word-wrap: break-word;
     color: colors.$gray;
+    margin-inline-start: 1rem;
   }
 }
 
@@ -83,4 +120,14 @@
       color: colors.$red;
     }
   }
+}
+
+.toast {
+  padding: 1rem 1.5rem;
+  background-color: colors.$dark-gray;
+  border-radius: 0.75rem;
+  font-weight: fonts.$weight-semi-bold;
+  font-size: fonts.$body-md-font-size;
+  width: 100%;
+  font-family: fonts.$instrument-sans;
 }
