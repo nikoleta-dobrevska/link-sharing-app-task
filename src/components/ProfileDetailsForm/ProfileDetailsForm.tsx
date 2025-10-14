@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { clsx } from "clsx";
 import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Slide, toast, ToastContainer } from "react-toastify";
@@ -180,11 +179,8 @@ export const ProfileDetailsForm = () => {
                 {...register("firstName")}
                 id={id + "-firstName"}
                 aria-required="true"
-                className={clsx(
-                  profileDetailsFormClasses["field__input"],
-                  errors?.firstName &&
-                    profileDetailsFormClasses["field__input--invalid"]
-                )}
+                className={profileDetailsFormClasses["profile-details-input"]}
+                invalid={!!errors?.firstName}
                 aria-invalid={!!errors?.firstName}
                 type="text"
                 placeholder="e.g. John"
@@ -203,11 +199,8 @@ export const ProfileDetailsForm = () => {
               <Input
                 {...register("lastName")}
                 id={id + "-lastName"}
-                className={clsx(
-                  profileDetailsFormClasses["field__input"],
-                  errors?.lastName &&
-                    profileDetailsFormClasses["field__input--invalid"]
-                )}
+                className={profileDetailsFormClasses["profile-details-input"]}
+                invalid={!!errors?.lastName}
                 aria-invalid={!!errors?.lastName}
                 aria-required="true"
                 type="text"
@@ -227,11 +220,8 @@ export const ProfileDetailsForm = () => {
               <Input
                 {...register("email")}
                 id={id + "-email"}
-                className={clsx(
-                  profileDetailsFormClasses["field__input"],
-                  errors?.email &&
-                    profileDetailsFormClasses["field__input--invalid"]
-                )}
+                className={profileDetailsFormClasses["profile-details-input"]}
+                invalid={!!errors?.email}
                 aria-invalid={!!errors?.email}
                 aria-required="false"
                 type="email"

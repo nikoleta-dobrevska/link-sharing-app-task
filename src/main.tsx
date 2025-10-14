@@ -11,6 +11,7 @@ import { PagesLayout } from "@/layouts/PagesLayout";
 import { ErrorPage } from "@/pages/ErrorPage";
 import { Links } from "@/pages/Links";
 import { Login } from "@/pages/Login";
+import { Preview } from "@/pages/Preview";
 import { ProfileDetails } from "@/pages/ProfileDetails";
 import { Register } from "@/pages/Register";
 
@@ -33,6 +34,7 @@ createRoot(document.getElementById("root")!).render(
                 element={<ProfileDetails />}
               />
             </Route>
+            <Route path={RoutePaths.preview} element={<Preview />} />
           </Route>
         </Routes>
       </BrowserRouter>

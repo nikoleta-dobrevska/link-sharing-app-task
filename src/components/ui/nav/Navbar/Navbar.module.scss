@@ -1,6 +1,7 @@
 @use "@/scss/colors.scss";
 @use "@/scss/screens.scss";
 @use "@/scss/constants.scss";
+@use "@/scss/fonts.scss";
 
 .navbar {
   display: flex;
@@ -8,6 +9,7 @@
   background-color: colors.$white;
   align-items: center;
   height: 4.7rem;
+  width: 100%;
   border-radius: constants.$page-elements-border-radius;
 
   &__logo {
@@ -42,4 +44,14 @@
       @include constants.screen-reader-only;
     }
   }
+}
+
+.toast {
+  padding: 1rem 1.5rem;
+  background-color: colors.$dark-gray;
+  border-radius: 0.75rem;
+  font-weight: fonts.$weight-semi-bold;
+  font-size: fonts.$body-md-font-size;
+  width: 100%;
+  font-family: fonts.$instrument-sans;
 }

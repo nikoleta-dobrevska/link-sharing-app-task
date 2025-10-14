@@ -15,7 +15,8 @@
 
   &__save-btn {
     align-self: flex-end;
-    margin: 1.5rem 2.5rem;
+    margin-inline-end: 2.5rem;
+    margin-block-start: 1.5rem;
 
     @include screens.tablet {
       align-self: unset;
@@ -91,7 +92,7 @@
   gap: 0.5rem;
   padding: 1.5rem;
   border-radius: constants.$page-elements-border-radius;
-  margin: 2rem;
+  margin: 2rem 2rem 6rem 2rem;
 }
 
 .field {
@@ -111,15 +112,10 @@
     font-weight: fonts.$weight-regular;
     font-size: fonts.$body-md-font-size;
   }
+}
 
-  &__input {
-    padding: 0.75rem 1rem;
-
-    &--invalid {
-      border: 1px solid colors.$red;
-      color: colors.$red;
-    }
-  }
+.profile-details-input {
+  padding: 0.75rem 1rem;
 }
 
 .toast {
