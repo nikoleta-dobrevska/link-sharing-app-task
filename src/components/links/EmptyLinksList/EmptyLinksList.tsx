@@ -1,11 +1,11 @@
 import PhoneIcon from "@/assets/svgr/Phone.svg?react";
 import { Typography } from "@/components/typography";
 
-import noLinksDescriptionClasses from "./NoLinksDescription.module.scss";
+import emptyLinksListClasses from "./EmptyLinksList.module.scss";
 
-export const NoLinksDescription = () => {
+export const EmptyLinksList = () => {
   return (
-    <div className={noLinksDescriptionClasses["no-links-desc"]}>
+    <div className={emptyLinksListClasses["empty-links-list"]}>
       <PhoneIcon />
       <Typography component="h2" variant="heading" size="md">
         Let's get you started
@@ -14,7 +14,7 @@ export const NoLinksDescription = () => {
         component="p"
         variant="body"
         size="md"
-        className={noLinksDescriptionClasses["no-links-desc__p"]}
+        className={emptyLinksListClasses["empty-links-list__p"]}
       >
         Use the “Add new link” button to get started. Once you have more than
         one link, you can reorder and edit them. We’re here to help you share

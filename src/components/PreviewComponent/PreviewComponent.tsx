@@ -63,11 +63,11 @@ export const PreviewComponent = () => {
   return (
     <div className={previewComponentClasses["user-data"]}>
       <div className={previewComponentClasses["user-info"]}>
-        {authenticatedUserProfileData?.profilePicture &&
+        {authenticatedUserProfileData?.profilePicturePath &&
         authenticatedUserProfileDataIsSuccess ? (
           <img
             alt=""
-            src={authenticatedUserProfileData?.profilePicture}
+            src={authenticatedUserProfileData?.profilePicturePath}
             className={previewComponentClasses["profile-pic"]}
           />
         ) : (

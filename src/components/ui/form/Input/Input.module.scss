@@ -14,7 +14,7 @@
   color: colors.$dark-gray;
   line-height: constants.$line-height;
   width: inherit;
-  height: 48px;
+  height: 3rem;
 
   &::placeholder {
     opacity: 0.5;
@@ -28,5 +28,10 @@
     outline: 1px solid colors.$dark-purple;
     box-shadow: constants.$form-fields-box-shadow;
     opacity: 1;
+  }
+
+  &--invalid {
+    border: 1px solid colors.$red;
+    color: colors.$red;
   }
 }

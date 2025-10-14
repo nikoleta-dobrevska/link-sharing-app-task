@@ -107,8 +107,8 @@ export const userLinksResponseSchema = z.object({
 
 export const userLinksArray = z.array(userLinksResponseSchema);
 
-export const profilePictureSchema = z.object({
-  profilePicture: z.file().check(
+export const profilePictureSchema = z.optional(
+  z.file().check(
     z.refine(
       (data) =>
         data.type === "image/png" ||
@@ -119,16 +119,36 @@ export const profilePictureSchema = z.object({
         path: ["profilePicture"],
       }
     ),
-    z.refine((data) => data.size <= PROFILE_PICTURE_SIZE_LIMIT, {
-      message: "Image must be below 1024x1024px",
-      path: ["profilePicture"],
-    })
-  ),
+    z.refine(
+      (data) => data.size <= PROFILE_PICTURE_SIZE_LIMIT && data.size > 0,
+      {
+        message: "Image must be below 1024x1024px",
+        path: ["profilePicture"],
+      }
+    )
+  )
+);
+
+export const profileDetailsSchema = z.object({
+  email: z.string().check(z.trim(), z.email("Invalid email address")),
+  firstName: z.string().check(z.trim(), z.minLength(1, "Can't be empty")),
+  lastName: z.string().check(z.trim(), z.minLength(1, "Can't be empty")),
+  profilePicture: profilePictureSchema,
 });
 
-export const authenticatedUserSchema = z.object({
-  profilePicture: z.optional(z.string()),
-  firstName: z.string(),
-  lastName: z.string(),
-  email: z.email(),
-});
+export const authenticatedUserSchema = z.pipe(
+  z.object({
+    profilePicturePath: z.nullable(z.string()),
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.email(),
+  }),
+  z.transform(({ profilePicturePath, firstName, lastName, email }) => ({
+    profilePicturePath: profilePicturePath
+      ? `${import.meta.env.VITE_API_URL}/${profilePicturePath}`
+      : null,
+    firstName,
+    lastName,
+    email,
+  }))
+);
