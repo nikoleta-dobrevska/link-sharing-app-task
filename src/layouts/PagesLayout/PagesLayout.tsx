@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router";
+import { Outlet } from "react-router";
 
 import RectangleIcon from "@/assets/svgr/Rectangle 15.svg?react";
 import SubstractIcon from "@/assets/svgr/Subtract.svg?react";
@@ -8,9 +8,6 @@ import { Navbar } from "@/components/ui/nav/Navbar";
 import pagesLayoutClasses from "./PagesLayout.module.scss";
 
 export const PagesLayout = () => {
-  const location = useLocation();
-  const { pathname } = location;
-
   return (
     <div className={pagesLayoutClasses["page-layout"]}>
       <Navbar />
@@ -25,7 +22,7 @@ export const PagesLayout = () => {
                 pagesLayoutClasses["preview-section__display--absolute"]
               }
             />
-            <PreviewComponent variant={pathname} />
+            <PreviewComponent />
           </aside>
         </section>
         <section className={pagesLayoutClasses["page-section"]}>
