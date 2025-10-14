@@ -23,7 +23,7 @@ type LinkProviderUserLinkPairs = LinkProviderUserLinkPair[] | undefined;
 export const PreviewComponent = () => {
   const {
     data: authenticatedUserProfileData,
-    isLoading: authenticatedUserProfileDataIsLoading,
+    isSuccess: authenticatedUserProfileDataIsSuccess,
   } = useQuery({
     queryKey: ["authenticatedUserProfileData"],
     queryFn: getAuthenticatedUserProfile,
@@ -31,17 +31,16 @@ export const PreviewComponent = () => {
     gcTime: ONE_DAY_IN_MILLISECONDS,
   });
 
-  const { data: linkProviders } = useQuery({
+  const { data: linkProviders, isSuccess: linkProvidersIsSuccess } = useQuery({
     queryKey: ["linkProviders"],
     queryFn: fetchAllLinkProviders,
     staleTime: ONE_DAY_IN_MILLISECONDS,
     gcTime: ONE_DAY_IN_MILLISECONDS,
   });
 
-  const { data: userLinks, isLoading: userLinksIsLoading } = useQuery({
+  const { data: userLinks, isSuccess: userLinksIsSuccess } = useQuery({
     queryKey: ["links"],
     queryFn: fetchAllLinks,
-    enabled: !!linkProviders,
     staleTime: ONE_DAY_IN_MILLISECONDS,
     gcTime: ONE_DAY_IN_MILLISECONDS,
   });
@@ -65,7 +64,7 @@ export const PreviewComponent = () => {
     <div className={previewComponentClasses["user-data"]}>
       <div className={previewComponentClasses["user-info"]}>
         {authenticatedUserProfileData?.profilePicture &&
-        !authenticatedUserProfileDataIsLoading ? (
+        authenticatedUserProfileDataIsSuccess ? (
           <img
             alt=""
             src={authenticatedUserProfileData?.profilePicture}
@@ -77,9 +76,8 @@ export const PreviewComponent = () => {
             className={previewComponentClasses["profile-pic-placeholder"]}
           />
         )}
-        {authenticatedUserProfileDataIsLoading ? (
+        {!authenticatedUserProfileDataIsSuccess ? (
           <div
-            aria-hidden="true"
             className={previewComponentClasses["user-info__names-placeholder"]}
           />
         ) : (
@@ -93,9 +91,8 @@ export const PreviewComponent = () => {
             {authenticatedUserProfileData?.lastName}
           </Typography>
         )}
-        {authenticatedUserProfileDataIsLoading ? (
+        {!authenticatedUserProfileDataIsSuccess ? (
           <div
-            aria-hidden="true"
             className={previewComponentClasses["user-info__email-placeholder"]}
           />
         ) : (
@@ -110,12 +107,14 @@ export const PreviewComponent = () => {
         )}
       </div>
       <div className={previewComponentClasses["user-links"]}>
-        {linkProviderUserLinkPairs && !userLinksIsLoading
+        {linkProviderUserLinkPairs &&
+        linkProvidersIsSuccess &&
+        userLinksIsSuccess
           ? linkProviderUserLinkPairs.map((linkProviderUserLinkPair) => (
               <a
                 key={linkProviderUserLinkPair?.userLink?.linkProviderId}
                 href={`${linkProviderUserLinkPair?.userLink?.link}`}
-                aria-label={`User's ${linkProviderUserLinkPair?.currentLinkProvider?.name} link, opens a new tab`}
+                aria-label={`Your ${linkProviderUserLinkPair?.currentLinkProvider?.name} link, opens a new tab`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={previewComponentClasses["user-link"]}
@@ -149,7 +148,6 @@ export const PreviewComponent = () => {
             ))
           : Array.from({ length: 5 }, (_, i) => (
               <div
-                aria-hidden="true"
                 key={i}
                 className={previewComponentClasses["user-link-placeholder"]}
               />
