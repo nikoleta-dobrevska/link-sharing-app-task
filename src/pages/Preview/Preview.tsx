@@ -71,7 +71,12 @@ export const Preview = () => {
             />
           )}
           <div className={previewClasses["user-info"]}>
-            <Typography component="span" variant="heading" size="md">
+            <Typography
+              component="span"
+              variant="heading"
+              size="md"
+              className={previewClasses["user-info__names"]}
+            >
               {authenticatedUserProfileData?.firstName}{" "}
               {authenticatedUserProfileData?.lastName}
             </Typography>

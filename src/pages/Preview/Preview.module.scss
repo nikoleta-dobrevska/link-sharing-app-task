@@ -1,9 +1,14 @@
 @use "@/scss/colors.scss";
 @use "@/scss/constants.scss";
 @use "@/scss/fonts.scss";
+@use "@/scss/screens.scss";
 
 .preview-page-background {
   background-color: colors.$beige;
+
+  @include screens.mobile {
+    background-color: colors.$white;
+  }
 }
 
 .purple-container {
@@ -14,6 +19,15 @@
   border-bottom-left-radius: 2rem;
   border-bottom-right-radius: 2rem;
   padding: 1.5rem;
+
+  @include screens.mobile {
+    background-color: colors.$white;
+    position: unset;
+    height: unset;
+    padding: unset;
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+  }
 }
 
 .user-data-container {
@@ -26,10 +40,18 @@
   position: absolute;
   border-radius: 1.5rem;
   top: 10rem;
-  left: 35rem;
+  left: 37%;
   padding: 3rem 3.5rem;
   box-shadow: constants.$light-gray-box-shadow;
   z-index: constants.$z-index;
+
+  @include screens.mobile {
+    position: unset;
+    box-shadow: none;
+    z-index: unset;
+    top: unset;
+    left: unset;
+  }
 }
 
 .user-info-container {
@@ -44,6 +66,11 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+
+  &__names {
+    text-align: center;
+    word-break: normal;
+  }
 
   &__email {
     color: colors.$gray;
@@ -69,6 +96,11 @@
   gap: 1rem;
   height: 13rem;
   overflow: hidden auto;
+
+  @include screens.mobile {
+    height: unset;
+    overflow: unset;
+  }
 }
 
 .user-link {

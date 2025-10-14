@@ -68,7 +68,7 @@ export const Navbar = ({ variant }: NavbarProps) => {
               size="md"
               onClick={async () => {
                 await navigator.clipboard.writeText(window.location.href);
-                //TODO: change href once profile page is added
+                //TODO: change text to the href of profile/id page once it's added
                 toast.success("The link has been copied to your clipboard!");
               }}
             >
