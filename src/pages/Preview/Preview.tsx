@@ -4,8 +4,8 @@ import { useMemo } from "react";
 import ArrowRightIcon from "@/assets/svgr/ArrowRight.svg?react";
 import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
 import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
+import { PreviewToolbar } from "@/components/PreviewToolbar";
 import { Typography } from "@/components/typography";
-import { Navbar } from "@/components/ui/nav/Navbar";
 import { ONE_DAY_IN_MILLISECONDS } from "@/constants";
 import { fetchAllLinkProviders } from "@/services/fetchAllLinkProviders";
 import { fetchAllLinks } from "@/services/fetchAllLinks";
@@ -52,12 +52,15 @@ export const Preview = () => {
   }, [linkProviders, userLinks]);
 
   return (
-    <div className={previewClasses["preview-page-background"]}>
-      <div className={previewClasses["purple-container"]}>
-        <Navbar variant="/preview" />
-      </div>
-      <div className={previewClasses["user-data-container"]}>
-        <div className={previewClasses["user-info-container"]}>
+    <div className={previewClasses["background"]}>
+      <header className={previewClasses["purple-header"]}>
+        <PreviewToolbar />
+      </header>
+      <main className={previewClasses["user-data-container"]}>
+        <section
+          className={previewClasses["user-info-container"]}
+          aria-label="Your info"
+        >
           {authenticatedUserProfileData?.profilePicturePath ? (
             <img
               alt=""
@@ -72,7 +75,7 @@ export const Preview = () => {
           )}
           <div className={previewClasses["user-info"]}>
             <Typography
-              component="span"
+              component="p"
               variant="heading"
               size="md"
               className={previewClasses["user-info__names"]}
@@ -81,7 +84,7 @@ export const Preview = () => {
               {authenticatedUserProfileData?.lastName}
             </Typography>
             <Typography
-              component="span"
+              component="p"
               variant="body"
               size="md"
               className={previewClasses["user-info__email"]}
@@ -89,47 +92,48 @@ export const Preview = () => {
               {authenticatedUserProfileData?.email}
             </Typography>
           </div>
-        </div>
-        <div className={previewClasses["user-links"]}>
+        </section>
+        <ul className={previewClasses["user-links"]} aria-label="Your links">
           {linkProviderUserLinkPairs &&
             linkProviderUserLinkPairs.map((linkProviderUserLinkPair) => (
-              <a
-                key={linkProviderUserLinkPair?.userLink?.linkProviderId}
-                href={`${linkProviderUserLinkPair?.userLink?.link}`}
-                aria-label={`Your ${linkProviderUserLinkPair?.currentLinkProvider?.name} link, opens a new tab`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={previewClasses["user-link"]}
-                style={{
-                  backgroundColor: `${linkProviderUserLinkPair.currentLinkProvider?.backgroundColor}`,
-                  color: `${linkProviderUserLinkPair?.currentLinkProvider?.textColor}`,
-                  border:
-                    linkProviderUserLinkPair?.currentLinkProvider?.name ===
-                    "Frontend Mentor"
-                      ? "1px solid #D9D9D9"
-                      : "none",
-                }}
-              >
-                <div className={previewClasses["user-link__name"]}>
-                  {linkProviderUserLinkPair?.currentLinkProvider?.name ===
-                  "Frontend Mentor" ? (
-                    <FrontendMentorIcon aria-hidden="true" />
-                  ) : (
-                    <img
-                      src={
-                        linkProviderUserLinkPair?.currentLinkProvider?.iconSrc
-                      }
-                      alt=""
-                      className={previewClasses["user-link__icon"]}
-                    />
-                  )}
-                  {linkProviderUserLinkPair?.currentLinkProvider?.name}
-                </div>
-                <ArrowRightIcon aria-hidden="true" />
-              </a>
+              <li key={linkProviderUserLinkPair?.userLink?.linkProviderId}>
+                <a
+                  href={`${linkProviderUserLinkPair?.userLink?.link}`}
+                  aria-label={`Your ${linkProviderUserLinkPair?.currentLinkProvider?.name} link, opens a new tab`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={previewClasses["user-link"]}
+                  style={{
+                    backgroundColor: `${linkProviderUserLinkPair.currentLinkProvider?.backgroundColor}`,
+                    color: `${linkProviderUserLinkPair?.currentLinkProvider?.textColor}`,
+                    border:
+                      linkProviderUserLinkPair?.currentLinkProvider?.name ===
+                      "Frontend Mentor"
+                        ? "1px solid #D9D9D9"
+                        : "none",
+                  }}
+                >
+                  <div className={previewClasses["user-link__name"]}>
+                    {linkProviderUserLinkPair?.currentLinkProvider?.name ===
+                    "Frontend Mentor" ? (
+                      <FrontendMentorIcon aria-hidden="true" />
+                    ) : (
+                      <img
+                        src={
+                          linkProviderUserLinkPair?.currentLinkProvider?.iconSrc
+                        }
+                        alt=""
+                        className={previewClasses["user-link__icon"]}
+                      />
+                    )}
+                    {linkProviderUserLinkPair?.currentLinkProvider?.name}
+                  </div>
+                  <ArrowRightIcon aria-hidden="true" />
+                </a>
+              </li>
             ))}
-        </div>
-      </div>
+        </ul>
+      </main>
     </div>
   );
 };

@@ -15,8 +15,8 @@
 
   &__save-btn {
     align-self: flex-end;
-    margin-inline-end: 2.5rem;
-    margin-block-start: 1.5rem;
+    margin-right: 2.5rem;
+    margin-top: 1.5rem;
 
     @include screens.tablet {
       align-self: unset;

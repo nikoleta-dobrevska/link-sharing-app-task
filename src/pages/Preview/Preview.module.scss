@@ -3,15 +3,17 @@
 @use "@/scss/fonts.scss";
 @use "@/scss/screens.scss";
 
-.preview-page-background {
+.background {
   background-color: colors.$beige;
+  height: 100vh;
 
   @include screens.mobile {
-    background-color: colors.$white;
+    background-color: unset;
+    height: unset;
   }
 }
 
-.purple-container {
+.purple-header {
   display: flex;
   background-color: colors.$dark-purple;
   position: relative;
