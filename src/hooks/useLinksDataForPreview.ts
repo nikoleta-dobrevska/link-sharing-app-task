@@ -5,7 +5,15 @@ import {
   useLinkProvidersQuery,
   useUserLinks,
 } from "@/queries";
-import { type LinkProps } from "@/types";
+
+type LinkProps = {
+  link?: string;
+  linkProviderId?: number;
+  linkProviderName?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  iconSrc?: string;
+};
 
 export function useLinksDataForPreview() {
   const authenticatedUserProfileData = useAuthenticatedUserProfileData();
