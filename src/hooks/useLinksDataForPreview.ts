@@ -1,33 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-import { ONE_DAY_IN_MILLISECONDS } from "@/constants";
-import { fetchAllLinkProviders } from "@/services/fetchAllLinkProviders";
-import { fetchAllLinks } from "@/services/fetchAllLinks";
-import { getAuthenticatedUserProfile } from "@/services/getAuthenticatedUserProfile";
+import {
+  useAuthenticatedUserProfileData,
+  useLinkProvidersQuery,
+  useUserLinks,
+} from "@/queries";
 import { type LinkProps } from "@/types";
 
 export function useLinksDataForPreview() {
-  const { data: authenticatedUserProfileData } = useQuery({
-    queryKey: ["authenticatedUserProfileData"],
-    queryFn: getAuthenticatedUserProfile,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
-  });
-
-  const { data: linkProviders } = useQuery({
-    queryKey: ["linkProviders"],
-    queryFn: fetchAllLinkProviders,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
-  });
-
-  const { data: userLinks } = useQuery({
-    queryKey: ["links"],
-    queryFn: fetchAllLinks,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
-  });
+  const authenticatedUserProfileData = useAuthenticatedUserProfileData();
+  const linkProviders = useLinkProvidersQuery();
+  const userLinks = useUserLinks();
 
   const linksDataForPreview = useMemo<LinkProps[]>(() => {
     if (!linkProviders || !userLinks) {
