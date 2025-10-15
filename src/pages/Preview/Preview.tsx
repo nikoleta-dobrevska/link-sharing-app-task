@@ -1,55 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
-
 import ArrowRightIcon from "@/assets/svgr/ArrowRight.svg?react";
 import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
 import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
 import { PreviewToolbar } from "@/components/PreviewToolbar";
 import { Typography } from "@/components/typography";
-import { ONE_DAY_IN_MILLISECONDS } from "@/constants";
-import { fetchAllLinkProviders } from "@/services/fetchAllLinkProviders";
-import { fetchAllLinks } from "@/services/fetchAllLinks";
-import { getAuthenticatedUserProfile } from "@/services/getAuthenticatedUserProfile";
-import { type LinkProviderUserLinkPairs } from "@/types";
+import { useLinksDataForPreview } from "@/hooks/useLinksDataForPreview";
 
 import previewClasses from "./Preview.module.scss";
 
 export const Preview = () => {
-  const { data: authenticatedUserProfileData } = useQuery({
-    queryKey: ["authenticatedUserProfileData"],
-    queryFn: getAuthenticatedUserProfile,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
-  });
-
-  const { data: linkProviders } = useQuery({
-    queryKey: ["linkProviders"],
-    queryFn: fetchAllLinkProviders,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
-  });
-
-  const { data: userLinks } = useQuery({
-    queryKey: ["links"],
-    queryFn: fetchAllLinks,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
-  });
-
-  const linkProviderUserLinkPairs = useMemo(() => {
-    const pairs: LinkProviderUserLinkPairs = userLinks?.map((userLink) => {
-      const currentLinkProvider = linkProviders?.find(
-        (linkProvider) => linkProvider.id === userLink.linkProviderId
-      );
-
-      return {
-        userLink: userLink,
-        currentLinkProvider: currentLinkProvider,
-      };
-    });
-
-    return pairs;
-  }, [linkProviders, userLinks]);
+  const { authenticatedUserProfileData, linksDataForPreview } =
+    useLinksDataForPreview();
 
   return (
     <div className={previewClasses["background"]}>
@@ -94,39 +54,35 @@ export const Preview = () => {
           </div>
         </section>
         <ul className={previewClasses["user-links"]} aria-label="Your links">
-          {linkProviderUserLinkPairs &&
-            linkProviderUserLinkPairs.map((linkProviderUserLinkPair) => (
-              <li key={linkProviderUserLinkPair?.userLink?.linkProviderId}>
+          {linksDataForPreview &&
+            linksDataForPreview.map((linkData) => (
+              <li key={linkData?.linkProviderId}>
                 <a
-                  href={`${linkProviderUserLinkPair?.userLink?.link}`}
-                  aria-label={`Your ${linkProviderUserLinkPair?.currentLinkProvider?.name} link, opens a new tab`}
+                  href={`${linkData.link}`}
+                  aria-label={`Your ${linkData?.linkProviderName} link, opens a new tab`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={previewClasses["user-link"]}
                   style={{
-                    backgroundColor: `${linkProviderUserLinkPair.currentLinkProvider?.backgroundColor}`,
-                    color: `${linkProviderUserLinkPair?.currentLinkProvider?.textColor}`,
+                    backgroundColor: `${linkData?.backgroundColor}`,
+                    color: `${linkData?.textColor}`,
                     border:
-                      linkProviderUserLinkPair?.currentLinkProvider?.name ===
-                      "Frontend Mentor"
+                      linkData?.linkProviderName === "Frontend Mentor"
                         ? "1px solid #D9D9D9"
                         : "none",
                   }}
                 >
                   <div className={previewClasses["user-link__name"]}>
-                    {linkProviderUserLinkPair?.currentLinkProvider?.name ===
-                    "Frontend Mentor" ? (
+                    {linkData?.linkProviderName === "Frontend Mentor" ? (
                       <FrontendMentorIcon aria-hidden="true" />
                     ) : (
                       <img
-                        src={
-                          linkProviderUserLinkPair?.currentLinkProvider?.iconSrc
-                        }
+                        src={linkData?.iconSrc}
                         alt=""
                         className={previewClasses["user-link__icon"]}
                       />
                     )}
-                    {linkProviderUserLinkPair?.currentLinkProvider?.name}
+                    {linkData?.linkProviderName}
                   </div>
                   <ArrowRightIcon aria-hidden="true" />
                 </a>

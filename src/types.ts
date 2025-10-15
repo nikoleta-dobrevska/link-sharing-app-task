@@ -24,9 +24,11 @@ export type AuthenticatedUserData = z.infer<typeof authenticatedUserSchema>;
 export type ProfilePictureData = z.infer<typeof profilePictureSchema>;
 export type UserLinkData = z.infer<typeof userLinksResponseSchema>;
 
-export type LinkProviderUserLinkPair = {
-  userLink?: UserLinkData;
-  currentLinkProvider?: LinkProviderData;
+export type LinkProps = {
+  link?: string;
+  linkProviderId?: number;
+  linkProviderName?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  iconSrc?: string;
 };
-
-export type LinkProviderUserLinkPairs = LinkProviderUserLinkPair[] | undefined;
