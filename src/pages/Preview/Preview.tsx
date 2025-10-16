@@ -4,12 +4,13 @@ import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
 import { PreviewToolbar } from "@/components/PreviewToolbar";
 import { Typography } from "@/components/typography";
 import { useLinksDataForPreview } from "@/hooks/useLinksDataForPreview";
+import { useAuthenticatedUserProfileData } from "@/queries";
 
 import previewClasses from "./Preview.module.scss";
 
 export const Preview = () => {
-  const { authenticatedUserProfileData, linksDataForPreview } =
-    useLinksDataForPreview();
+  const { linksDataForPreview } = useLinksDataForPreview();
+  const authenticatedUserProfileData = useAuthenticatedUserProfileData();
 
   return (
     <div className={previewClasses["background"]}>

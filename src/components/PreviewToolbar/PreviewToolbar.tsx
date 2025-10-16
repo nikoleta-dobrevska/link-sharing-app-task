@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router";
-import { Slide, toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import LinksIcon from "@/assets/svgr/links.svg?react";
 import { Button } from "@/components/ui/Button";
+import { CustomToastComponent } from "@/components/ui/CustomToastComponent";
 
 import previewToolbarClasses from "./PreviewToolbar.module.scss";
 
@@ -39,19 +40,8 @@ export const PreviewToolbar = () => {
           Share Link
         </Button>
       </div>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={4000}
-        hideProgressBar={true}
-        newestOnTop={true}
-        role="status"
-        closeOnClick={false}
-        rtl={false}
-        closeButton={false}
+      <CustomToastComponent
         icon={<LinksIcon color="#737373" aria-hidden="true" />}
-        transition={Slide}
-        theme="dark"
-        toastClassName={previewToolbarClasses["toast"]}
       />
     </>
   );

@@ -27,36 +27,34 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <>
-      <nav className={navbarClasses["navbar"]} aria-label="Main Menu">
-        <div className={navbarClasses["navbar__left"]}>
-          <Logo className={navbarClasses["navbar__logo"]} />
-        </div>
-        <ul className={navbarClasses["navbar__center"]}>
-          {navItems.map((navItem) => (
-            <NavItem key={navItem.name} to={navItem.to}>
-              {navItem.icon}
-              <span className={navbarClasses["navbar__span"]}>
-                {navItem.name}
-              </span>
-            </NavItem>
-          ))}
-        </ul>
-        <div className={navbarClasses["navbar__right"]}>
-          <Button
-            type="button"
-            variant="secondary"
-            size="md"
-            onClick={() => navigate(RoutePaths.preview)}
-          >
-            <PreviewIcon
-              aria-hidden={true}
-              className={navbarClasses["navbar__preview-icon"]}
-            />
-            <span className={navbarClasses["navbar__span"]}>Preview</span>
-          </Button>
-        </div>
-      </nav>
-    </>
+    <nav className={navbarClasses["navbar"]} aria-label="Main Menu">
+      <div className={navbarClasses["navbar__left"]}>
+        <Logo className={navbarClasses["navbar__logo"]} />
+      </div>
+      <ul className={navbarClasses["navbar__center"]}>
+        {navItems.map((navItem) => (
+          <NavItem key={navItem.name} to={navItem.to}>
+            {navItem.icon}
+            <span className={navbarClasses["navbar__span"]}>
+              {navItem.name}
+            </span>
+          </NavItem>
+        ))}
+      </ul>
+      <div className={navbarClasses["navbar__right"]}>
+        <Button
+          type="button"
+          variant="secondary"
+          size="md"
+          onClick={() => navigate(RoutePaths.preview)}
+        >
+          <PreviewIcon
+            aria-hidden={true}
+            className={navbarClasses["navbar__preview-icon"]}
+          />
+          <span className={navbarClasses["navbar__span"]}>Preview</span>
+        </Button>
+      </div>
+    </nav>
   );
 };

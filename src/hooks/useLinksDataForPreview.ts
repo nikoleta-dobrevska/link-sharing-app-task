@@ -1,10 +1,6 @@
 import { useMemo } from "react";
 
-import {
-  useAuthenticatedUserProfileData,
-  useLinkProvidersQuery,
-  useUserLinks,
-} from "@/queries";
+import { useLinkProvidersQuery, useUserLinks } from "@/queries";
 
 type LinkProps = {
   link?: string;
@@ -16,7 +12,6 @@ type LinkProps = {
 };
 
 export function useLinksDataForPreview() {
-  const authenticatedUserProfileData = useAuthenticatedUserProfileData();
   const linkProviders = useLinkProvidersQuery();
   const userLinks = useUserLinks();
 
@@ -41,5 +36,5 @@ export function useLinksDataForPreview() {
     });
   }, [linkProviders, userLinks]);
 
-  return { linksDataForPreview, authenticatedUserProfileData };
+  return { linksDataForPreview };
 }

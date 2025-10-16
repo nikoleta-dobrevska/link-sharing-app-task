@@ -2,11 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Slide, toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import FloppyDiscIcon from "@/assets/svgr/FloppyDisk.svg?react";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/Button";
+import { CustomToastComponent } from "@/components/ui/CustomToastComponent";
 import { FormField } from "@/components/ui/form/FormField";
 import { ImageUploader } from "@/components/ui/form/ImageUploader";
 import { Input } from "@/components/ui/form/Input";
@@ -240,20 +241,7 @@ export const ProfileDetailsForm = () => {
           Save
         </Button>
       </form>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={4000}
-        hideProgressBar={true}
-        newestOnTop={true}
-        role="status"
-        closeOnClick={false}
-        rtl={false}
-        closeButton={false}
-        icon={<FloppyDiscIcon aria-hidden="true" />}
-        transition={Slide}
-        theme="dark"
-        toastClassName={profileDetailsFormClasses["toast"]}
-      />
+      <CustomToastComponent icon={<FloppyDiscIcon aria-hidden="true" />} />
     </>
   );
 };
