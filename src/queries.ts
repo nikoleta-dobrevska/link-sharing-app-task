@@ -1,39 +1,38 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { ONE_DAY_IN_MILLISECONDS } from "@/constants";
 import { fetchAllLinkProviders } from "@/services/fetchAllLinkProviders";
 import { fetchAllLinks } from "@/services/fetchAllLinks";
 import { getAuthenticatedUserProfile } from "@/services/getAuthenticatedUserProfile";
 
 export function useLinkProvidersQuery() {
-  const linkProviders = useQuery({
+  const { data: linkProviders, isSuccess: linkProvidersIsSuccess } = useQuery({
     queryKey: ["linkProviders"],
     queryFn: fetchAllLinkProviders,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
   });
 
-  return linkProviders.data;
+  return { linkProviders, linkProvidersIsSuccess };
 }
 
 export function useAuthenticatedUserProfileData() {
-  const authenticatedUserProfileData = useQuery({
+  const {
+    data: authenticatedUserProfileData,
+    isSuccess: authenticatedUserProfileDataIsSuccess,
+  } = useQuery({
     queryKey: ["authenticatedUserProfileData"],
     queryFn: getAuthenticatedUserProfile,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
   });
 
-  return authenticatedUserProfileData.data;
+  return {
+    authenticatedUserProfileData,
+    authenticatedUserProfileDataIsSuccess,
+  };
 }
 
 export function useUserLinks() {
-  const userLinks = useQuery({
+  const { data: userLinks, isSuccess: userLinksIsSuccess } = useQuery({
     queryKey: ["links"],
     queryFn: fetchAllLinks,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
   });
 
-  return userLinks.data;
+  return { userLinks, userLinksIsSuccess };
 }

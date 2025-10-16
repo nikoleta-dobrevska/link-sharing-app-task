@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 
@@ -7,25 +7,17 @@ import { EmptyLinksList } from "@/components/links/EmptyLinksList";
 import { LinksField } from "@/components/links/LinksField";
 import { Button } from "@/components/ui/Button";
 import { queryClient } from "@/config/react-query";
+import { useLinkProvidersQuery, useUserLinks } from "@/queries";
 import { linksSchema } from "@/schemas";
 import { createOrUpdateUserLinks } from "@/services/createOrUpdateLinks";
 import { deleteLink } from "@/services/deleteLink";
-import { fetchAllLinkProviders } from "@/services/fetchAllLinkProviders";
-import { fetchAllLinks } from "@/services/fetchAllLinks";
 import { type LinksFormData } from "@/types";
 
 import linksListClasses from "./LinksList.module.scss";
 
 export const LinksList = () => {
-  const { data: linkProviders } = useQuery({
-    queryKey: ["linkProviders"],
-    queryFn: fetchAllLinkProviders,
-  });
-
-  const { data: userLinks } = useQuery({
-    queryKey: ["links"],
-    queryFn: fetchAllLinks,
-  });
+  const { linkProviders } = useLinkProvidersQuery();
+  const { userLinks } = useUserLinks();
 
   const initialFormValues = useMemo(
     () => ({

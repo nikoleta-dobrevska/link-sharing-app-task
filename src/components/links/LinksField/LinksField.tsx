@@ -79,9 +79,7 @@ export const LinksField = ({
           {...register(`links.${index}.link`)}
           aria-required="true"
           aria-invalid={!!errorMessage}
-          className={
-            errorMessage && linksFieldClasses["link-field__input--invalid"]
-          }
+          invalid={!!errorMessage}
           type="text"
           placeholder="e.g. https://www.github.com/johnappleseed"
         />

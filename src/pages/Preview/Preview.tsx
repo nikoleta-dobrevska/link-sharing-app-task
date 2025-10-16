@@ -1,7 +1,7 @@
 import ArrowRightIcon from "@/assets/svgr/ArrowRight.svg?react";
 import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
 import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
-import { PreviewToolbar } from "@/components/PreviewToolbar";
+import { PreviewHeader } from "@/components/PreviewHeader";
 import { Typography } from "@/components/typography";
 import { useLinksDataForPreview } from "@/hooks/useLinksDataForPreview";
 import { useAuthenticatedUserProfileData } from "@/queries";
@@ -10,13 +10,13 @@ import previewClasses from "./Preview.module.scss";
 
 export const Preview = () => {
   const { linksDataForPreview } = useLinksDataForPreview();
-  const authenticatedUserProfileData = useAuthenticatedUserProfileData();
+  const { authenticatedUserProfileData } = useAuthenticatedUserProfileData();
 
   return (
     <div className={previewClasses["background"]}>
-      <header className={previewClasses["purple-header"]}>
-        <PreviewToolbar />
-      </header>
+      <div className={previewClasses["purple-header"]}>
+        <PreviewHeader />
+      </div>
       <main className={previewClasses["user-data-container"]}>
         <section
           className={previewClasses["user-info-container"]}

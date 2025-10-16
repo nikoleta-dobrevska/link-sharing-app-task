@@ -5,24 +5,20 @@ import LinksIcon from "@/assets/svgr/links.svg?react";
 import { Button } from "@/components/ui/Button";
 import { CustomToastComponent } from "@/components/ui/CustomToastComponent";
 
-import previewToolbarClasses from "./PreviewToolbar.module.scss";
+import previewHeaderClasses from "./PreviewHeader.module.scss";
 
-export const PreviewToolbar = () => {
+export const PreviewHeader = () => {
   const navigate = useNavigate();
 
   return (
     <>
-      <div
-        role="toolbar"
-        className={previewToolbarClasses["toolbar"]}
-        aria-label="Preview Toolbar"
-      >
+      <header className={previewHeaderClasses["preview-header"]}>
         <Button
           type="button"
           variant="secondary"
           size="md"
           onClick={() => navigate("/links")}
-          className={previewToolbarClasses["btn--mobile"]}
+          className={previewHeaderClasses["preview-header__btn--mobile"]}
         >
           Back to Editor
         </Button>
@@ -30,7 +26,7 @@ export const PreviewToolbar = () => {
           type="button"
           variant="primary"
           size="md"
-          className={previewToolbarClasses["btn--mobile"]}
+          className={previewHeaderClasses["preview-header__btn--mobile"]}
           onClick={async () => {
             await navigator.clipboard.writeText(window.location.href);
             //TODO: change text to the href of profile/id page once it's added
@@ -39,7 +35,7 @@ export const PreviewToolbar = () => {
         >
           Share Link
         </Button>
-      </div>
+      </header>
       <CustomToastComponent
         icon={<LinksIcon color="#737373" aria-hidden="true" />}
       />

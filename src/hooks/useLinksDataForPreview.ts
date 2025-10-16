@@ -12,8 +12,8 @@ type LinkProps = {
 };
 
 export function useLinksDataForPreview() {
-  const linkProviders = useLinkProvidersQuery();
-  const userLinks = useUserLinks();
+  const { linkProviders } = useLinkProvidersQuery();
+  const { userLinks } = useUserLinks();
 
   const linksDataForPreview = useMemo<LinkProps[]>(() => {
     if (!linkProviders || !userLinks) {

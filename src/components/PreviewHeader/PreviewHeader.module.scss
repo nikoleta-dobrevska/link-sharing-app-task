@@ -3,7 +3,7 @@
 @use "@/scss/fonts.scss";
 @use "@/scss/screens.scss";
 
-.toolbar {
+.preview-header {
   display: flex;
   width: 100%;
   height: fit-content;
@@ -17,10 +17,10 @@
     justify-content: center;
     gap: 1rem;
   }
-}
 
-.btn--mobile {
-  @include screens.mobile {
-    width: 10rem;
+  &__btn--mobile {
+    @include screens.mobile {
+      width: 10rem;
+    }
   }
 }
