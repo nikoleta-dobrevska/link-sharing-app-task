@@ -1,15 +1,7 @@
 import { useMemo } from "react";
 
 import { useLinkProvidersQuery, useUserLinks } from "@/queries";
-
-type LinkProps = {
-  link?: string;
-  linkProviderId?: number;
-  linkProviderName?: string;
-  backgroundColor?: string;
-  textColor?: string;
-  iconSrc?: string;
-};
+import { type LinkProps } from "@/types";
 
 export function useLinksDataForPreview() {
   const { linkProviders } = useLinkProvidersQuery();

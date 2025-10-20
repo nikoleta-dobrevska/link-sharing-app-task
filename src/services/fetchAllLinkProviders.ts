@@ -6,7 +6,10 @@ export const fetchAllLinkProviders = async ({
 }: {
   signal?: AbortSignal;
 }) => {
-  const response = await apiClientAuthorized.get("/link-providers", { signal });
+  const response = await apiClientAuthorized.get(
+    `${import.meta.env.VITE_API_URL}/link-providers`,
+    { signal }
+  );
 
   const validatedResponse = linkProvidersResponseSchemaArray.safeParse(
     response.data

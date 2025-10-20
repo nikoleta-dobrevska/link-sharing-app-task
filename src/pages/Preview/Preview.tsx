@@ -15,7 +15,7 @@ export const Preview = () => {
   return (
     <div className={previewClasses["background"]}>
       <div className={previewClasses["purple-header"]}>
-        <PreviewHeader />
+        <PreviewHeader userId={authenticatedUserProfileData?.id} />
       </div>
       <main className={previewClasses["user-data-container"]}>
         <section

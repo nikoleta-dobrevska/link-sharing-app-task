@@ -14,6 +14,7 @@ import { Links } from "@/pages/Links";
 import { Login } from "@/pages/Login";
 import { Preview } from "@/pages/Preview";
 import { ProfileDetails } from "@/pages/ProfileDetails";
+import { PublicProfilePage } from "@/pages/PublicProfilePage";
 import { Register } from "@/pages/Register";
 
 import "@/scss/reset.scss";
@@ -27,6 +28,10 @@ createRoot(document.getElementById("root")!).render(
             <Route index element={<Login />} />
             <Route path={RoutePaths.register} element={<Register />} />
           </Route>
+          <Route
+            path={RoutePaths.publicProfilePage}
+            element={<PublicProfilePage />}
+          />
           <Route element={<AuthGuard />} errorElement={<ErrorPage />}>
             <Route element={<PagesLayout />} errorElement={<ErrorPage />}>
               <Route path={RoutePaths.links} index element={<Links />} />

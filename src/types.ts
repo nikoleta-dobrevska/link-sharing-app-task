@@ -23,3 +23,11 @@ export type ProfileDetailsData = z.infer<typeof profileDetailsSchema>;
 export type AuthenticatedUserData = z.infer<typeof authenticatedUserSchema>;
 export type ProfilePictureData = z.infer<typeof profilePictureSchema>;
 export type UserLinkData = z.infer<typeof userLinksResponseSchema>;
+export type LinkProps = {
+  link?: string;
+  linkProviderId?: number;
+  linkProviderName?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  iconSrc?: string;
+};
