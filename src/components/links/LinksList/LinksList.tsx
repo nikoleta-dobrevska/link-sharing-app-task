@@ -16,8 +16,8 @@ import { type LinksFormData } from "@/types";
 import linksListClasses from "./LinksList.module.scss";
 
 export const LinksList = () => {
-  const { linkProviders } = useLinkProvidersQuery();
-  const { userLinks } = useUserLinks();
+  const { data: linkProviders } = useLinkProvidersQuery();
+  const { data: userLinks } = useUserLinks();
 
   const initialFormValues = useMemo(
     () => ({

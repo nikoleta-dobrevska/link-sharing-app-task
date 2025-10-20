@@ -3,37 +3,42 @@ import { useMemo } from "react";
 import { useLinkProvidersQuery, useUserLinks } from "@/queries";
 
 type LinkProps = {
-  link?: string;
-  linkProviderId?: number;
-  linkProviderName?: string;
-  backgroundColor?: string;
-  textColor?: string;
-  iconSrc?: string;
+  link: string;
+  linkProviderId: number;
+  linkProviderName: string;
+  backgroundColor: string;
+  textColor: string;
+  iconSrc: string;
 };
 
 export function useLinksDataForPreview() {
-  const { linkProviders, linkProvidersIsSuccess } = useLinkProvidersQuery();
-  const { userLinks, userLinksIsSuccess } = useUserLinks();
+  const { data: linkProviders, isSuccess: linkProvidersIsSuccess } =
+    useLinkProvidersQuery();
+  const { data: userLinks, isSuccess: userLinksIsSuccess } = useUserLinks();
 
-  const linksDataForPreview = useMemo<LinkProps[] | undefined>(() => {
+  const linksDataForPreview = useMemo<LinkProps[]>(() => {
     if (!linkProvidersIsSuccess || !userLinksIsSuccess) {
       return [];
     }
 
-    return userLinks?.map((userLink) => {
-      const currentLinkProvider = linkProviders?.find(
-        (linkProvider) => linkProvider.id === userLink.linkProviderId
-      );
+    return userLinks
+      .map((userLink) => {
+        const currentLinkProvider = linkProviders.find(
+          (linkProvider) => linkProvider.id === userLink.linkProviderId
+        );
 
-      return {
-        link: userLink.link,
-        linkProviderId: currentLinkProvider?.id,
-        linkProviderName: currentLinkProvider?.name,
-        backgroundColor: currentLinkProvider?.backgroundColor,
-        textColor: currentLinkProvider?.textColor,
-        iconSrc: currentLinkProvider?.iconSrc,
-      };
-    });
+        if (!currentLinkProvider) return null;
+
+        return {
+          link: userLink.link,
+          linkProviderId: currentLinkProvider.id,
+          linkProviderName: currentLinkProvider.name,
+          backgroundColor: currentLinkProvider.backgroundColor,
+          textColor: currentLinkProvider.textColor,
+          iconSrc: currentLinkProvider.iconSrc,
+        };
+      })
+      .filter((userLink) => userLink !== null);
   }, [linkProviders, linkProvidersIsSuccess, userLinks, userLinksIsSuccess]);
 
   return { linksDataForPreview };
