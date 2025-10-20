@@ -22,10 +22,10 @@ export const PublicProfilePage = () => {
     enabled: !!userId,
   });
 
-  const { linkProviders } = useLinkProvidersQuery();
+  const { linkProviders, linkProvidersIsSuccess } = useLinkProvidersQuery();
 
-  const mappedLinksData = useMemo<LinkProps[]>(() => {
-    if (!linkProviders || !publicUserProfileData?.userLinks) {
+  const mappedLinksData = useMemo<LinkProps[] | undefined>(() => {
+    if (!linkProvidersIsSuccess || !publicUserProfileData?.userLinks) {
       return [];
     }
 
@@ -43,7 +43,7 @@ export const PublicProfilePage = () => {
         iconSrc: currentLinkProvider?.iconSrc,
       };
     });
-  }, [linkProviders, publicUserProfileData?.userLinks]);
+  }, [linkProviders, linkProvidersIsSuccess, publicUserProfileData?.userLinks]);
 
   return (
     <div className={publicProfilePageClasses["background"]}>
