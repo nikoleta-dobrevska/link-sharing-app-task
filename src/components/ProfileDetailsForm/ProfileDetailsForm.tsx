@@ -49,10 +49,11 @@ export const ProfileDetailsForm = () => {
     mutationFn: updateProfileData,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: [
-          "authenticatedUserProfileData",
-          `publicUserProfileDataForUser${authenticatedUserProfileData?.id}`,
-        ],
+        queryKey: ["authenticatedUserProfileData"],
+      });
+
+      await queryClient.invalidateQueries({
+        queryKey: ["publicUserProfileData", authenticatedUserProfileData?.id],
       });
 
       toast.success("Your changes have been successfully saved!", {
@@ -67,10 +68,11 @@ export const ProfileDetailsForm = () => {
     mutationFn: deleteProfilePicture,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: [
-          "authenticatedUserProfileData",
-          `publicUserProfileDataForUser${authenticatedUserProfileData?.id}`,
-        ],
+        queryKey: ["authenticatedUserProfileData"],
+      });
+
+      await queryClient.invalidateQueries({
+        queryKey: ["publicUserProfileData", authenticatedUserProfileData?.id],
       });
 
       removePreview();

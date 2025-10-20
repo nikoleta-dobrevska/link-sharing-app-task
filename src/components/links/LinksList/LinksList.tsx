@@ -61,24 +61,26 @@ export const LinksList = () => {
 
   const createOrUpdateUserLinksMutation = useMutation({
     mutationFn: createOrUpdateUserLinks,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [
-          "links",
-          `publicUserProfileDataForUser${authenticatedUserProfileData?.id}`,
-        ],
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["links"],
+      });
+
+      await queryClient.invalidateQueries({
+        queryKey: ["publicUserProfileData", authenticatedUserProfileData?.id],
       });
     },
   });
 
   const deleteLinkMutation = useMutation({
     mutationFn: deleteLink,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [
-          "links",
-          `publicUserProfileDataForUser${authenticatedUserProfileData?.id}`,
-        ],
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["links"],
+      });
+
+      await queryClient.invalidateQueries({
+        queryKey: ["publicUserProfileData", authenticatedUserProfileData?.id],
       });
     },
   });
