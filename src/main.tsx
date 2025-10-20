@@ -3,6 +3,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 
+import { CustomToastComponent } from "@/components/ui/CustomToastComponent";
 import { queryClient } from "@/config/react-query";
 import { RoutePaths } from "@/constants";
 import { AuthGuard } from "@/layouts/AuthGuard";
@@ -38,6 +39,7 @@ createRoot(document.getElementById("root")!).render(
           </Route>
         </Routes>
       </BrowserRouter>
+      <CustomToastComponent />
     </QueryClientProvider>
   </StrictMode>
 );

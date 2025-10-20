@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import FloppyDiscIcon from "@/assets/svgr/FloppyDisk.svg?react";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/Button";
-import { CustomToastComponent } from "@/components/ui/CustomToastComponent";
 import { FormField } from "@/components/ui/form/FormField";
 import { ImageUploader } from "@/components/ui/form/ImageUploader";
 import { Input } from "@/components/ui/form/Input";
@@ -56,7 +55,9 @@ export const ProfileDetailsForm = () => {
         queryKey: ["authenticatedUserProfileData"],
       });
 
-      toast.success("Your changes have been successfully saved!");
+      toast.success("Your changes have been successfully saved!", {
+        icon: <FloppyDiscIcon aria-hidden="true" />,
+      });
 
       removePreview();
     },
@@ -241,7 +242,6 @@ export const ProfileDetailsForm = () => {
           Save
         </Button>
       </form>
-      <CustomToastComponent icon={<FloppyDiscIcon aria-hidden="true" />} />
     </>
   );
 };

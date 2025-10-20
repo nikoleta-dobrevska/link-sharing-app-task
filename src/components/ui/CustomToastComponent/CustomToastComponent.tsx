@@ -1,12 +1,8 @@
-import { Slide, ToastContainer, type ToastIcon } from "react-toastify";
+import { Slide, ToastContainer } from "react-toastify";
 
 import customToastComponentClasses from "./CustomToastComponent.module.scss";
 
-type ToastProps = {
-  icon: ToastIcon;
-};
-
-export const CustomToastComponent = ({ icon }: ToastProps) => {
+export const CustomToastComponent = () => {
   return (
     <ToastContainer
       position="bottom-center"
@@ -17,7 +13,6 @@ export const CustomToastComponent = ({ icon }: ToastProps) => {
       closeOnClick={false}
       rtl={false}
       closeButton={false}
-      icon={icon}
       transition={Slide}
       theme="dark"
       toastClassName={customToastComponentClasses["toast"]}

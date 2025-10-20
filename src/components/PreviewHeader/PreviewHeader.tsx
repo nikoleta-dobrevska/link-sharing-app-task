@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 
 import LinksIcon from "@/assets/svgr/links.svg?react";
 import { Button } from "@/components/ui/Button";
-import { CustomToastComponent } from "@/components/ui/CustomToastComponent";
 
 import previewHeaderClasses from "./PreviewHeader.module.scss";
 
@@ -30,15 +29,14 @@ export const PreviewHeader = () => {
           onClick={async () => {
             await navigator.clipboard.writeText(window.location.href);
             //TODO: change text to the href of profile/id page once it's added
-            toast.success("The link has been copied to your clipboard!");
+            toast.success("The link has been copied to your clipboard!", {
+              icon: <LinksIcon color="#737373" aria-hidden="true" />,
+            });
           }}
         >
           Share Link
         </Button>
       </header>
-      <CustomToastComponent
-        icon={<LinksIcon color="#737373" aria-hidden="true" />}
-      />
     </>
   );
 };
