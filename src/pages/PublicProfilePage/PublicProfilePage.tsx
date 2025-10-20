@@ -16,7 +16,7 @@ export const PublicProfilePage = () => {
   const { userId } = useParams();
 
   const { data: publicUserProfileData } = useQuery({
-    queryKey: ["publicUserProfileData"],
+    queryKey: [`publicUserProfileDataForUser${userId}`],
     queryFn: () =>
       getPublicUserProfileData(userId ? parseInt(userId) : undefined),
     enabled: !!userId,

@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -12,9 +12,9 @@ import { ImageUploader } from "@/components/ui/form/ImageUploader";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
 import { queryClient } from "@/config/react-query";
+import { useAuthenticatedUserProfileData } from "@/queries";
 import { profileDetailsSchema } from "@/schemas";
 import { deleteProfilePicture } from "@/services/deleteProfilePicture";
-import { getAuthenticatedUserProfile } from "@/services/getAuthenticatedUserProfile";
 import { updateProfileData } from "@/services/updateProfileData";
 import { type ProfileDetailsData } from "@/types";
 
@@ -23,10 +23,7 @@ import profileDetailsFormClasses from "./ProfileDetailsForm.module.scss";
 export const ProfileDetailsForm = () => {
   const id = useId();
 
-  const { data: authenticatedUserProfileData } = useQuery({
-    queryKey: ["authenticatedUserProfileData"],
-    queryFn: getAuthenticatedUserProfile,
-  });
+  const { authenticatedUserProfileData } = useAuthenticatedUserProfileData();
 
   const {
     register,
@@ -52,7 +49,10 @@ export const ProfileDetailsForm = () => {
     mutationFn: updateProfileData,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["authenticatedUserProfileData"],
+        queryKey: [
+          "authenticatedUserProfileData",
+          `publicUserProfileDataForUser${authenticatedUserProfileData?.id}`,
+        ],
       });
 
       toast.success("Your changes have been successfully saved!", {
@@ -67,7 +67,10 @@ export const ProfileDetailsForm = () => {
     mutationFn: deleteProfilePicture,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["authenticatedUserProfileData"],
+        queryKey: [
+          "authenticatedUserProfileData",
+          `publicUserProfileDataForUser${authenticatedUserProfileData?.id}`,
+        ],
       });
 
       removePreview();
