@@ -102,154 +102,152 @@ export const ProfileDetailsForm = () => {
   }, [preview]);
 
   return (
-    <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={profileDetailsFormClasses["form"]}
-      >
-        <div className={profileDetailsFormClasses["image-container"]}>
-          <Label
-            htmlFor={id + "-profilePicture"}
-            color="gray"
-            className={profileDetailsFormClasses["image-container__label"]}
-          >
-            Profile picture
-          </Label>
-          <div
-            className={profileDetailsFormClasses["image-container__controller"]}
-          >
-            <Controller
-              control={control}
-              name="profilePicture"
-              render={({ field: { onChange, name } }) => (
-                <ImageUploader
-                  id={id + "-profilePicture"}
-                  name={name}
-                  ariaDescribedBy={id + "-profilePictureNote"}
-                  ariaRequired={false}
-                  preview={
-                    previewUrl ??
-                    authenticatedUserProfileData?.profilePicturePath ??
-                    undefined
-                  }
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    if (e.target.files) {
-                      const file = e.target.files?.[0];
-                      onChange(file);
-                    }
-                  }}
-                  errorMessage={errors?.profilePicture?.message}
-                />
-              )}
-            />
-            {preview && (
-              <button
-                onClick={removePreview}
-                className={
-                  profileDetailsFormClasses["image-container__remove-btn"]
-                }
-                type="button"
-              >
-                Remove Preview
-              </button>
-            )}
-            {authenticatedUserProfileData?.profilePicturePath && (
-              <button
-                onClick={onDeleteProfilePicture}
-                className={
-                  profileDetailsFormClasses["image-container__delete-btn"]
-                }
-                type="button"
-              >
-                Delete Picture
-              </button>
-            )}
-          </div>
-          <Typography
-            component="p"
-            variant="body"
-            size="sm"
-            className={profileDetailsFormClasses["image-container__text"]}
-            id={id + "-profilePictureNote"}
-          >
-            Image must be below 1024x1024px. Use PNG or JPG format.
-          </Typography>
-        </div>
-        <div className={profileDetailsFormClasses["fields"]}>
-          <div className={profileDetailsFormClasses["field"]}>
-            <Label
-              htmlFor={id + "-firstName"}
-              color="gray"
-              className={profileDetailsFormClasses["field__label"]}
-            >
-              First name<span aria-hidden="true">*</span>
-            </Label>
-            <FormField errorMessage={errors?.firstName?.message}>
-              <Input
-                {...register("firstName")}
-                id={id + "-firstName"}
-                aria-required="true"
-                className={profileDetailsFormClasses["profile-details-input"]}
-                invalid={!!errors?.firstName}
-                aria-invalid={!!errors?.firstName}
-                type="text"
-                placeholder="e.g. John"
-              />
-            </FormField>
-          </div>
-          <div className={profileDetailsFormClasses["field"]}>
-            <Label
-              htmlFor={id + "-lastName"}
-              color="gray"
-              className={profileDetailsFormClasses["field__label"]}
-            >
-              Last name<span aria-hidden="true">*</span>
-            </Label>
-            <FormField errorMessage={errors?.lastName?.message}>
-              <Input
-                {...register("lastName")}
-                id={id + "-lastName"}
-                className={profileDetailsFormClasses["profile-details-input"]}
-                invalid={!!errors?.lastName}
-                aria-invalid={!!errors?.lastName}
-                aria-required="true"
-                type="text"
-                placeholder="e.g. Appleseed"
-              />
-            </FormField>
-          </div>
-          <div className={profileDetailsFormClasses["field"]}>
-            <Label
-              htmlFor={id + "-email"}
-              color="gray"
-              className={profileDetailsFormClasses["field__label"]}
-            >
-              Email
-            </Label>
-            <FormField errorMessage={errors?.email?.message}>
-              <Input
-                {...register("email")}
-                id={id + "-email"}
-                className={profileDetailsFormClasses["profile-details-input"]}
-                invalid={!!errors?.email}
-                aria-invalid={!!errors?.email}
-                aria-required="false"
-                type="email"
-                placeholder="e.g. email@example.com"
-              />
-            </FormField>
-          </div>
-        </div>
-        <span className={profileDetailsFormClasses["form__separator"]} />
-        <Button
-          variant="primary"
-          type="submit"
-          size="md"
-          className={profileDetailsFormClasses["form__save-btn"]}
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={profileDetailsFormClasses["form"]}
+    >
+      <div className={profileDetailsFormClasses["image-container"]}>
+        <Label
+          htmlFor={id + "-profilePicture"}
+          color="gray"
+          className={profileDetailsFormClasses["image-container__label"]}
         >
-          Save
-        </Button>
-      </form>
-    </>
+          Profile picture
+        </Label>
+        <div
+          className={profileDetailsFormClasses["image-container__controller"]}
+        >
+          <Controller
+            control={control}
+            name="profilePicture"
+            render={({ field: { onChange, name } }) => (
+              <ImageUploader
+                id={id + "-profilePicture"}
+                name={name}
+                ariaDescribedBy={id + "-profilePictureNote"}
+                ariaRequired={false}
+                preview={
+                  previewUrl ??
+                  authenticatedUserProfileData?.profilePicturePath ??
+                  undefined
+                }
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  if (e.target.files) {
+                    const file = e.target.files?.[0];
+                    onChange(file);
+                  }
+                }}
+                errorMessage={errors?.profilePicture?.message}
+              />
+            )}
+          />
+          {preview && (
+            <button
+              onClick={removePreview}
+              className={
+                profileDetailsFormClasses["image-container__remove-btn"]
+              }
+              type="button"
+            >
+              Remove Preview
+            </button>
+          )}
+          {authenticatedUserProfileData?.profilePicturePath && (
+            <button
+              onClick={onDeleteProfilePicture}
+              className={
+                profileDetailsFormClasses["image-container__delete-btn"]
+              }
+              type="button"
+            >
+              Delete Picture
+            </button>
+          )}
+        </div>
+        <Typography
+          component="p"
+          variant="body"
+          size="sm"
+          className={profileDetailsFormClasses["image-container__text"]}
+          id={id + "-profilePictureNote"}
+        >
+          Image must be below 1024x1024px. Use PNG or JPG format.
+        </Typography>
+      </div>
+      <div className={profileDetailsFormClasses["fields"]}>
+        <div className={profileDetailsFormClasses["field"]}>
+          <Label
+            htmlFor={id + "-firstName"}
+            color="gray"
+            className={profileDetailsFormClasses["field__label"]}
+          >
+            First name<span aria-hidden="true">*</span>
+          </Label>
+          <FormField errorMessage={errors?.firstName?.message}>
+            <Input
+              {...register("firstName")}
+              id={id + "-firstName"}
+              aria-required="true"
+              className={profileDetailsFormClasses["profile-details-input"]}
+              invalid={!!errors?.firstName}
+              aria-invalid={!!errors?.firstName}
+              type="text"
+              placeholder="e.g. John"
+            />
+          </FormField>
+        </div>
+        <div className={profileDetailsFormClasses["field"]}>
+          <Label
+            htmlFor={id + "-lastName"}
+            color="gray"
+            className={profileDetailsFormClasses["field__label"]}
+          >
+            Last name<span aria-hidden="true">*</span>
+          </Label>
+          <FormField errorMessage={errors?.lastName?.message}>
+            <Input
+              {...register("lastName")}
+              id={id + "-lastName"}
+              className={profileDetailsFormClasses["profile-details-input"]}
+              invalid={!!errors?.lastName}
+              aria-invalid={!!errors?.lastName}
+              aria-required="true"
+              type="text"
+              placeholder="e.g. Appleseed"
+            />
+          </FormField>
+        </div>
+        <div className={profileDetailsFormClasses["field"]}>
+          <Label
+            htmlFor={id + "-email"}
+            color="gray"
+            className={profileDetailsFormClasses["field__label"]}
+          >
+            Email
+          </Label>
+          <FormField errorMessage={errors?.email?.message}>
+            <Input
+              {...register("email")}
+              id={id + "-email"}
+              className={profileDetailsFormClasses["profile-details-input"]}
+              invalid={!!errors?.email}
+              aria-invalid={!!errors?.email}
+              aria-required="false"
+              type="email"
+              placeholder="e.g. email@example.com"
+            />
+          </FormField>
+        </div>
+      </div>
+      <span className={profileDetailsFormClasses["form__separator"]} />
+      <Button
+        variant="primary"
+        type="submit"
+        size="md"
+        className={profileDetailsFormClasses["form__save-btn"]}
+      >
+        Save
+      </Button>
+    </form>
   );
 };
