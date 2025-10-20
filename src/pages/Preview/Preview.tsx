@@ -65,8 +65,8 @@ export const Preview = () => {
                   rel="noopener noreferrer"
                   className={previewClasses["user-link"]}
                   style={{
-                    backgroundColor: `${linkData?.backgroundColor}`,
-                    color: `${linkData?.textColor}`,
+                    backgroundColor: linkData?.backgroundColor,
+                    color: linkData?.textColor,
                     border:
                       linkData?.linkProviderName === "Frontend Mentor"
                         ? "1px solid #D9D9D9"

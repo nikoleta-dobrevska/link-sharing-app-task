@@ -99,7 +99,7 @@ export const PublicProfilePage = () => {
                   rel="noopener noreferrer"
                   className={publicProfilePageClasses["user-link"]}
                   style={{
-                    backgroundColor: `${linkData?.backgroundColor}`,
+                    backgroundColor: linkData?.backgroundColor,
                     color: linkData?.textColor,
                     border:
                       linkData?.linkProviderName === "Frontend Mentor"

@@ -3,11 +3,7 @@ import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
 import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
 import { Typography } from "@/components/typography";
 import { useLinksDataForPreview } from "@/hooks/useLinksDataForPreview";
-import {
-  useAuthenticatedUserProfileData,
-  useLinkProvidersQuery,
-  useUserLinks,
-} from "@/queries";
+import { useAuthenticatedUserProfileData } from "@/queries";
 
 import previewComponentClasses from "./PreviewComponent.module.scss";
 
@@ -17,8 +13,6 @@ export const PreviewComponent = () => {
     authenticatedUserProfileData,
     authenticatedUserProfileDataIsSuccess,
   } = useAuthenticatedUserProfileData();
-  const { userLinksIsSuccess } = useUserLinks();
-  const { linkProvidersIsSuccess } = useLinkProvidersQuery();
 
   return (
     <div className={previewComponentClasses["user-data"]}>
@@ -67,7 +61,7 @@ export const PreviewComponent = () => {
         )}
       </div>
       <div className={previewComponentClasses["user-links"]}>
-        {linksDataForPreview && linkProvidersIsSuccess && userLinksIsSuccess
+        {linksDataForPreview
           ? linksDataForPreview.map((linksDataForPreview) => (
               <a
                 key={linksDataForPreview?.linkProviderId}
@@ -77,8 +71,8 @@ export const PreviewComponent = () => {
                 rel="noopener noreferrer"
                 className={previewComponentClasses["user-link"]}
                 style={{
-                  backgroundColor: `${linksDataForPreview?.backgroundColor}`,
-                  color: `${linksDataForPreview?.textColor}`,
+                  backgroundColor: linksDataForPreview?.backgroundColor,
+                  color: linksDataForPreview?.textColor,
                   border:
                     linksDataForPreview?.linkProviderName === "Frontend Mentor"
                       ? "1px solid #D9D9D9"

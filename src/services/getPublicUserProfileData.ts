@@ -15,7 +15,9 @@ export const getPublicUserProfileData = async (
     { signal }
   );
 
-  const validatedResponse = publicUserProfileDataSchema.safeParse(response);
+  const validatedResponse = publicUserProfileDataSchema.safeParse(
+    response.data
+  );
 
   if (!validatedResponse?.success) {
     return;

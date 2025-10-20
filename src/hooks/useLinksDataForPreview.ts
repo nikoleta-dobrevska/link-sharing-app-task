@@ -4,11 +4,11 @@ import { useLinkProvidersQuery, useUserLinks } from "@/queries";
 import { type LinkProps } from "@/types";
 
 export function useLinksDataForPreview() {
-  const { linkProviders } = useLinkProvidersQuery();
-  const { userLinks } = useUserLinks();
+  const { linkProviders, linkProvidersIsSuccess } = useLinkProvidersQuery();
+  const { userLinks, userLinksIsSuccess } = useUserLinks();
 
-  const linksDataForPreview = useMemo<LinkProps[]>(() => {
-    if (!linkProviders || !userLinks) {
+  const linksDataForPreview = useMemo<LinkProps[] | undefined>(() => {
+    if (!linkProvidersIsSuccess || !userLinksIsSuccess) {
       return [];
     }
 
@@ -26,7 +26,7 @@ export function useLinksDataForPreview() {
         iconSrc: currentLinkProvider?.iconSrc,
       };
     });
-  }, [linkProviders, userLinks]);
+  }, [linkProviders, linkProvidersIsSuccess, userLinks, userLinksIsSuccess]);
 
   return { linksDataForPreview };
 }
