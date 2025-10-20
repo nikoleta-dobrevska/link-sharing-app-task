@@ -31,13 +31,17 @@ export const PreviewHeader = ({ userId }: PreviewHeaderProps) => {
           size="md"
           className={previewHeaderClasses["preview-header__btn--mobile"]}
           onClick={async () => {
-            await navigator.clipboard.writeText(
-              `${import.meta.env.VITE_FRONTEND_URL}/profile/${userId}`
-            );
+            try {
+              await navigator.clipboard.writeText(
+                `${import.meta.env.VITE_FRONTEND_URL}/profile/${userId}`
+              );
 
-            toast.success("The link has been copied to your clipboard!", {
-              icon: <LinksIcon color="#737373" aria-hidden="true" />,
-            });
+              toast.success("The link has been copied to your clipboard!", {
+                icon: <LinksIcon color="#737373" aria-hidden="true" />,
+              });
+            } catch (error) {
+              toast.error(`An error occured: ${error}. Please try again.`);
+            }
           }}
         >
           Share Link
