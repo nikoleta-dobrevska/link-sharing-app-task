@@ -36,9 +36,14 @@ export const PreviewHeader = ({ userId }: PreviewHeaderProps) => {
             );
 
             toast.success("The link has been copied to your clipboard!", {
-              icon: <LinksIcon color="#737373" aria-hidden="true" />,
+              icon: (
+                <LinksIcon
+                  className={previewHeaderClasses["toast-icon"]}
+                  aria-hidden="true"
+                />
+              ),
             });
-          } catch (error) {
+          } catch (error: unknown) {
             toast.error(`An error occured: ${error}. Please try again.`);
           }
         }}
