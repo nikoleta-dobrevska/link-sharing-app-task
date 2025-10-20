@@ -10,8 +10,8 @@ import previewComponentClasses from "./PreviewComponent.module.scss";
 export const PreviewComponent = () => {
   const { linksDataForPreview } = useLinksDataForPreview();
   const {
-    authenticatedUserProfileData,
-    authenticatedUserProfileDataIsSuccess,
+    data: authenticatedUserProfileData,
+    isSuccess: authenticatedUserProfileDataIsSuccess,
   } = useAuthenticatedUserProfileData();
 
   return (

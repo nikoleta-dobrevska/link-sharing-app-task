@@ -20,9 +20,10 @@ import { type LinksFormData } from "@/types";
 import linksListClasses from "./LinksList.module.scss";
 
 export const LinksList = () => {
-  const { linkProviders } = useLinkProvidersQuery();
-  const { userLinks } = useUserLinks();
-  const { authenticatedUserProfileData } = useAuthenticatedUserProfileData();
+  const { data: linkProviders } = useLinkProvidersQuery();
+  const { data: userLinks } = useUserLinks();
+  const { data: authenticatedUserProfileData } =
+    useAuthenticatedUserProfileData();
 
   const initialFormValues = useMemo(
     () => ({
@@ -41,6 +42,8 @@ export const LinksList = () => {
     }),
     [userLinks, linkProviders]
   );
+
+  const userId = authenticatedUserProfileData?.id;
 
   const {
     control,
@@ -67,7 +70,7 @@ export const LinksList = () => {
       });
 
       await queryClient.invalidateQueries({
-        queryKey: ["publicUserProfileData", authenticatedUserProfileData?.id],
+        queryKey: ["publicUserProfileData", userId],
       });
     },
   });
@@ -80,7 +83,7 @@ export const LinksList = () => {
       });
 
       await queryClient.invalidateQueries({
-        queryKey: ["publicUserProfileData", authenticatedUserProfileData?.id],
+        queryKey: ["publicUserProfileData", userId],
       });
     },
   });

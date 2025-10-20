@@ -5,34 +5,22 @@ import { fetchAllLinks } from "@/services/fetchAllLinks";
 import { getAuthenticatedUserProfile } from "@/services/getAuthenticatedUserProfile";
 
 export function useLinkProvidersQuery() {
-  const { data: linkProviders, isSuccess: linkProvidersIsSuccess } = useQuery({
+  return useQuery({
     queryKey: ["linkProviders"],
     queryFn: fetchAllLinkProviders,
   });
-
-  return { linkProviders, linkProvidersIsSuccess };
 }
 
 export function useAuthenticatedUserProfileData() {
-  const {
-    data: authenticatedUserProfileData,
-    isSuccess: authenticatedUserProfileDataIsSuccess,
-  } = useQuery({
+  return useQuery({
     queryKey: ["authenticatedUserProfileData"],
     queryFn: getAuthenticatedUserProfile,
   });
-
-  return {
-    authenticatedUserProfileData,
-    authenticatedUserProfileDataIsSuccess,
-  };
 }
 
 export function useUserLinks() {
-  const { data: userLinks, isSuccess: userLinksIsSuccess } = useQuery({
+  return useQuery({
     queryKey: ["links"],
     queryFn: fetchAllLinks,
   });
-
-  return { userLinks, userLinksIsSuccess };
 }

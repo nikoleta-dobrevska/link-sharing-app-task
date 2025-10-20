@@ -22,27 +22,32 @@ export const PublicProfilePage = () => {
     enabled: !!userId,
   });
 
-  const { linkProviders, linkProvidersIsSuccess } = useLinkProvidersQuery();
+  const { data: linkProviders, isSuccess: linkProvidersIsSuccess } =
+    useLinkProvidersQuery();
 
-  const mappedLinksData = useMemo<LinkProps[] | undefined>(() => {
+  const mappedLinksData = useMemo<LinkProps[]>(() => {
     if (!linkProvidersIsSuccess || !publicUserProfileData?.userLinks) {
       return [];
     }
 
-    return publicUserProfileData?.userLinks?.map((userLink) => {
-      const currentLinkProvider = linkProviders?.find(
-        (linkProvider) => linkProvider.id === userLink.linkProviderId
-      );
+    return publicUserProfileData?.userLinks
+      ?.map((userLink) => {
+        const currentLinkProvider = linkProviders?.find(
+          (linkProvider) => linkProvider.id === userLink.linkProviderId
+        );
 
-      return {
-        link: userLink.link,
-        linkProviderId: currentLinkProvider?.id,
-        linkProviderName: currentLinkProvider?.name,
-        backgroundColor: currentLinkProvider?.backgroundColor,
-        textColor: currentLinkProvider?.textColor,
-        iconSrc: currentLinkProvider?.iconSrc,
-      };
-    });
+        if (!currentLinkProvider) return null;
+
+        return {
+          link: userLink.link,
+          linkProviderId: currentLinkProvider.id,
+          linkProviderName: currentLinkProvider.name,
+          backgroundColor: currentLinkProvider.backgroundColor,
+          textColor: currentLinkProvider.textColor,
+          iconSrc: currentLinkProvider.iconSrc,
+        };
+      })
+      .filter((userLink) => userLink !== null);
   }, [linkProviders, linkProvidersIsSuccess, publicUserProfileData?.userLinks]);
 
   return (

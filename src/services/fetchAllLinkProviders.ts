@@ -11,13 +11,9 @@ export const fetchAllLinkProviders = async ({
     { signal }
   );
 
-  const validatedResponse = linkProvidersResponseSchemaArray.safeParse(
+  const validatedResponse = linkProvidersResponseSchemaArray.parse(
     response.data
   );
 
-  if (!validatedResponse?.success) {
-    return;
-  }
-
-  return validatedResponse?.data;
+  return validatedResponse;
 };

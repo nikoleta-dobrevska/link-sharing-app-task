@@ -10,7 +10,8 @@ import previewClasses from "./Preview.module.scss";
 
 export const Preview = () => {
   const { linksDataForPreview } = useLinksDataForPreview();
-  const { authenticatedUserProfileData } = useAuthenticatedUserProfileData();
+  const { data: authenticatedUserProfileData } =
+    useAuthenticatedUserProfileData();
 
   return (
     <div className={previewClasses["background"]}>

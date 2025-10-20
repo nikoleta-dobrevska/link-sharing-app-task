@@ -4,11 +4,7 @@ import { userLinksArray } from "@/schemas";
 export const fetchAllLinks = async ({ signal }: { signal?: AbortSignal }) => {
   const response = await apiClientAuthorized.get("/user-links", { signal });
 
-  const validatedResponse = userLinksArray.safeParse(response.data);
+  const validatedResponse = userLinksArray.parse(response.data);
 
-  if (!validatedResponse?.success) {
-    return;
-  }
-
-  return validatedResponse?.data;
+  return validatedResponse;
 };

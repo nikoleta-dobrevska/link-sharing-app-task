@@ -23,7 +23,10 @@ import profileDetailsFormClasses from "./ProfileDetailsForm.module.scss";
 export const ProfileDetailsForm = () => {
   const id = useId();
 
-  const { authenticatedUserProfileData } = useAuthenticatedUserProfileData();
+  const { data: authenticatedUserProfileData } =
+    useAuthenticatedUserProfileData();
+
+  const userId = authenticatedUserProfileData?.id;
 
   const {
     register,
@@ -53,7 +56,7 @@ export const ProfileDetailsForm = () => {
       });
 
       await queryClient.invalidateQueries({
-        queryKey: ["publicUserProfileData", authenticatedUserProfileData?.id],
+        queryKey: ["publicUserProfileData", userId],
       });
 
       toast.success("Your changes have been successfully saved!", {
@@ -72,7 +75,7 @@ export const ProfileDetailsForm = () => {
       });
 
       await queryClient.invalidateQueries({
-        queryKey: ["publicUserProfileData", authenticatedUserProfileData?.id],
+        queryKey: ["publicUserProfileData", userId],
       });
 
       removePreview();

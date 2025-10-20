@@ -8,11 +8,7 @@ export const getAuthenticatedUserProfile = async ({
 }) => {
   const response = await apiClientAuthorized.get("/profile", { signal });
 
-  const validatedResponse = authenticatedUserSchema.safeParse(response.data);
+  const validatedResponse = authenticatedUserSchema.parse(response.data);
 
-  if (!validatedResponse?.success) {
-    return;
-  }
-
-  return validatedResponse?.data;
+  return validatedResponse;
 };
