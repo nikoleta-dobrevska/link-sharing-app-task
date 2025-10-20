@@ -1,6 +1,7 @@
 @use "@/scss/colors.scss";
 @use "@/scss/screens.scss";
 @use "@/scss/constants.scss";
+@use "@/scss/fonts.scss";
 
 .navbar {
   display: flex;
@@ -8,6 +9,7 @@
   background-color: colors.$white;
   align-items: center;
   height: 4.7rem;
+  width: 100%;
   border-radius: constants.$page-elements-border-radius;
 
   &__logo {

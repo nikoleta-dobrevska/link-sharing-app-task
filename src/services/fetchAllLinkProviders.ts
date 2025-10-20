@@ -8,13 +8,9 @@ export const fetchAllLinkProviders = async ({
 }) => {
   const response = await apiClientAuthorized.get("/link-providers", { signal });
 
-  const validatedResponse = linkProvidersResponseSchemaArray.safeParse(
+  const validatedResponse = linkProvidersResponseSchemaArray.parse(
     response.data
   );
 
-  if (!validatedResponse?.success) {
-    return;
-  }
-
-  return validatedResponse?.data;
+  return validatedResponse;
 };

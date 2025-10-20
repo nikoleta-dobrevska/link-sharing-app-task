@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router";
+
 import LinksIcon from "@/assets/svgr/links.svg?react";
 import PreviewIcon from "@/assets/svgr/preview.svg?react";
 import ProfileDetailsIcon from "@/assets/svgr/profile-details.svg?react";
@@ -22,6 +24,8 @@ const navItems = [
 ];
 
 export const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <nav className={navbarClasses["navbar"]} aria-label="Main Menu">
       <div className={navbarClasses["navbar__left"]}>
@@ -38,7 +42,12 @@ export const Navbar = () => {
         ))}
       </ul>
       <div className={navbarClasses["navbar__right"]}>
-        <Button type="button" variant="secondary" size="md">
+        <Button
+          type="button"
+          variant="secondary"
+          size="md"
+          onClick={() => navigate(RoutePaths.preview)}
+        >
           <PreviewIcon
             aria-hidden={true}
             className={navbarClasses["navbar__preview-icon"]}

@@ -1,64 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
-
 import ArrowRightIcon from "@/assets/svgr/ArrowRight.svg?react";
 import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
 import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
 import { Typography } from "@/components/typography";
-import { ONE_DAY_IN_MILLISECONDS } from "@/constants";
-import { fetchAllLinkProviders } from "@/services/fetchAllLinkProviders";
-import { fetchAllLinks } from "@/services/fetchAllLinks";
-import { getAuthenticatedUserProfile } from "@/services/getAuthenticatedUserProfile";
-import { type LinkProviderData, type UserLinkData } from "@/types";
+import { useLinksDataForPreview } from "@/hooks/useLinksDataForPreview";
+import { useAuthenticatedUserProfileData } from "@/queries";
 
 import previewComponentClasses from "./PreviewComponent.module.scss";
 
-type LinkProviderUserLinkPair = {
-  userLink?: UserLinkData;
-  currentLinkProvider?: LinkProviderData;
-};
-
-type LinkProviderUserLinkPairs = LinkProviderUserLinkPair[] | undefined;
-
 export const PreviewComponent = () => {
+  const { linksDataForPreview } = useLinksDataForPreview();
   const {
     data: authenticatedUserProfileData,
     isSuccess: authenticatedUserProfileDataIsSuccess,
-  } = useQuery({
-    queryKey: ["authenticatedUserProfileData"],
-    queryFn: getAuthenticatedUserProfile,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
-  });
-
-  const { data: linkProviders, isSuccess: linkProvidersIsSuccess } = useQuery({
-    queryKey: ["linkProviders"],
-    queryFn: fetchAllLinkProviders,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
-  });
-
-  const { data: userLinks, isSuccess: userLinksIsSuccess } = useQuery({
-    queryKey: ["links"],
-    queryFn: fetchAllLinks,
-    staleTime: ONE_DAY_IN_MILLISECONDS,
-    gcTime: ONE_DAY_IN_MILLISECONDS,
-  });
-
-  const linkProviderUserLinkPairs = useMemo(() => {
-    const pairs: LinkProviderUserLinkPairs = userLinks?.map((userLink) => {
-      const currentLinkProvider = linkProviders?.find(
-        (linkProvider) => linkProvider.id === userLink.linkProviderId
-      );
-
-      return {
-        userLink: userLink,
-        currentLinkProvider: currentLinkProvider,
-      };
-    });
-
-    return pairs;
-  }, [linkProviders, userLinks]);
+  } = useAuthenticatedUserProfileData();
 
   return (
     <div className={previewComponentClasses["user-data"]}>
@@ -107,41 +61,36 @@ export const PreviewComponent = () => {
         )}
       </div>
       <div className={previewComponentClasses["user-links"]}>
-        {linkProviderUserLinkPairs &&
-        linkProvidersIsSuccess &&
-        userLinksIsSuccess
-          ? linkProviderUserLinkPairs.map((linkProviderUserLinkPair) => (
+        {linksDataForPreview
+          ? linksDataForPreview.map((linksDataForPreview) => (
               <a
-                key={linkProviderUserLinkPair?.userLink?.linkProviderId}
-                href={`${linkProviderUserLinkPair?.userLink?.link}`}
-                aria-label={`Your ${linkProviderUserLinkPair?.currentLinkProvider?.name} link, opens a new tab`}
+                key={linksDataForPreview?.linkProviderId}
+                href={`${linksDataForPreview?.link}`}
+                aria-label={`Your ${linksDataForPreview?.linkProviderName} link, opens a new tab`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={previewComponentClasses["user-link"]}
                 style={{
-                  backgroundColor: `${linkProviderUserLinkPair.currentLinkProvider?.backgroundColor}`,
-                  color: `${linkProviderUserLinkPair?.currentLinkProvider?.textColor}`,
+                  backgroundColor: `${linksDataForPreview?.backgroundColor}`,
+                  color: `${linksDataForPreview?.textColor}`,
                   border:
-                    linkProviderUserLinkPair?.currentLinkProvider?.name ===
-                    "Frontend Mentor"
+                    linksDataForPreview?.linkProviderName === "Frontend Mentor"
                       ? "1px solid #D9D9D9"
                       : "none",
                 }}
               >
                 <div className={previewComponentClasses["user-link__name"]}>
-                  {linkProviderUserLinkPair?.currentLinkProvider?.name ===
+                  {linksDataForPreview?.linkProviderName ===
                   "Frontend Mentor" ? (
                     <FrontendMentorIcon aria-hidden="true" />
                   ) : (
                     <img
-                      src={
-                        linkProviderUserLinkPair?.currentLinkProvider?.iconSrc
-                      }
+                      src={linksDataForPreview?.iconSrc}
                       alt=""
                       className={previewComponentClasses["user-link__icon"]}
                     />
                   )}
-                  {linkProviderUserLinkPair?.currentLinkProvider?.name}
+                  {linksDataForPreview?.linkProviderName}
                 </div>
                 <ArrowRightIcon aria-hidden="true" />
               </a>

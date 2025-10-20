@@ -50,8 +50,8 @@
 .profile-pic {
   border: 0.25rem solid colors.$dark-purple;
   border-radius: 50%;
-  width: 6.5rem;
-  height: 6.5rem;
+  width: 6rem;
+  height: 6rem;
 }
 
 .profile-pic,
@@ -70,8 +70,7 @@
 }
 
 .user-link {
-  height: 1.25rem;
-  width: 13rem;
+  width: 15rem;
   padding: 0.75rem 1rem;
   border-radius: constants.$border-radius;
   display: flex;
