@@ -6,7 +6,11 @@ import { Button } from "@/components/ui/Button";
 
 import previewHeaderClasses from "./PreviewHeader.module.scss";
 
-export const PreviewHeader = () => {
+type PreviewHeaderProps = {
+  userId?: number;
+};
+
+export const PreviewHeader = ({ userId }: PreviewHeaderProps) => {
   const navigate = useNavigate();
 
   return (
@@ -27,8 +31,10 @@ export const PreviewHeader = () => {
         className={previewHeaderClasses["preview-header__btn--mobile"]}
         onClick={async () => {
           try {
-            await navigator.clipboard.writeText(window.location.href);
-            //TODO: change text to the href of profile/id page once it's added
+            await navigator.clipboard.writeText(
+              `${import.meta.env.VITE_FRONTEND_URL}/profile/${userId}`
+            );
+
             toast.success("The link has been copied to your clipboard!", {
               icon: (
                 <LinksIcon

@@ -7,7 +7,11 @@ import { EmptyLinksList } from "@/components/links/EmptyLinksList";
 import { LinksField } from "@/components/links/LinksField";
 import { Button } from "@/components/ui/Button";
 import { queryClient } from "@/config/react-query";
-import { useLinkProvidersQuery, useUserLinks } from "@/queries";
+import {
+  useAuthenticatedUserProfileDataQuery,
+  useLinkProvidersQuery,
+  useUserLinksQuery,
+} from "@/queries";
 import { linksSchema } from "@/schemas";
 import { createOrUpdateUserLinks } from "@/services/createOrUpdateLinks";
 import { deleteLink } from "@/services/deleteLink";
@@ -17,7 +21,9 @@ import linksListClasses from "./LinksList.module.scss";
 
 export const LinksList = () => {
   const { data: linkProviders } = useLinkProvidersQuery();
-  const { data: userLinks } = useUserLinks();
+  const { data: userLinks } = useUserLinksQuery();
+  const { data: authenticatedUserProfileData } =
+    useAuthenticatedUserProfileDataQuery();
 
   const initialFormValues = useMemo(
     () => ({
@@ -36,6 +42,8 @@ export const LinksList = () => {
     }),
     [userLinks, linkProviders]
   );
+
+  const userId = authenticatedUserProfileData?.id;
 
   const {
     control,
@@ -56,15 +64,27 @@ export const LinksList = () => {
 
   const createOrUpdateUserLinksMutation = useMutation({
     mutationFn: createOrUpdateUserLinks,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["links"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["links"],
+      });
+
+      await queryClient.invalidateQueries({
+        queryKey: ["publicUserProfileData", userId],
+      });
     },
   });
 
   const deleteLinkMutation = useMutation({
     mutationFn: deleteLink,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["links"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["links"],
+      });
+
+      await queryClient.invalidateQueries({
+        queryKey: ["publicUserProfileData", userId],
+      });
     },
   });
 

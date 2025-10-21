@@ -1,8 +1,5 @@
-import {
-  DropDownField,
-  type Option,
-} from "@/components/ui/form/DropDownField/DropDownField";
-import { type LinkProviderData } from "@/types";
+import { DropDownField } from "@/components/ui/form/DropDownField/DropDownField";
+import { type LinkProviderData, type Option } from "@/types";
 
 function mapLinkProviderToOption(linkProvider: LinkProviderData): Option {
   return {

@@ -5,6 +5,7 @@ import DownIcon from "@/assets/svgr/Down.svg?react";
 import UpIcon from "@/assets/svgr/Up.svg?react";
 import { Typography } from "@/components/typography";
 import { KeyboardEventKey } from "@/constants";
+import { type Option } from "@/types";
 
 import dropDownFieldClasses from "./DropDownField.module.scss";
 
@@ -14,11 +15,6 @@ type ArrowProps = {
 
 const Arrow = ({ isDropdownOpen }: ArrowProps) => {
   return isDropdownOpen ? <UpIcon /> : <DownIcon />;
-};
-
-export type Option = {
-  name: string;
-  src: string;
 };
 
 type DropDownFieldProps = {

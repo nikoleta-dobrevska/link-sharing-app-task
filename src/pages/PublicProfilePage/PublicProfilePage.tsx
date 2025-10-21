@@ -1,81 +1,86 @@
+import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { useParams } from "react-router";
 
 import ArrowRightIcon from "@/assets/svgr/ArrowRight.svg?react";
 import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
 import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
-import { PreviewHeader } from "@/components/PreviewHeader";
 import { Typography } from "@/components/typography";
 import { mapLinksData } from "@/mapLinksData";
-import {
-  useAuthenticatedUserProfileDataQuery,
-  useLinkProvidersQuery,
-  useUserLinksQuery,
-} from "@/queries";
+import { useLinkProvidersQuery } from "@/queries";
+import { getPublicUserProfileData } from "@/services/getPublicUserProfileData";
 
-import previewClasses from "./Preview.module.scss";
+import publicProfilePageClasses from "./PublicProfilePage.module.scss";
 
-export const Preview = () => {
-  const { data: authenticatedUserProfileData } =
-    useAuthenticatedUserProfileDataQuery();
+export const PublicProfilePage = () => {
+  const { userId } = useParams();
+
+  const { data: publicUserProfileData } = useQuery({
+    queryKey: ["publicUserProfileData", userId],
+    queryFn: () =>
+      getPublicUserProfileData(userId ? parseInt(userId) : undefined),
+    enabled: !!userId,
+  });
+
   const { data: linkProviders } = useLinkProvidersQuery();
-  const { data: userLinks } = useUserLinksQuery();
 
   const mappedLinksData = useMemo(() => {
-    return mapLinksData(userLinks, linkProviders);
-  }, [linkProviders, userLinks]);
+    return mapLinksData(publicUserProfileData?.userLinks, linkProviders);
+  }, [linkProviders, publicUserProfileData?.userLinks]);
 
   return (
-    <div className={previewClasses["background"]}>
-      <div className={previewClasses["purple-header"]}>
-        <PreviewHeader userId={authenticatedUserProfileData?.id} />
-      </div>
-      <main className={previewClasses["user-data-container"]}>
+    <div className={publicProfilePageClasses["background"]}>
+      <div className={publicProfilePageClasses["purple-header"]} />
+      <main className={publicProfilePageClasses["user-data-container"]}>
         <section
-          className={previewClasses["user-info-container"]}
-          aria-label="Your info"
+          className={publicProfilePageClasses["user-info-container"]}
+          aria-label="User info"
         >
-          {authenticatedUserProfileData?.profilePicturePath ? (
+          {publicUserProfileData?.profilePicturePath ? (
             <img
               alt=""
-              src={authenticatedUserProfileData?.profilePicturePath}
-              className={previewClasses["profile-pic"]}
+              src={publicUserProfileData?.profilePicturePath}
+              className={publicProfilePageClasses["profile-pic"]}
             />
           ) : (
             <ElipseIcon
               aria-hidden="true"
-              className={previewClasses["profile-pic-placeholder"]}
+              className={publicProfilePageClasses["profile-pic-placeholder"]}
             />
           )}
-          <div className={previewClasses["user-info"]}>
+          <div className={publicProfilePageClasses["user-info"]}>
             <Typography
               component="p"
               variant="heading"
               size="md"
-              className={previewClasses["user-info__names"]}
+              className={publicProfilePageClasses["user-info__names"]}
             >
-              {authenticatedUserProfileData?.firstName}{" "}
-              {authenticatedUserProfileData?.lastName}
+              {publicUserProfileData?.firstName}{" "}
+              {publicUserProfileData?.lastName}
             </Typography>
             <Typography
               component="p"
               variant="body"
               size="md"
-              className={previewClasses["user-info__email"]}
+              className={publicProfilePageClasses["user-info__email"]}
             >
-              {authenticatedUserProfileData?.email}
+              {publicUserProfileData?.email}
             </Typography>
           </div>
         </section>
-        <ul className={previewClasses["user-links"]} aria-label="Your links">
+        <ul
+          className={publicProfilePageClasses["user-links"]}
+          aria-label="Your links"
+        >
           {mappedLinksData &&
             mappedLinksData.map((linkData) => (
               <li key={linkData?.linkProviderId}>
                 <a
                   href={`${linkData.link}`}
-                  aria-label={`Your ${linkData?.linkProviderName} link, opens a new tab`}
+                  aria-label={`User's ${linkData?.linkProviderName} link, opens a new tab`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={previewClasses["user-link"]}
+                  className={publicProfilePageClasses["user-link"]}
                   style={{
                     backgroundColor: linkData?.backgroundColor,
                     color: linkData?.textColor,
@@ -85,14 +90,14 @@ export const Preview = () => {
                         : "none",
                   }}
                 >
-                  <div className={previewClasses["user-link__name"]}>
+                  <div className={publicProfilePageClasses["user-link__name"]}>
                     {linkData?.linkProviderName === "Frontend Mentor" ? (
                       <FrontendMentorIcon aria-hidden="true" />
                     ) : (
                       <img
                         src={linkData?.iconSrc}
                         alt=""
-                        className={previewClasses["user-link__icon"]}
+                        className={publicProfilePageClasses["user-link__icon"]}
                       />
                     )}
                     {linkData?.linkProviderName}

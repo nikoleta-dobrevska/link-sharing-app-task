@@ -138,12 +138,14 @@ export const profileDetailsSchema = z.object({
 
 export const authenticatedUserSchema = z.pipe(
   z.object({
+    id: z.number(),
     profilePicturePath: z.nullable(z.string()),
     firstName: z.string(),
     lastName: z.string(),
     email: z.email(),
   }),
-  z.transform(({ profilePicturePath, firstName, lastName, email }) => ({
+  z.transform(({ id, profilePicturePath, firstName, lastName, email }) => ({
+    id,
     profilePicturePath: profilePicturePath
       ? `${import.meta.env.VITE_API_URL}/${profilePicturePath}`
       : null,
@@ -151,4 +153,25 @@ export const authenticatedUserSchema = z.pipe(
     lastName,
     email,
   }))
+);
+
+export const publicUserProfileDataSchema = z.pipe(
+  z.object({
+    profilePicturePath: z.nullable(z.string()),
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.email(),
+    userLinks: userLinksArray,
+  }),
+  z.transform(
+    ({ profilePicturePath, firstName, lastName, email, userLinks }) => ({
+      profilePicturePath: profilePicturePath
+        ? `${import.meta.env.VITE_API_URL}/${profilePicturePath}`
+        : null,
+      firstName,
+      lastName,
+      email,
+      userLinks,
+    })
+  )
 );
