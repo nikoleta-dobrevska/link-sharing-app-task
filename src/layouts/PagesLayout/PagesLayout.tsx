@@ -11,9 +11,12 @@ export const PagesLayout = () => {
   return (
     <div className={pagesLayoutClasses["page-layout"]}>
       <Navbar />
-      <main className={pagesLayoutClasses["main"]}>
-        <section className={pagesLayoutClasses["preview-section"]}>
-          <aside className={pagesLayoutClasses["preview-section__display"]}>
+      <div className={pagesLayoutClasses["main"]}>
+        <aside
+          className={pagesLayoutClasses["preview-section"]}
+          aria-label="Preview content"
+        >
+          <div className={pagesLayoutClasses["preview-section__display"]}>
             <RectangleIcon
               className={pagesLayoutClasses["preview-section__display--static"]}
             />
@@ -23,14 +26,14 @@ export const PagesLayout = () => {
               }
             />
             <PreviewComponent />
-          </aside>
-        </section>
-        <section className={pagesLayoutClasses["page-section"]}>
+          </div>
+        </aside>
+        <main className={pagesLayoutClasses["page-section"]}>
           <div className={pagesLayoutClasses["page-section__elements"]}>
             <Outlet />
           </div>
-        </section>
-      </main>
+        </main>
+      </div>
     </div>
   );
 };

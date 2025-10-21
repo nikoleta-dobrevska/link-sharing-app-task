@@ -71,39 +71,43 @@ export const PreviewComponent = () => {
           </Typography>
         )}
       </div>
-      <div className={previewComponentClasses["user-links"]}>
+      <ul
+        className={previewComponentClasses["user-links"]}
+        aria-label="Your links"
+      >
         {mappedLinksData
           ? mappedLinksData.map((linkData) => (
-              <a
-                key={linkData?.linkProviderId}
-                href={`${linkData?.link}`}
-                aria-label={`Your ${linkData?.linkProviderName} link, opens a new tab`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={previewComponentClasses["user-link"]}
-                style={{
-                  backgroundColor: linkData?.backgroundColor,
-                  color: linkData?.textColor,
-                  border:
-                    linkData?.linkProviderName === "Frontend Mentor"
-                      ? "1px solid #D9D9D9"
-                      : "none",
-                }}
-              >
-                <div className={previewComponentClasses["user-link__name"]}>
-                  {linkData?.linkProviderName === "Frontend Mentor" ? (
-                    <FrontendMentorIcon aria-hidden="true" />
-                  ) : (
-                    <img
-                      src={linkData?.iconSrc}
-                      alt=""
-                      className={previewComponentClasses["user-link__icon"]}
-                    />
-                  )}
-                  {linkData?.linkProviderName}
-                </div>
-                <ArrowRightIcon aria-hidden="true" />
-              </a>
+              <li key={linkData?.linkProviderId}>
+                <a
+                  href={`${linkData?.link}`}
+                  aria-label={`Your ${linkData?.linkProviderName} link, opens a new tab`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={previewComponentClasses["user-link"]}
+                  style={{
+                    backgroundColor: linkData?.backgroundColor,
+                    color: linkData?.textColor,
+                    border:
+                      linkData?.linkProviderName === "Frontend Mentor"
+                        ? "1px solid #D9D9D9"
+                        : "none",
+                  }}
+                >
+                  <div className={previewComponentClasses["user-link__name"]}>
+                    {linkData?.linkProviderName === "Frontend Mentor" ? (
+                      <FrontendMentorIcon aria-hidden="true" />
+                    ) : (
+                      <img
+                        src={linkData?.iconSrc}
+                        alt=""
+                        className={previewComponentClasses["user-link__icon"]}
+                      />
+                    )}
+                    {linkData?.linkProviderName}
+                  </div>
+                  <ArrowRightIcon aria-hidden="true" />
+                </a>
+              </li>
             ))
           : Array.from({ length: 5 }, (_, i) => (
               <div
@@ -111,7 +115,7 @@ export const PreviewComponent = () => {
                 className={previewComponentClasses["user-link-placeholder"]}
               />
             ))}
-      </div>
+      </ul>
     </div>
   );
 };

@@ -70,7 +70,7 @@ export const PublicProfilePage = () => {
         </section>
         <ul
           className={publicProfilePageClasses["user-links"]}
-          aria-label="Your links"
+          aria-label="User links"
         >
           {mappedLinksData &&
             mappedLinksData.map((linkData) => (
