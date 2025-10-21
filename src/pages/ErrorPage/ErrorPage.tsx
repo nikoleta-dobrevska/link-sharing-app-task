@@ -6,7 +6,10 @@ import errorPageClasses from "./ErrorPage.module.scss";
 
 export const ErrorPage = () => {
   return (
-    <div className={errorPageClasses["error-page"]}>
+    <main className={errorPageClasses["error-page"]}>
+      <Typography component="h1" variant="heading" size="md">
+        Error Page
+      </Typography>
       <Typography
         component="p"
         variant="body"
@@ -24,6 +27,6 @@ export const ErrorPage = () => {
           Login
         </NavLink>
       </Typography>
-    </div>
+    </main>
   );
 };
