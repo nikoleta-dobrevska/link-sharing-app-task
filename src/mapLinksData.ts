@@ -1,8 +1,8 @@
 import { type LinkProvidersData, type UserLinksResponseData } from "@/types";
 
 export function mapLinksData(
-  userLinks?: UserLinksResponseData,
-  linkProviders?: LinkProvidersData
+  userLinks: UserLinksResponseData | undefined,
+  linkProviders: LinkProvidersData | undefined
 ) {
   if (!userLinks || !linkProviders) {
     return [];
