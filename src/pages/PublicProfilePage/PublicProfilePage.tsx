@@ -6,9 +6,9 @@ import ArrowRightIcon from "@/assets/svgr/ArrowRight.svg?react";
 import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
 import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
 import { Typography } from "@/components/typography";
+import { mapLinksData } from "@/mapLinksData";
 import { useLinkProvidersQuery } from "@/queries";
 import { getPublicUserProfileData } from "@/services/getPublicUserProfileData";
-import { type LinkProps } from "@/types";
 
 import publicProfilePageClasses from "./PublicProfilePage.module.scss";
 
@@ -22,33 +22,11 @@ export const PublicProfilePage = () => {
     enabled: !!userId,
   });
 
-  const { data: linkProviders, isSuccess: linkProvidersIsSuccess } =
-    useLinkProvidersQuery();
+  const { data: linkProviders } = useLinkProvidersQuery();
 
-  const mappedLinksData = useMemo<LinkProps[]>(() => {
-    if (!linkProvidersIsSuccess || !publicUserProfileData?.userLinks) {
-      return [];
-    }
-
-    return publicUserProfileData?.userLinks
-      ?.map((userLink) => {
-        const currentLinkProvider = linkProviders?.find(
-          (linkProvider) => linkProvider.id === userLink.linkProviderId
-        );
-
-        if (!currentLinkProvider) return null;
-
-        return {
-          link: userLink.link,
-          linkProviderId: currentLinkProvider.id,
-          linkProviderName: currentLinkProvider.name,
-          backgroundColor: currentLinkProvider.backgroundColor,
-          textColor: currentLinkProvider.textColor,
-          iconSrc: currentLinkProvider.iconSrc,
-        };
-      })
-      .filter((userLink) => userLink !== null);
-  }, [linkProviders, linkProvidersIsSuccess, publicUserProfileData?.userLinks]);
+  const mappedLinksData = useMemo(() => {
+    return mapLinksData(publicUserProfileData?.userLinks, linkProviders);
+  }, [linkProviders, publicUserProfileData?.userLinks]);
 
   return (
     <div className={publicProfilePageClasses["background"]}>

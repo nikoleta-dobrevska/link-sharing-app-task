@@ -11,14 +11,14 @@ export function useLinkProvidersQuery() {
   });
 }
 
-export function useAuthenticatedUserProfileData() {
+export function useAuthenticatedUserProfileDataQuery() {
   return useQuery({
     queryKey: ["authenticatedUserProfileData"],
     queryFn: getAuthenticatedUserProfile,
   });
 }
 
-export function useUserLinks() {
+export function useUserLinksQuery() {
   return useQuery({
     queryKey: ["links"],
     queryFn: fetchAllLinks,

@@ -1,17 +1,28 @@
+import { useMemo } from "react";
+
 import ArrowRightIcon from "@/assets/svgr/ArrowRight.svg?react";
 import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
 import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
 import { PreviewHeader } from "@/components/PreviewHeader";
 import { Typography } from "@/components/typography";
-import { useLinksDataForPreview } from "@/hooks/useLinksDataForPreview";
-import { useAuthenticatedUserProfileData } from "@/queries";
+import { mapLinksData } from "@/mapLinksData";
+import {
+  useAuthenticatedUserProfileDataQuery,
+  useLinkProvidersQuery,
+  useUserLinksQuery,
+} from "@/queries";
 
 import previewClasses from "./Preview.module.scss";
 
 export const Preview = () => {
-  const { linksDataForPreview } = useLinksDataForPreview();
   const { data: authenticatedUserProfileData } =
-    useAuthenticatedUserProfileData();
+    useAuthenticatedUserProfileDataQuery();
+  const { data: linkProviders } = useLinkProvidersQuery();
+  const { data: userLinks } = useUserLinksQuery();
+
+  const mappedLinksData = useMemo(() => {
+    return mapLinksData(userLinks, linkProviders);
+  }, [linkProviders, userLinks]);
 
   return (
     <div className={previewClasses["background"]}>
@@ -56,8 +67,8 @@ export const Preview = () => {
           </div>
         </section>
         <ul className={previewClasses["user-links"]} aria-label="Your links">
-          {linksDataForPreview &&
-            linksDataForPreview.map((linkData) => (
+          {mappedLinksData &&
+            mappedLinksData.map((linkData) => (
               <li key={linkData?.linkProviderId}>
                 <a
                   href={`${linkData.link}`}

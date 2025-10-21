@@ -8,9 +8,9 @@ import { LinksField } from "@/components/links/LinksField";
 import { Button } from "@/components/ui/Button";
 import { queryClient } from "@/config/react-query";
 import {
-  useAuthenticatedUserProfileData,
+  useAuthenticatedUserProfileDataQuery,
   useLinkProvidersQuery,
-  useUserLinks,
+  useUserLinksQuery,
 } from "@/queries";
 import { linksSchema } from "@/schemas";
 import { createOrUpdateUserLinks } from "@/services/createOrUpdateLinks";
@@ -21,9 +21,9 @@ import linksListClasses from "./LinksList.module.scss";
 
 export const LinksList = () => {
   const { data: linkProviders } = useLinkProvidersQuery();
-  const { data: userLinks } = useUserLinks();
+  const { data: userLinks } = useUserLinksQuery();
   const { data: authenticatedUserProfileData } =
-    useAuthenticatedUserProfileData();
+    useAuthenticatedUserProfileDataQuery();
 
   const initialFormValues = useMemo(
     () => ({

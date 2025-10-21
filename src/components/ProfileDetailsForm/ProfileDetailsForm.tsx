@@ -12,7 +12,7 @@ import { ImageUploader } from "@/components/ui/form/ImageUploader";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
 import { queryClient } from "@/config/react-query";
-import { useAuthenticatedUserProfileData } from "@/queries";
+import { useAuthenticatedUserProfileDataQuery } from "@/queries";
 import { profileDetailsSchema } from "@/schemas";
 import { deleteProfilePicture } from "@/services/deleteProfilePicture";
 import { updateProfileData } from "@/services/updateProfileData";
@@ -24,7 +24,7 @@ export const ProfileDetailsForm = () => {
   const id = useId();
 
   const { data: authenticatedUserProfileData } =
-    useAuthenticatedUserProfileData();
+    useAuthenticatedUserProfileDataQuery();
 
   const userId = authenticatedUserProfileData?.id;
 

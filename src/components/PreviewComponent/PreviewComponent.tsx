@@ -1,18 +1,29 @@
+import { useMemo } from "react";
+
 import ArrowRightIcon from "@/assets/svgr/ArrowRight.svg?react";
 import ElipseIcon from "@/assets/svgr/Ellipse 3.svg?react";
 import FrontendMentorIcon from "@/assets/svgr/FrontendMentor.svg?react";
 import { Typography } from "@/components/typography";
-import { useLinksDataForPreview } from "@/hooks/useLinksDataForPreview";
-import { useAuthenticatedUserProfileData } from "@/queries";
+import { mapLinksData } from "@/mapLinksData";
+import {
+  useAuthenticatedUserProfileDataQuery,
+  useLinkProvidersQuery,
+  useUserLinksQuery,
+} from "@/queries";
 
 import previewComponentClasses from "./PreviewComponent.module.scss";
 
 export const PreviewComponent = () => {
-  const { linksDataForPreview } = useLinksDataForPreview();
   const {
     data: authenticatedUserProfileData,
     isSuccess: authenticatedUserProfileDataIsSuccess,
-  } = useAuthenticatedUserProfileData();
+  } = useAuthenticatedUserProfileDataQuery();
+  const { data: linkProviders } = useLinkProvidersQuery();
+  const { data: userLinks } = useUserLinksQuery();
+
+  const mappedLinksData = useMemo(() => {
+    return mapLinksData(userLinks, linkProviders);
+  }, [linkProviders, userLinks]);
 
   return (
     <div className={previewComponentClasses["user-data"]}>
@@ -61,36 +72,35 @@ export const PreviewComponent = () => {
         )}
       </div>
       <div className={previewComponentClasses["user-links"]}>
-        {linksDataForPreview
-          ? linksDataForPreview.map((linksDataForPreview) => (
+        {mappedLinksData
+          ? mappedLinksData.map((linkData) => (
               <a
-                key={linksDataForPreview?.linkProviderId}
-                href={`${linksDataForPreview?.link}`}
-                aria-label={`Your ${linksDataForPreview?.linkProviderName} link, opens a new tab`}
+                key={linkData?.linkProviderId}
+                href={`${linkData?.link}`}
+                aria-label={`Your ${linkData?.linkProviderName} link, opens a new tab`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={previewComponentClasses["user-link"]}
                 style={{
-                  backgroundColor: linksDataForPreview?.backgroundColor,
-                  color: linksDataForPreview?.textColor,
+                  backgroundColor: linkData?.backgroundColor,
+                  color: linkData?.textColor,
                   border:
-                    linksDataForPreview?.linkProviderName === "Frontend Mentor"
+                    linkData?.linkProviderName === "Frontend Mentor"
                       ? "1px solid #D9D9D9"
                       : "none",
                 }}
               >
                 <div className={previewComponentClasses["user-link__name"]}>
-                  {linksDataForPreview?.linkProviderName ===
-                  "Frontend Mentor" ? (
+                  {linkData?.linkProviderName === "Frontend Mentor" ? (
                     <FrontendMentorIcon aria-hidden="true" />
                   ) : (
                     <img
-                      src={linksDataForPreview?.iconSrc}
+                      src={linkData?.iconSrc}
                       alt=""
                       className={previewComponentClasses["user-link__icon"]}
                     />
                   )}
-                  {linksDataForPreview?.linkProviderName}
+                  {linkData?.linkProviderName}
                 </div>
                 <ArrowRightIcon aria-hidden="true" />
               </a>
