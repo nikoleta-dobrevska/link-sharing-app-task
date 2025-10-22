@@ -6,5 +6,9 @@ export const fetchAllLinks = async ({ signal }: { signal?: AbortSignal }) => {
 
   const validatedResponse = userLinksArray.parse(response.data);
 
-  return validatedResponse;
+  const orderedUserLinksAsc = validatedResponse.sort(
+    (prev, next) => prev.order - next.order
+  );
+
+  return orderedUserLinksAsc;
 };
