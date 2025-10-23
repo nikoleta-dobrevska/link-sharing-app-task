@@ -7,6 +7,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 
 import { EmptyLinksList } from "@/components/links/EmptyLinksList";
 import { LinksField } from "@/components/links/LinksField";
+import { ScrollableLinksList } from "@/components/links/ScrollableLinksList";
 import { Button } from "@/components/ui/Button";
 import { queryClient } from "@/config/react-query";
 import {
@@ -107,7 +108,9 @@ export const LinksList = () => {
     createOrUpdateUserLinksMutation.mutate(data);
   };
 
-  const onSwap = (from: number, to: number) => {
+  const swapLinks = (from: number, to: number) => {
+    if (from === to) return;
+
     swap(from, to);
   };
 
@@ -134,34 +137,35 @@ export const LinksList = () => {
           {userLinks && userLinks?.length <= 0 ? (
             <EmptyLinksList />
           ) : (
-            <div className={linksListClasses["links-list__fields"]}>
+            <ScrollableLinksList>
+              {/*<div className={linksListClasses["links-list__fields"]}>*/}
               {linkProviders &&
                 fields.map((field, index) => {
                   return (
-                    <div key={field.id}>
-                      <LinksField
-                        index={index}
-                        errorMessage={errors?.links?.[index]?.link?.message}
-                        control={control}
-                        linkProviders={linkProviders}
-                        register={register}
-                        onRemove={() => {
-                          remove(index);
+                    <LinksField
+                      key={field.id}
+                      index={index}
+                      errorMessage={errors?.links?.[index]?.link?.message}
+                      control={control}
+                      linkProviders={linkProviders}
+                      register={register}
+                      onRemove={() => {
+                        remove(index);
 
-                          const hasBeenAdded = userLinks?.some(
-                            (link) => link.link === field.link
-                          );
+                        const hasBeenAdded = userLinks?.some(
+                          (link) => link.link === field.link
+                        );
 
-                          if (hasBeenAdded) {
-                            deleteLinkMutation.mutate(field.linkProvider.id);
-                          }
-                        }}
-                        swapLink={onSwap}
-                      />
-                    </div>
+                        if (hasBeenAdded) {
+                          deleteLinkMutation.mutate(field.linkProvider.id);
+                        }
+                      }}
+                      onSwap={swapLinks}
+                    />
                   );
                 })}
-            </div>
+            </ScrollableLinksList>
+            //</div>
           )}
           <span className={linksListClasses["links-list__separator"]} />
           <Button

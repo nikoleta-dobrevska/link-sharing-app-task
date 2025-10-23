@@ -14,6 +14,8 @@ type LinkProviderDropDownFieldProps = {
   onChange: (option: LinkProviderData) => void;
   options: LinkProviderData[];
   selected?: LinkProviderData | null;
+  onPointerEnter?: () => void;
+  onPointerLeave?: () => void;
 };
 
 export const LinkProviderDropDownField = ({
@@ -22,6 +24,8 @@ export const LinkProviderDropDownField = ({
   onChange,
   options,
   selected,
+  onPointerEnter,
+  onPointerLeave,
 }: LinkProviderDropDownFieldProps) => {
   return (
     <DropDownField
@@ -36,6 +40,8 @@ export const LinkProviderDropDownField = ({
           onChange(selected);
         }
       }}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
     />
   );
 };

@@ -21,7 +21,9 @@
     gap: 1.5rem;
     height: 32rem;
     overflow: hidden auto;
-    margin: 2rem 2rem 0 2rem;
+    scroll-behavior: smooth;
+    margin: 2rem;
+    padding-top: 0.5rem;
   }
 
   &__separator {
