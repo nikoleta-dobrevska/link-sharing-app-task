@@ -68,14 +68,6 @@ export default tseslint.config([
       // eslint-plugin-import
       "import/no-deprecated": "error",
       "import/no-empty-named-blocks": "error",
-      "import/no-extraneous-dependencies": [
-        "error",
-        {
-          devDependencies: ["*.{js,ts}"],
-          optionalDependencies: false,
-          peerDependencies: false,
-        },
-      ],
       "import/no-mutable-exports": "error",
       "import/enforce-node-protocol-usage": ["error", "always"],
       "import/no-useless-path-segments": ["error", { noUselessIndex: true }],
