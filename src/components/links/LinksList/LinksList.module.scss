@@ -34,7 +34,7 @@
     align-self: flex-end;
     margin: 1.5rem 2.5rem;
 
-    @include screens.tablet {
+    @include screens.mobile {
       align-self: unset;
     }
   }
