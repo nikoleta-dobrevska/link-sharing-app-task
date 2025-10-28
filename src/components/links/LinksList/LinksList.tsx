@@ -7,7 +7,6 @@ import { useFieldArray, useForm } from "react-hook-form";
 
 import { EmptyLinksList } from "@/components/links/EmptyLinksList";
 import { LinksField } from "@/components/links/LinksField";
-import { ScrollableLinksList } from "@/components/links/ScrollableLinksList";
 import { Button } from "@/components/ui/Button";
 import { queryClient } from "@/config/react-query";
 import {
@@ -137,8 +136,7 @@ export const LinksList = () => {
           {userLinks && userLinks?.length <= 0 ? (
             <EmptyLinksList />
           ) : (
-            <ScrollableLinksList>
-              {/*<div className={linksListClasses["links-list__fields"]}>*/}
+            <div className={linksListClasses["links-list__fields"]}>
               {linkProviders &&
                 fields.map((field, index) => {
                   return (
@@ -164,8 +162,7 @@ export const LinksList = () => {
                     />
                   );
                 })}
-            </ScrollableLinksList>
-            //</div>
+            </div>
           )}
           <span className={linksListClasses["links-list__separator"]} />
           <Button
