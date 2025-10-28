@@ -1,7 +1,7 @@
-import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
+import { BrowserRouter, Route, Routes } from "react-router";
 
 import { Login } from "@/pages/Login";
 
@@ -16,7 +16,13 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 test("logins successfully", async () => {
-  render(<Login />);
+  render(
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Login />} />
+      </Routes>
+    </BrowserRouter>
+  );
 
   const email = await screen.findByLabelText(/Email address/, {
     selector: "input",
