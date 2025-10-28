@@ -8,7 +8,6 @@ describe("Button", () => {
   it("should render correctly", () => {
     render(
       <Button variant="primary" size="md">
-        {" "}
         Test
       </Button>
     );
@@ -23,7 +22,6 @@ describe("Button", () => {
 
     render(
       <Button variant="primary" size="md" onClick={mockFn}>
-        {" "}
         Test
       </Button>
     );
