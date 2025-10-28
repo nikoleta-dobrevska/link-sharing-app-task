@@ -1,0 +1,20 @@
+/* eslint-disable no-restricted-syntax */
+
+/// <reference types="vitest/config" />
+
+import { defineConfig, mergeConfig } from "vite";
+
+import viteConfig from "./vite.config";
+
+export default mergeConfig(
+  viteConfig,
+  defineConfig({
+    test: {
+      globals: true,
+      environment: "jsdom",
+      setupFiles: ["vitest.setup.ts"],
+      include: ["**/*.{test,spec}.?(cm)[jt]s?(x)"],
+      exclude: ["**/{node_modules,.git,dist}/**"],
+    },
+  })
+);
