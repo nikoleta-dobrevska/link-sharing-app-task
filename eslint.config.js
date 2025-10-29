@@ -72,7 +72,11 @@ export default tseslint.config([
       "import/no-extraneous-dependencies": [
         "error",
         {
-          devDependencies: ["./*.[jt]s", "**/*.{test,spec}.?(mc)[jt]s?(x)"],
+          devDependencies: [
+            "./*.[jt]s",
+            "**/*.{test,spec}.?(mc)[jt]s?(x)",
+            "./src/test-utils/*.?(mc)[jt]s?(x)",
+          ],
           optionalDependencies: false,
           peerDependencies: false,
         },
