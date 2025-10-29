@@ -1,34 +1,95 @@
-import { fireEvent, screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { HttpStatusCode } from "axios";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 
+import { RoutePaths } from "@/constants";
 import { Login } from "@/pages/Login/Login";
 import { renderWithAppContexts } from "@/test-utils/renderWithAppContexts";
 
-const server = setupServer(
-  http.post(`${import.meta.env.VITE_API}/login`, () => {
-    return HttpResponse.json({ status: 200 });
-  })
-);
-//TO DO: fix in next commit
+const server = setupServer();
+
+const mockNavigation = vi.fn();
+
+vi.mock("react-router", async (importOriginal) => {
+  const actual = (await importOriginal()) as object;
+  return { ...actual, useNavigate: () => mockNavigation };
+});
+
+const mockSetToken = vi.fn();
+
 describe("Login", () => {
-  beforeAll(() => server.listen());
-  afterEach(() => server.resetHandlers());
+  beforeAll(() => {
+    server.listen();
+  });
+  beforeEach(() => {
+    renderWithAppContexts(<Login />);
+  });
+  afterEach(() => {
+    server.resetHandlers();
+    globalThis.Storage.prototype.removeItem = mockSetToken;
+  });
   afterAll(() => server.close());
 
-  it.skip("logins successfully", () => {
-    renderWithAppContexts(<Login />);
+  it("fails with wrong credentials", async () => {
+    server.use(
+      http.post("http://localhost:2400/v1/login", () => {
+        return new HttpResponse(
+          {
+            error: { message: "One or more validation errors have occurred." },
+          },
+          { status: HttpStatusCode.BadRequest }
+        );
+      })
+    );
 
-    const email = screen.getByLabelText(/Email address/);
+    const email = screen.getByLabelText(/Email address/i);
+    const password = screen.getByLabelText(/Password/i);
+    const loginButton = screen.getByRole("button", { name: /Login/i });
 
-    const password = screen.getByLabelText(/Password/);
+    await userEvent.type(email, "wrong@email.com");
+    await userEvent.type(password, "8u98u89u89");
+    expect(email).toHaveValue("wrong@email.com");
+    expect(password).toHaveValue("8u98u89u89");
 
-    fireEvent.change(email, { target: { value: "example@example.com" } });
-    fireEvent.change(password, { target: { value: "12345678" } });
+    await userEvent.click(loginButton);
 
-    fireEvent.click(screen.getByRole("button"));
+    await waitFor(() => {
+      const globalAlert = screen.getByText("Wrong email and/or password!");
+      expect(globalAlert).toBeInTheDocument();
+    });
+  });
 
-    expect(screen.getByRole("heading")).toHaveTextContent("hello there");
-    expect(screen.getByRole("button")).toBeDisabled();
+  it("logins successfully with valid credentials", async () => {
+    server.use(
+      http.post("http://localhost:2400/v1/login", () => {
+        return HttpResponse.json(
+          { token: "mockToken" },
+          { status: HttpStatusCode.Ok }
+        );
+      })
+    );
+
+    globalThis.Storage.prototype.setItem = mockSetToken;
+
+    const email = screen.getByLabelText(/Email address/i);
+    const password = screen.getByLabelText(/Password/i);
+    const loginButton = screen.getByRole("button", { name: /Login/i });
+
+    await userEvent.type(email, "example@example.com");
+    await userEvent.type(password, "12345678");
+    expect(email).toHaveValue("example@example.com");
+    expect(password).toHaveValue("12345678");
+
+    await userEvent.click(loginButton);
+
+    await waitFor(() => {
+      expect(mockSetToken).toHaveBeenCalledWith("token", {
+        token: "mockToken",
+      });
+
+      expect(mockNavigation).toHaveBeenCalledWith(RoutePaths.links);
+    });
   });
 });
