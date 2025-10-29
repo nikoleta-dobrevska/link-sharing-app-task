@@ -58,6 +58,7 @@ export default tseslint.config([
           prefer: "type-imports",
         },
       ],
+      "@typescript-eslint/triple-slash-reference": "off",
 
       // @stylistic/eslint-plugin
       "@stylistic/jsx-self-closing-comp": "error",
@@ -71,7 +72,7 @@ export default tseslint.config([
       "import/no-extraneous-dependencies": [
         "error",
         {
-          devDependencies: ["*.{js,ts}"],
+          devDependencies: ["./*.[jt]s", "**/*.{test,spec}.?(mc)[jt]s?(x)"],
           optionalDependencies: false,
           peerDependencies: false,
         },

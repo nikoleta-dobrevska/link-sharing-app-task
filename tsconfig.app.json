@@ -26,7 +26,10 @@
     /* Import alias */
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    /* Additional type packages */
+    "types": ["vitest/globals", "vitest/jsdom", "@testing-library/jest-dom"]
   },
   "include": ["src"]
 }
