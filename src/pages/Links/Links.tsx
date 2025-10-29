@@ -7,14 +7,19 @@ export const Links = () => {
   return (
     <>
       <div className={linksClasses["heading"]}>
-        <Typography component="h1" variant="heading" size="md">
+        <Typography
+          component="h1"
+          variant="heading"
+          size="md"
+          className={linksClasses["heading__title"]}
+        >
           Customize your links
         </Typography>
         <Typography
           component="p"
           variant="body"
           size="md"
-          className={linksClasses["heading__subheading"]}
+          className={linksClasses["heading__subtitle"]}
         >
           Add/edit/remove links below and then share all your profiles with the
           world!
