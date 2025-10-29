@@ -66,7 +66,13 @@ describe("Login", () => {
       http.post("http://localhost:2400/v1/login", () => {
         return HttpResponse.json(
           { token: "mockToken" },
-          { status: HttpStatusCode.Ok }
+          {
+            status: HttpStatusCode.Ok,
+            headers: {
+              Authorization: "Bearer mockToken",
+              "Content-Type": "application/json",
+            },
+          }
         );
       })
     );
