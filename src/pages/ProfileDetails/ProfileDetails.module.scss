@@ -1,4 +1,5 @@
 @use "@/scss/colors.scss";
+@use "@/scss/screens.scss";
 
 .heading {
   display: flex;
@@ -6,7 +7,13 @@
   gap: 1rem;
   margin: 2rem 2rem 0 2rem;
 
-  &__subheading {
+  @include screens.mobile {
+    &__title {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__subtitle {
     color: colors.$gray;
   }
 }

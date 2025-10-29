@@ -23,6 +23,8 @@ type DropDownFieldProps = {
   onChange: (option: Option) => void;
   options: Option[];
   selected?: Option | null;
+  onPointerEnter?: () => void;
+  onPointerLeave?: () => void;
 };
 
 export const DropDownField = ({
@@ -31,6 +33,8 @@ export const DropDownField = ({
   onChange,
   options,
   selected,
+  onPointerEnter,
+  onPointerLeave,
 }: DropDownFieldProps) => {
   const id = useId();
 
@@ -184,6 +188,8 @@ export const DropDownField = ({
     <div
       className={dropDownFieldClasses["drop-down-field"]}
       ref={dropDownFieldRef}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
     >
       <div
         id={id + `-${dropDownFieldId}`}
