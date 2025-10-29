@@ -17,5 +17,7 @@ export const getPublicUserProfileData = async (
 
   const validatedResponse = publicUserProfileDataSchema.parse(response.data);
 
+  validatedResponse.userLinks.sort((prev, next) => prev.order - next.order);
+
   return validatedResponse;
 };

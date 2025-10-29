@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { useFieldArray, useForm } from "react-hook-form";
 
 import { EmptyLinksList } from "@/components/links/EmptyLinksList";
@@ -57,7 +59,7 @@ export const LinksList = () => {
     reValidateMode: "onSubmit",
   });
 
-  const { fields, append, remove, update } = useFieldArray({
+  const { fields, append, remove, update, swap } = useFieldArray({
     control,
     name: "links",
   });
@@ -105,64 +107,75 @@ export const LinksList = () => {
     createOrUpdateUserLinksMutation.mutate(data);
   };
 
+  const swapLinks = (from: number, to: number) => {
+    if (from === to) return;
+
+    swap(from, to);
+  };
+
   return (
-    <div className={linksListClasses["links-list"]}>
-      <Button
-        type="button"
-        variant="secondary"
-        size="md"
-        onClick={() => {
-          if (linkProviders) {
-            append({ linkProvider: linkProviders[0], link: "" });
-          }
-        }}
-        className={linksListClasses["links-list__add-btn"]}
-      >
-        <span aria-hidden={true}>+</span> Add new link
-      </Button>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={linksListClasses["links-list__form"]}
-      >
-        {userLinks && userLinks?.length <= 0 ? (
-          <EmptyLinksList />
-        ) : (
-          <div className={linksListClasses["links-list__fields"]}>
-            {linkProviders &&
-              fields.map((field, index) => (
-                <LinksField
-                  key={field.id}
-                  index={index}
-                  errorMessage={errors?.links?.[index]?.link?.message}
-                  control={control}
-                  linkProviders={linkProviders}
-                  register={register}
-                  onRemove={() => {
-                    remove(index);
-
-                    const hasBeenAdded = userLinks?.some(
-                      (link) => link.link === field.link
-                    );
-
-                    if (hasBeenAdded) {
-                      deleteLinkMutation.mutate(field.linkProvider.id);
-                    }
-                  }}
-                />
-              ))}
-          </div>
-        )}
-        <span className={linksListClasses["links-list__separator"]} />
+    <DndProvider backend={HTML5Backend}>
+      <div className={linksListClasses["links-list"]}>
         <Button
-          type="submit"
-          variant="primary"
+          type="button"
+          variant="secondary"
           size="md"
-          disabled={userLinks && userLinks?.length <= 0}
-          className={linksListClasses["links-list__save-btn"]}
+          onClick={() => {
+            if (linkProviders) {
+              append({ linkProvider: linkProviders[0], link: "" });
+            }
+          }}
+          className={linksListClasses["links-list__add-btn"]}
         >
-          Save
+          <span aria-hidden={true}>+</span> Add new link
         </Button>
-      </form>
-    </div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={linksListClasses["links-list__form"]}
+        >
+          {userLinks && userLinks?.length <= 0 ? (
+            <EmptyLinksList />
+          ) : (
+            <div className={linksListClasses["links-list__fields"]}>
+              {linkProviders &&
+                fields.map((field, index) => {
+                  return (
+                    <LinksField
+                      key={field.id}
+                      index={index}
+                      errorMessage={errors?.links?.[index]?.link?.message}
+                      control={control}
+                      linkProviders={linkProviders}
+                      register={register}
+                      onRemove={() => {
+                        remove(index);
+
+                        const hasBeenAdded = userLinks?.some(
+                          (link) => link.link === field.link
+                        );
+
+                        if (hasBeenAdded) {
+                          deleteLinkMutation.mutate(field.linkProvider.id);
+                        }
+                      }}
+                      onSwap={swapLinks}
+                    />
+                  );
+                })}
+            </div>
+          )}
+          <span className={linksListClasses["links-list__separator"]} />
+          <Button
+            type="submit"
+            variant="primary"
+            size="md"
+            disabled={userLinks && userLinks?.length <= 0}
+            className={linksListClasses["links-list__save-btn"]}
+          >
+            Save
+          </Button>
+        </form>
+      </div>
+    </DndProvider>
   );
 };
