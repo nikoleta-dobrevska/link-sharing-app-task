@@ -50,6 +50,7 @@
     "globals": "^16.3.0",
     "husky": "^9.1.7",
     "jsdom": "^27.0.1",
+    "msw": "^2.11.6",
     "prettier": "3.6.2",
     "sass-embedded": "^1.91.0",
     "typescript": "~5.8.3",
