@@ -15,6 +15,11 @@ export default mergeConfig(
       setupFiles: ["vitest.setup.ts"],
       include: ["**/*.{test,spec}.?(cm)[jt]s?(x)"],
       exclude: ["**/{node_modules,.git,dist}/**"],
+      coverage: {
+        provider: "v8",
+        include: ["src/**/*.?(cm)[jt]s?(x)"],
+        exclude: ["src/test-utils", "src/**/*.d.ts"],
+      },
     },
   })
 );
