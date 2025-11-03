@@ -71,8 +71,7 @@ export const Register = () => {
             size="md"
             className={registerClasses["register__global-error-msg"]}
           >
-            {registerMutation?.error?.message ??
-              "Oops, something went wrong! Please try again later."}
+            {registerMutation?.error?.message}
           </Typography>
         )}
       </div>
