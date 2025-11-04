@@ -67,40 +67,39 @@ export const Preview = () => {
           </div>
         </section>
         <ul className={previewClasses["user-links"]} aria-label="Your links">
-          {mappedLinksData &&
-            mappedLinksData.map((linkData) => (
-              <li key={linkData?.linkProviderId}>
-                <a
-                  href={`${linkData.link}`}
-                  aria-label={`Your ${linkData?.linkProviderName} link, opens a new tab`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={previewClasses["user-link"]}
-                  style={{
-                    backgroundColor: linkData?.backgroundColor,
-                    color: linkData?.textColor,
-                    border:
-                      linkData?.linkProviderName === "Frontend Mentor"
-                        ? "1px solid #D9D9D9"
-                        : "none",
-                  }}
-                >
-                  <div className={previewClasses["user-link__name"]}>
-                    {linkData?.linkProviderName === "Frontend Mentor" ? (
-                      <FrontendMentorIcon aria-hidden="true" />
-                    ) : (
-                      <img
-                        src={linkData?.iconSrc}
-                        alt=""
-                        className={previewClasses["user-link__icon"]}
-                      />
-                    )}
-                    {linkData?.linkProviderName}
-                  </div>
-                  <ArrowRightIcon aria-hidden="true" />
-                </a>
-              </li>
-            ))}
+          {mappedLinksData.map((linkData) => (
+            <li key={linkData?.linkProviderId}>
+              <a
+                href={`${linkData.link}`}
+                aria-label={`Your ${linkData?.linkProviderName} link, opens a new tab`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={previewClasses["user-link"]}
+                style={{
+                  backgroundColor: linkData?.backgroundColor,
+                  color: linkData?.textColor,
+                  border:
+                    linkData?.linkProviderName === "Frontend Mentor"
+                      ? "1px solid #D9D9D9"
+                      : "none",
+                }}
+              >
+                <div className={previewClasses["user-link__name"]}>
+                  {linkData?.linkProviderName === "Frontend Mentor" ? (
+                    <FrontendMentorIcon aria-hidden="true" />
+                  ) : (
+                    <img
+                      src={linkData?.iconSrc}
+                      alt=""
+                      className={previewClasses["user-link__icon"]}
+                    />
+                  )}
+                  {linkData?.linkProviderName}
+                </div>
+                <ArrowRightIcon aria-hidden="true" />
+              </a>
+            </li>
+          ))}
         </ul>
       </main>
     </div>
