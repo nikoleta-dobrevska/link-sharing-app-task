@@ -4,7 +4,7 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { type z } from "zod";
 
-import { Preview } from "@/pages/Preview/Preview";
+import { PreviewComponent } from "@/components/PreviewComponent/PreviewComponent";
 import {
   type authenticatedUserSchema,
   type linkProvidersResponseSchemaArray,
@@ -16,7 +16,7 @@ type AuthenticatedUserDataProps = z.infer<typeof authenticatedUserSchema>;
 
 const server = setupServer();
 
-describe("Preview Page", () => {
+describe("Preview Component", () => {
   let mockedLinkProviders: z.input<typeof linkProvidersResponseSchemaArray>;
   let mockedUserLinks: UserLinksResponseData;
   let mockedUserData: AuthenticatedUserDataProps;
@@ -87,7 +87,7 @@ describe("Preview Page", () => {
       })
     );
 
-    renderWithAppContexts(<Preview />);
+    renderWithAppContexts(<PreviewComponent />);
   });
   afterEach(() => {
     server.resetHandlers();
@@ -123,5 +123,40 @@ describe("Preview Page", () => {
 
     expect(links[0]).toHaveAttribute("href", mockedUserLinks[0].link);
     expect(links[1]).toHaveAttribute("href", mockedUserLinks[1].link);
+  });
+
+  it("should render the ui skeleton if no data is present", async () => {
+    server.close();
+
+    const placeholders = document.getElementsByTagName("div");
+
+    const userFullNamePlaceholder = placeholders[3];
+    expect(userFullNamePlaceholder.className).toEqual(
+      expect.stringContaining("user-info__names-placeholder")
+    );
+
+    const userEmail = placeholders[4];
+    expect(userEmail.className).toEqual(
+      expect.stringContaining("user-info__email-placeholder")
+    );
+
+    const linksList = screen.getByRole("list");
+    expect(linksList.childNodes.length).toBe(5);
+
+    expect(linksList.children[0].className).toEqual(
+      expect.stringContaining("user-link-placeholder")
+    );
+    expect(linksList.children[1].className).toEqual(
+      expect.stringContaining("user-link-placeholder")
+    );
+    expect(linksList.children[2].className).toEqual(
+      expect.stringContaining("user-link-placeholder")
+    );
+    expect(linksList.children[3].className).toEqual(
+      expect.stringContaining("user-link-placeholder")
+    );
+    expect(linksList.children[4].className).toEqual(
+      expect.stringContaining("user-link-placeholder")
+    );
   });
 });

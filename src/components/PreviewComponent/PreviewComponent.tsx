@@ -18,8 +18,10 @@ export const PreviewComponent = () => {
     data: authenticatedUserProfileData,
     isSuccess: authenticatedUserProfileDataIsSuccess,
   } = useAuthenticatedUserProfileDataQuery();
-  const { data: linkProviders } = useLinkProvidersQuery();
-  const { data: userLinks } = useUserLinksQuery();
+  const { data: linkProviders, isSuccess: linkProvidersIsSuccess } =
+    useLinkProvidersQuery();
+  const { data: userLinks, isSuccess: userLinksIsSuccess } =
+    useUserLinksQuery();
 
   const mappedLinksData = useMemo(() => {
     return mapLinksData(userLinks, linkProviders);
@@ -75,7 +77,9 @@ export const PreviewComponent = () => {
         className={previewComponentClasses["user-links"]}
         aria-label="Your links"
       >
-        {mappedLinksData
+        {userLinksIsSuccess &&
+        linkProvidersIsSuccess &&
+        mappedLinksData?.length > 0
           ? mappedLinksData.map((linkData) => (
               <li key={linkData?.linkProviderId}>
                 <a
