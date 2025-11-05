@@ -2,28 +2,23 @@ import { screen } from "@testing-library/react";
 import { HttpStatusCode } from "axios";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { type z } from "zod";
 
 import { Preview } from "@/pages/Preview/Preview";
-import {
-  type authenticatedUserSchema,
-  type linkProvidersResponseSchemaArray,
-} from "@/schemas";
 import { renderWithAppContexts } from "@/test-utils/renderWithAppContexts";
-import { type UserLinksResponseData } from "@/types";
-
-type AuthenticatedUserDataProps = z.infer<typeof authenticatedUserSchema>;
 
 const server = setupServer();
 
 describe("Preview Page", () => {
-  let mockedLinkProviders: z.input<typeof linkProvidersResponseSchemaArray>;
-  let mockedUserLinks: UserLinksResponseData;
-  let mockedUserData: AuthenticatedUserDataProps;
-
   beforeAll(() => server.listen());
-  beforeEach(async () => {
-    mockedLinkProviders = [
+  afterEach(() => {
+    server.resetHandlers();
+  });
+  afterAll(() => {
+    server.close();
+  });
+
+  it("should correctly render the user's data after loading", async () => {
+    const mockedLinkProviders = [
       {
         id: 0,
         iconName: "string",
@@ -42,7 +37,7 @@ describe("Preview Page", () => {
       },
     ];
 
-    mockedUserLinks = [
+    const mockedUserLinks = [
       {
         linkProviderId: 0,
         link: "string",
@@ -55,7 +50,7 @@ describe("Preview Page", () => {
       },
     ];
 
-    mockedUserData = {
+    const mockedUserData = {
       id: 0,
       profilePicturePath: "string",
       firstName: "string",
@@ -88,15 +83,7 @@ describe("Preview Page", () => {
     );
 
     renderWithAppContexts(<Preview />);
-  });
-  afterEach(() => {
-    server.resetHandlers();
-  });
-  afterAll(() => {
-    server.close();
-  });
 
-  it("should correctly render the user's data after loading", async () => {
     const imgs = await screen.findAllByAltText("");
     expect(imgs[0]).toHaveAttribute(
       "src",

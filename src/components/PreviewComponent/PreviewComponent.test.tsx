@@ -2,28 +2,16 @@ import { screen } from "@testing-library/react";
 import { HttpStatusCode } from "axios";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { type z } from "zod";
 
 import { PreviewComponent } from "@/components/PreviewComponent/PreviewComponent";
-import {
-  type authenticatedUserSchema,
-  type linkProvidersResponseSchemaArray,
-} from "@/schemas";
 import { renderWithAppContexts } from "@/test-utils/renderWithAppContexts";
-import { type UserLinksResponseData } from "@/types";
-
-type AuthenticatedUserDataProps = z.infer<typeof authenticatedUserSchema>;
-
-const server = setupServer();
 
 describe("Preview Component", () => {
-  let mockedLinkProviders: z.input<typeof linkProvidersResponseSchemaArray>;
-  let mockedUserLinks: UserLinksResponseData;
-  let mockedUserData: AuthenticatedUserDataProps;
+  it("should correctly render the user's data after loading", async () => {
+    const server = setupServer();
+    server.listen();
 
-  beforeAll(() => server.listen());
-  beforeEach(async () => {
-    mockedLinkProviders = [
+    const mockedLinkProviders = [
       {
         id: 0,
         iconName: "string",
@@ -42,7 +30,7 @@ describe("Preview Component", () => {
       },
     ];
 
-    mockedUserLinks = [
+    const mockedUserLinks = [
       {
         linkProviderId: 0,
         link: "string",
@@ -55,7 +43,7 @@ describe("Preview Component", () => {
       },
     ];
 
-    mockedUserData = {
+    const mockedUserData = {
       id: 0,
       profilePicturePath: "string",
       firstName: "string",
@@ -88,15 +76,7 @@ describe("Preview Component", () => {
     );
 
     renderWithAppContexts(<PreviewComponent />);
-  });
-  afterEach(() => {
-    server.resetHandlers();
-  });
-  afterAll(() => {
-    server.close();
-  });
 
-  it("should correctly render the user's data after loading", async () => {
     const imgs = await screen.findAllByAltText("");
     expect(imgs[0]).toHaveAttribute(
       "src",
@@ -123,10 +103,13 @@ describe("Preview Component", () => {
 
     expect(links[0]).toHaveAttribute("href", mockedUserLinks[0].link);
     expect(links[1]).toHaveAttribute("href", mockedUserLinks[1].link);
+
+    server.resetHandlers();
+    server.close();
   });
 
   it("should render the ui skeleton if no data is present", async () => {
-    server.close();
+    renderWithAppContexts(<PreviewComponent />);
 
     const placeholders = document.getElementsByTagName("div");
 
