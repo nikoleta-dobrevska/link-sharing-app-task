@@ -3,13 +3,8 @@ import { HttpStatusCode } from "axios";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { useParams } from "react-router";
-import { type z } from "zod/mini";
 
 import { PublicProfilePage } from "@/pages/PublicProfilePage/PublicProfilePage";
-import {
-  type linkProvidersResponseSchemaArray,
-  type publicUserProfileDataSchema,
-} from "@/schemas";
 import { renderWithAppContexts } from "@/test-utils/renderWithAppContexts";
 
 const server = setupServer();
@@ -20,17 +15,17 @@ vi.mock("react-router", async (importOriginal) => {
 });
 
 describe("Public Profile Page", () => {
-  type mockedLinkProvidersType = z.input<
-    typeof linkProvidersResponseSchemaArray
-  >;
-  let mockedLinkProviders: mockedLinkProvidersType;
-  type mockedPublicUserDetailsDataType = z.input<
-    typeof publicUserProfileDataSchema
-  >;
-  let mockedPublicUserDetailsData: mockedPublicUserDetailsDataType;
-
   beforeAll(() => server.listen());
-  beforeEach(() => {
+  afterEach(() => {
+    server.resetHandlers();
+    vi.resetAllMocks();
+  });
+  afterAll(() => {
+    server.close();
+    vi.clearAllMocks();
+  });
+
+  it("should correctly render the user's public profile data based on the user's id", async () => {
     vi.mocked(useParams).mockReturnValue({ userId: "111" });
 
     renderWithAppContexts(<PublicProfilePage />, {
@@ -38,7 +33,7 @@ describe("Public Profile Page", () => {
       initialEntries: ["profile/111"],
     });
 
-    mockedLinkProviders = [
+    const mockedLinkProviders = [
       {
         id: 0,
         iconName: "string",
@@ -57,7 +52,7 @@ describe("Public Profile Page", () => {
       },
     ];
 
-    mockedPublicUserDetailsData = {
+    const mockedPublicUserDetailsData = {
       profilePicturePath: "string",
       firstName: "string",
       lastName: "string",
@@ -92,11 +87,7 @@ describe("Public Profile Page", () => {
         });
       })
     );
-  });
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
 
-  it("should correctly render the user's public profile data based on the user's id", async () => {
     const imgs = await screen.findAllByAltText("");
     expect(imgs[0]).toHaveAttribute(
       "src",
