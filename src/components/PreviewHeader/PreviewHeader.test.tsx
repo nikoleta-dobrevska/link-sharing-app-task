@@ -1,4 +1,4 @@
-import { screen, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { PreviewHeader } from "@/components/PreviewHeader/PreviewHeader";
@@ -16,7 +16,9 @@ describe("Preview Header", () => {
   const mockedUserId = 1;
 
   beforeEach(() => {
-    renderWithAppContexts(<PreviewHeader userId={mockedUserId} />);
+    renderWithAppContexts(<PreviewHeader userId={mockedUserId} />, {
+      usesReactToastify: true,
+    });
 
     Object.defineProperty(navigator, "clipboard", {
       value: {
@@ -60,33 +62,9 @@ describe("Preview Header", () => {
 
     await userEvent.click(shareLinkButton);
 
-    waitFor(async () => {
-      expect(
-        screen.queryByText("The link has been copied to your clipboard!")
-      ).toBeInTheDocument();
-    });
-  });
-
-  it("should hide toast notification after 4 seconds", async () => {
-    const buttons = screen.getAllByRole("button");
-    const shareLinkButton = buttons[1];
-
-    await userEvent.click(shareLinkButton);
-
-    waitFor(async () => {
-      expect(
-        screen.queryByText("The link has been copied to your clipboard!")
-      ).toBeInTheDocument();
-    });
-
-    waitFor(
-      async () => {
-        expect(
-          screen.queryByText("The link has been copied to your clipboard!")
-        ).not.toBeInTheDocument();
-      },
-      { timeout: 4000 }
-    );
+    expect(
+      screen.getByText("The link has been copied to your clipboard!")
+    ).toBeInTheDocument();
   });
 
   it("should display an error toast notification if an error occurs", async () => {
@@ -101,12 +79,10 @@ describe("Preview Header", () => {
 
     await userEvent.click(shareLinkButton);
 
-    waitFor(async () => {
-      expect(
-        screen.queryByText(`An error occured: ${error}. Please try again.`)
-      ).toBeInTheDocument();
-    });
-
     expect(failWriteTextSpy).toHaveBeenCalledOnce();
+
+    expect(
+      screen.getByText(`An error occured: Error: ${error}. Please try again.`)
+    ).toBeInTheDocument();
   });
 });
