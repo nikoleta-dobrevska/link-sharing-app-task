@@ -5,7 +5,6 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 
 import { ProfileDetailsForm } from "@/components/ProfileDetailsForm/ProfileDetailsForm";
-import { queryClient } from "@/config/react-query";
 import { PROFILE_PICTURE_SIZE_LIMIT } from "@/constants";
 import { renderWithAppContexts } from "@/test-utils/renderWithAppContexts";
 
@@ -14,7 +13,6 @@ const server = setupServer();
 describe("Profile Details Form", () => {
   beforeAll(() => server.listen());
   afterEach(() => {
-    queryClient.clear();
     server.resetHandlers();
     vi.resetAllMocks();
     globalThis.URL.revokeObjectURL = vi.fn(() => "mockfile.png");

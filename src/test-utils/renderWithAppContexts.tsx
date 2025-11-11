@@ -1,15 +1,9 @@
-import {
-  //QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
 
 import { CustomToastComponent } from "@/components/ui/CustomToastComponent";
-import {
-  //QUERY_CLIENT_OPTIONS,
-  queryClient,
-} from "@/config/react-query";
+import { QUERY_CLIENT_OPTIONS } from "@/config/react-query";
 
 type RenderWithAppContextsOptions = {
   path?: string;
@@ -25,7 +19,7 @@ export function renderWithAppContexts(
     usesReactToastify = false,
   }: RenderWithAppContextsOptions = {}
 ) {
-  //const queryClient = new QueryClient(QUERY_CLIENT_OPTIONS);
+  const queryClient = new QueryClient(QUERY_CLIENT_OPTIONS);
 
   return render(element, {
     wrapper: ({ children }) => (

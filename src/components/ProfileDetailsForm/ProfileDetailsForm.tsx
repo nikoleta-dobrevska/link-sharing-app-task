@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ import { FormField } from "@/components/ui/form/FormField";
 import { ImageUploader } from "@/components/ui/form/ImageUploader";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
-import { queryClient } from "@/config/react-query";
+//import { queryClient } from "@/config/react-query";
 import { useAuthenticatedUserProfileDataQuery } from "@/queries";
 import { profileDetailsSchema } from "@/schemas";
 import { deleteProfilePicture } from "@/services/deleteProfilePicture";
@@ -21,6 +21,8 @@ import { type ProfileDetailsData } from "@/types";
 import profileDetailsFormClasses from "./ProfileDetailsForm.module.scss";
 
 export const ProfileDetailsForm = () => {
+  const queryClient = useQueryClient();
+
   const id = useId();
 
   const { data: authenticatedUserProfileData } =

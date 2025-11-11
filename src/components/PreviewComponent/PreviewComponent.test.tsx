@@ -4,12 +4,9 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 
 import { PreviewComponent } from "@/components/PreviewComponent/PreviewComponent";
-import { queryClient } from "@/config/react-query";
 import { renderWithAppContexts } from "@/test-utils/renderWithAppContexts";
 
 describe("Preview Component", () => {
-  afterEach(() => queryClient.clear());
-
   it("should correctly render the user's data after loading", async () => {
     const server = setupServer();
     server.listen();

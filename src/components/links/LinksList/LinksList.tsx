@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -8,7 +8,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { EmptyLinksList } from "@/components/links/EmptyLinksList";
 import { LinksField } from "@/components/links/LinksField";
 import { Button } from "@/components/ui/Button";
-import { queryClient } from "@/config/react-query";
+//import { queryClient } from "@/config/react-query";
 import {
   useAuthenticatedUserProfileDataQuery,
   useLinkProvidersQuery,
@@ -22,6 +22,8 @@ import { type LinksFormData } from "@/types";
 import linksListClasses from "./LinksList.module.scss";
 
 export const LinksList = () => {
+  const queryClient = useQueryClient();
+
   const { data: linkProviders } = useLinkProvidersQuery();
   const { data: userLinks } = useUserLinksQuery();
   const { data: authenticatedUserProfileData } =
