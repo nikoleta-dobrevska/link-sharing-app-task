@@ -5,6 +5,7 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 
 import { ProfileDetailsForm } from "@/components/ProfileDetailsForm/ProfileDetailsForm";
+import { queryClient } from "@/config/react-query";
 import { PROFILE_PICTURE_SIZE_LIMIT } from "@/constants";
 import { renderWithAppContexts } from "@/test-utils/renderWithAppContexts";
 
@@ -13,6 +14,7 @@ const server = setupServer();
 describe("Profile Details Form", () => {
   beforeAll(() => server.listen());
   afterEach(() => {
+    queryClient.clear();
     server.resetHandlers();
     vi.resetAllMocks();
     globalThis.URL.revokeObjectURL = vi.fn(() => "mockfile.png");
@@ -22,7 +24,7 @@ describe("Profile Details Form", () => {
     vi.clearAllMocks();
   });
 
-  it.skip("should delete profile picture after pressing 'Delete Picture' button", async () => {
+  it("should delete profile picture after pressing 'Delete Picture' button", async () => {
     const mockedUserData = {
       id: 1,
       profilePicturePath: "string" as string | null,
@@ -31,14 +33,25 @@ describe("Profile Details Form", () => {
       email: "string@email.com",
     };
 
+    globalThis.URL.createObjectURL = vi.fn(
+      () => `http://localhost:2400/v1/${mockedUserData.profilePicturePath}`
+    );
+
     server.use(
       http.get("http://localhost:2400/v1/profile", () => {
-        return HttpResponse.json(mockedUserData, {
-          status: HttpStatusCode.Ok,
-        });
+        return HttpResponse.json(
+          { ...mockedUserData },
+          {
+            status: HttpStatusCode.Ok,
+          }
+        );
       }),
       http.delete("http://localhost:2400/v1/profile/profile-picture", () => {
         mockedUserData.profilePicturePath = null;
+
+        globalThis.URL.revokeObjectURL = vi.fn(
+          () => `http://localhost:2400/v1/${mockedUserData.profilePicturePath}`
+        );
 
         return HttpResponse.json({
           status: HttpStatusCode.NoContent,
@@ -62,9 +75,10 @@ describe("Profile Details Form", () => {
 
     await userEvent.click(deleteButton);
 
-    expect(deleteButton).not.toBeInTheDocument();
-    // const profilePicture = screen.getByAltText("");
-    // expect(profilePicture).toHaveAttribute("src", "");
+    await waitFor(() => {
+      expect(screen.queryByAltText("")).not.toBeInTheDocument();
+      expect(deleteButton).not.toBeInTheDocument();
+    });
   });
 
   it("should render a preview of the user's uploaded image and remove the preview after clicking 'Remove Preview' button", async () => {
@@ -201,10 +215,13 @@ describe("Profile Details Form", () => {
     const saveButton = screen.getByRole("button", { name: /Save/i });
     await userEvent.click(saveButton);
 
-    const alerts = screen.getAllByRole("alert");
-    expect(alerts[1]).toHaveTextContent("Can't be empty");
-    expect(alerts[2]).toHaveTextContent("Can't be empty");
-    expect(alerts[3]).toHaveTextContent("Invalid email address");
+    const alerts = await screen.findAllByRole("alert");
+
+    await waitFor(() => {
+      expect(alerts[1]).toHaveTextContent("Can't be empty");
+      expect(alerts[2]).toHaveTextContent("Can't be empty");
+      expect(alerts[3]).toHaveTextContent("Invalid email address");
+    });
   });
 
   it("should allow user to edit their data", async () => {
