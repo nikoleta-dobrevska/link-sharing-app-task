@@ -12,7 +12,7 @@ type ImageUploaderProps = {
   ariaRequired: boolean;
   name: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  errorMessage: string | undefined;
+  errorMessage?: string;
   preview: string | undefined;
 };
 

@@ -17,8 +17,6 @@ vi.mock("react-router", async (importOriginal) => {
   return { ...actual, useNavigate: () => mockNavigation };
 });
 
-const mockNonServerError = vi.fn();
-
 describe("Register", () => {
   beforeAll(() => server.listen());
   beforeEach(() => {
@@ -42,7 +40,7 @@ describe("Register", () => {
     expect(alerts[4]).toHaveTextContent("Can't be empty");
   });
 
-  it("should not accept invalid email address", async () => {
+  it("should not accept an invalid email address", async () => {
     const email = screen.getByLabelText(/Email/i);
 
     const INVALID_EMAILS = [
@@ -145,7 +143,7 @@ describe("Register", () => {
     });
   });
 
-  it("should throw global error message if an error occurs with message", async () => {
+  it("should throw global error message if an error occurs with descriptive message", async () => {
     server.use(
       http.post("http://localhost:2400/v1/register", () => {
         return HttpResponse.json(
@@ -180,7 +178,7 @@ describe("Register", () => {
     });
   });
 
-  it("should throw default global error message if an error occurs with no message", async () => {
+  it("should throw default global error message if an error occurs with no descriptive message", async () => {
     server.use(
       http.post("http://localhost:2400/v1/register", () => {
         return HttpResponse.json(
@@ -220,9 +218,23 @@ describe("Register", () => {
   });
 
   it("shows global error message if a non-server error occurs", async () => {
-    mockNonServerError.mockImplementation(() => {
-      throw new SyntaxError();
-    });
+    server.use(
+      http.post("http://localhost:2400/v1/register", async ({ request }) => {
+        const formData = await request.formData();
+        formData.get("email");
+        formData.get("firstName");
+        formData.get("lastName");
+        formData.get("password");
+        formData.get("confirmPassword");
+
+        return HttpResponse.json(
+          {
+            error: new SyntaxError(),
+          },
+          { status: HttpStatusCode.BadRequest }
+        );
+      })
+    );
 
     const firstName = screen.getByLabelText(/First name/i);
     const lastName = screen.getByLabelText(/Last name/i);

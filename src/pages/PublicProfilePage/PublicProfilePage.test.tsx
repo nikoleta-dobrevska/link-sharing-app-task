@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { HttpStatusCode } from "axios";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
@@ -26,13 +26,6 @@ describe("Public Profile Page", () => {
   });
 
   it("should correctly render the user's public profile data based on the user's id", async () => {
-    vi.mocked(useParams).mockReturnValue({ userId: "111" });
-
-    renderWithAppContexts(<PublicProfilePage />, {
-      path: "profile/:userId",
-      initialEntries: ["profile/111"],
-    });
-
     const mockedLinkProviders = [
       {
         id: 0,
@@ -69,16 +62,17 @@ describe("Public Profile Page", () => {
     server.use(
       http.get<{ userId: string }>(
         `http://localhost:2400/v1/profile/:userId`,
-        ({ params }) => {
-          const { userId } = params;
-          parseInt(userId);
-
+        () => {
           return HttpResponse.json(mockedPublicUserDetailsData, {
             status: HttpStatusCode.Ok,
           });
         }
       )
     );
+
+    vi.mocked(useParams).mockReturnValue({ userId: "111" });
+
+    renderWithAppContexts(<PublicProfilePage />);
 
     server.use(
       http.get("http://localhost:2400/v1/link-providers", () => {
@@ -88,11 +82,13 @@ describe("Public Profile Page", () => {
       })
     );
 
-    const imgs = await screen.findAllByAltText("");
-    expect(imgs[0]).toHaveAttribute(
-      "src",
-      `http://localhost:2400/v1/${mockedPublicUserDetailsData.profilePicturePath}`
-    );
+    await waitFor(() => {
+      const imgs = screen.getAllByAltText("");
+      expect(imgs[0]).toHaveAttribute(
+        "src",
+        `http://localhost:2400/v1/${mockedPublicUserDetailsData.profilePicturePath}`
+      );
+    });
 
     const userFullName = screen.getByText(
       `${mockedPublicUserDetailsData.firstName} ${mockedPublicUserDetailsData.lastName}`

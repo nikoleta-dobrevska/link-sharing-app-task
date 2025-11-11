@@ -120,7 +120,7 @@ export const ProfileDetailsForm = () => {
           <Controller
             control={control}
             name="profilePicture"
-            render={({ field: { onChange, name } }) => (
+            render={({ field: { onChange, name }, fieldState: { error } }) => (
               <ImageUploader
                 id={id + "-profilePicture"}
                 name={name}
@@ -137,7 +137,7 @@ export const ProfileDetailsForm = () => {
                     onChange(file);
                   }
                 }}
-                errorMessage={errors?.profilePicture?.message}
+                errorMessage={error?.message}
               />
             )}
           />
@@ -171,7 +171,7 @@ export const ProfileDetailsForm = () => {
           className={profileDetailsFormClasses["image-container__text"]}
           id={id + "-profilePictureNote"}
         >
-          Image must be below 1024x1024px. Use PNG or JPG format.
+          Image must be below 5MB. Use PNG or JPG format.
         </Typography>
       </div>
       <div className={profileDetailsFormClasses["fields"]}>

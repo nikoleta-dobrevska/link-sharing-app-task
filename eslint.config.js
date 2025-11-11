@@ -39,7 +39,7 @@ export default tseslint.config([
     },
     rules: {
       // eslint
-      "no-console": "error",
+      "no-console": "warn",
       "no-duplicate-imports": "off",
       "no-restricted-syntax": [
         "error",

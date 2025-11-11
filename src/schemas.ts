@@ -116,14 +116,12 @@ export const profilePictureSchema = z.optional(
         data.type === "image/jpg",
       {
         message: "Use PNG or JPG format",
-        path: ["profilePicture"],
       }
     ),
     z.refine(
       (data) => data.size <= PROFILE_PICTURE_SIZE_LIMIT && data.size > 0,
       {
-        message: "Image must be below 1024x1024px",
-        path: ["profilePicture"],
+        message: "Image must be below 5MB",
       }
     )
   )
