@@ -8,7 +8,6 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { EmptyLinksList } from "@/components/links/EmptyLinksList";
 import { LinksField } from "@/components/links/LinksField";
 import { Button } from "@/components/ui/Button";
-//import { queryClient } from "@/config/react-query";
 import {
   useAuthenticatedUserProfileDataQuery,
   useLinkProvidersQuery,

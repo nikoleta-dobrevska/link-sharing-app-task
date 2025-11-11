@@ -11,7 +11,6 @@ import { FormField } from "@/components/ui/form/FormField";
 import { ImageUploader } from "@/components/ui/form/ImageUploader";
 import { Input } from "@/components/ui/form/Input";
 import { Label } from "@/components/ui/form/Label";
-//import { queryClient } from "@/config/react-query";
 import { useAuthenticatedUserProfileDataQuery } from "@/queries";
 import { profileDetailsSchema } from "@/schemas";
 import { deleteProfilePicture } from "@/services/deleteProfilePicture";
