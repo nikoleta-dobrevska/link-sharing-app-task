@@ -16,7 +16,7 @@ import {
 import { linksSchema } from "@/schemas";
 import { createOrUpdateUserLinks } from "@/services/createOrUpdateLinks";
 import { deleteLink } from "@/services/deleteLink";
-import { type LinksFormData } from "@/types";
+import { type LinkProviderData, type LinksFormData } from "@/types";
 
 import linksListClasses from "./LinksList.module.scss";
 
@@ -28,23 +28,33 @@ export const LinksList = () => {
   const { data: authenticatedUserProfileData } =
     useAuthenticatedUserProfileDataQuery();
 
-  const initialFormValues = useMemo(
-    () => ({
-      links:
-        (userLinks &&
-          linkProviders &&
-          userLinks?.map((link) => {
-            const provider = linkProviders?.[link.linkProviderId - 1];
+  const initialFormValues = useMemo(() => {
+    if (!userLinks?.length || !linkProviders?.length) {
+      return { links: [] };
+    }
 
-            return {
-              linkProvider: provider,
-              link: link.link,
-            };
-          })) ??
-        [],
-    }),
-    [userLinks, linkProviders]
-  );
+    const links = userLinks.reduce<
+      {
+        linkProvider: LinkProviderData;
+        link: string;
+      }[]
+    >((links, link) => {
+      const provider = linkProviders.find(
+        (linkProvider) => linkProvider.id === link.linkProviderId
+      );
+
+      if (provider) {
+        links.push({
+          linkProvider: provider,
+          link: link.link,
+        });
+      }
+
+      return links;
+    }, []);
+
+    return { links };
+  }, [userLinks, linkProviders]);
 
   const userId = authenticatedUserProfileData?.id;
 
@@ -134,10 +144,14 @@ export const LinksList = () => {
           onSubmit={handleSubmit(onSubmit)}
           className={linksListClasses["links-list__form"]}
         >
-          {userLinks && userLinks?.length <= 0 ? (
+          {fields.length <= 0 ? (
             <EmptyLinksList />
           ) : (
-            <div className={linksListClasses["links-list__fields"]}>
+            <div
+              role="list"
+              className={linksListClasses["links-list__fields"]}
+              aria-label="Your added links list"
+            >
               {linkProviders &&
                 fields.map((field, index) => {
                   return (
@@ -170,7 +184,7 @@ export const LinksList = () => {
             type="submit"
             variant="primary"
             size="md"
-            disabled={userLinks && userLinks?.length <= 0}
+            disabled={fields?.length <= 0}
             className={linksListClasses["links-list__save-btn"]}
           >
             Save

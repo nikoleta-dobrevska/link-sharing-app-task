@@ -104,6 +104,7 @@ export const LinksField = ({
 
   return (
     <div
+      role="listitem"
       className={clsx(
         linksFieldClasses["link-field"],
         isDragging && linksFieldClasses["link-field--is-dragging"],
@@ -132,28 +133,26 @@ export const LinksField = ({
       <Label htmlFor={id + `-platform`} color="dark-gray">
         Platform
       </Label>
-      <FormField>
-        <Controller
-          control={control}
-          name={`links.${index}.linkProvider`}
-          rules={{ required: "true" }}
-          render={({ field: { onChange, value } }) => (
-            <LinkProviderDropDownField
-              dropDownFieldId={id + `-platform`}
-              onChange={onChange}
-              selected={value}
-              options={linkProviders}
-              placeholder="Choose platform"
-              onPointerEnter={() => {
-                isOverInput.current = true;
-              }}
-              onPointerLeave={() => {
-                isOverInput.current = false;
-              }}
-            />
-          )}
-        />
-      </FormField>
+      <Controller
+        control={control}
+        name={`links.${index}.linkProvider`}
+        rules={{ required: "true" }}
+        render={({ field: { onChange, value } }) => (
+          <LinkProviderDropDownField
+            dropDownFieldId={id + `-platform`}
+            onChange={onChange}
+            selected={value}
+            options={linkProviders}
+            placeholder="Choose platform"
+            onPointerEnter={() => {
+              isOverInput.current = true;
+            }}
+            onPointerLeave={() => {
+              isOverInput.current = false;
+            }}
+          />
+        )}
+      />
       <Label htmlFor={id + `link-${index}`} color="dark-gray">
         Link
       </Label>
