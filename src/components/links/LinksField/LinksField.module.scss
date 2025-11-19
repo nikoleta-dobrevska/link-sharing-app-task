@@ -22,28 +22,6 @@
     filter: brightness(90%);
   }
 
-  @media screen and (prefers-reduced-motion: no-preference) {
-    &:hover {
-      animation: bounce 0.6s ease-in-out;
-    }
-
-    @keyframes bounce {
-      0%,
-      20%,
-      50%,
-      80%,
-      100% {
-        transform: translateY(0);
-      }
-      40% {
-        transform: translateY(-0.3rem);
-      }
-      60% {
-        transform: translateY(-0.1rem);
-      }
-    }
-  }
-
   &__row {
     display: flex;
     flex-direction: row;

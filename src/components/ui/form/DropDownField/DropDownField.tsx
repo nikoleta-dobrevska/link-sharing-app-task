@@ -40,7 +40,7 @@ export const DropDownField = ({
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [visualFocusIndex, setVisualFocusIndex] = useState(() =>
-    selected ? options.findIndex((option) => option === selected) : 0
+    selected ? options.findIndex((option) => option.name === selected.name) : -1
   );
 
   const comboboxRef = useRef<HTMLDivElement>(null);
@@ -76,7 +76,7 @@ export const DropDownField = ({
   }, [dropDownFieldRef]);
 
   const handleKeyDownCombobox = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === KeyboardEventKey.arrowDown) {
+    if (!e.altKey && e.key === KeyboardEventKey.arrowDown) {
       e.preventDefault();
 
       if (isDropdownOpen) {
@@ -91,7 +91,7 @@ export const DropDownField = ({
       }
     }
 
-    if (e.key === KeyboardEventKey.arrowUp) {
+    if (!e.altKey && e.key === KeyboardEventKey.arrowUp) {
       e.preventDefault();
 
       if (isDropdownOpen) {
@@ -115,8 +115,7 @@ export const DropDownField = ({
       e.preventDefault();
 
       if (isDropdownOpen) {
-        onChange(options[visualFocusIndex]);
-        setDropdownOpen(false);
+        onOptionClick(options[visualFocusIndex], visualFocusIndex);
         focusCombobox();
         return;
       } else {
@@ -148,8 +147,7 @@ export const DropDownField = ({
 
     if (isDropdownOpen) {
       if (e.key === KeyboardEventKey.tab) {
-        onChange(options[visualFocusIndex]);
-        setDropdownOpen(false);
+        onOptionClick(options[visualFocusIndex], visualFocusIndex);
         return;
       }
 
@@ -160,26 +158,17 @@ export const DropDownField = ({
       }
 
       if (e.altKey && e.key === KeyboardEventKey.arrowUp) {
-        onChange(options[visualFocusIndex]);
-        setDropdownOpen(false);
+        onOptionClick(options[visualFocusIndex], visualFocusIndex);
         focusCombobox();
         return;
       }
 
       if (e.key === KeyboardEventKey.pageUp) {
-        if (options.length >= 10) {
-          setVisualFocusIndex(0);
-        } else {
-          setVisualFocusIndex(9);
-        }
+        setVisualFocusIndex(0);
       }
 
       if (e.key === KeyboardEventKey.pageDown) {
-        if (options.length >= 10) {
-          setVisualFocusIndex(9);
-        } else {
-          setVisualFocusIndex(options.length - 1);
-        }
+        setVisualFocusIndex(options.length - 1);
       }
     }
   };
