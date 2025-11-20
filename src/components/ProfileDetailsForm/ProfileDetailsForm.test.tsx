@@ -107,6 +107,8 @@ describe("Profile Details Form", () => {
     );
 
     const file = new File(["mock file"], "mockfile.png", { type: "image/png" });
+    const btns = screen.getAllByRole("button");
+    await userEvent.click(btns[0]);
     await userEvent.upload(screen.getByLabelText(/Profile picture/i), file);
     expect(preview).toHaveAttribute("src", "mockfile.png");
 
@@ -158,7 +160,8 @@ describe("Profile Details Form", () => {
     });
 
     const file = new File(["mock file"], "mockfile.png", { type: "image/png" });
-
+    const btns = screen.getAllByRole("button");
+    await userEvent.click(btns[0]);
     await userEvent.upload(screen.getByLabelText(/Profile picture/i), file);
     expect(
       screen.getByRole("button", { name: "Remove Preview" })

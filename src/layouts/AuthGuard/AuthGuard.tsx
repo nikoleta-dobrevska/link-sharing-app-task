@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
-import { Outlet } from "react-router";
+import { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router";
 
-import { LOCAL_STORAGE_UPDATED_CUSTOM_EVENT } from "@/constants";
+import { LOCAL_STORAGE_UPDATED_CUSTOM_EVENT, RoutePaths } from "@/constants";
 import { getLocalStorageItem } from "@/localStorage";
 
 export const AuthGuard = () => {
-  const [token, setToken] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setToken(getLocalStorageItem("token"));
-  }, []);
+    const token = getLocalStorageItem("token");
+
+    if (!token) {
+      navigate(RoutePaths.login);
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const handleLocalStorageTokenChange = (
@@ -21,7 +25,9 @@ export const AuthGuard = () => {
 
       const token = getLocalStorageItem("token");
 
-      setToken(token);
+      if (!token) {
+        navigate(RoutePaths.login);
+      }
     };
 
     window.addEventListener(
@@ -33,7 +39,7 @@ export const AuthGuard = () => {
       LOCAL_STORAGE_UPDATED_CUSTOM_EVENT as keyof WindowEventMap,
       handleLocalStorageTokenChange as unknown as (event: Event) => void
     );
-  }, [token]);
+  }, [navigate]);
 
   return <Outlet />;
 };
