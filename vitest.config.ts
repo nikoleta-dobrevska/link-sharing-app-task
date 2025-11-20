@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-
 /// <reference types="vitest/config" />
 
 import { defineConfig, mergeConfig } from "vite";

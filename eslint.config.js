@@ -8,11 +8,11 @@ import jsxA11y from "eslint-plugin-jsx-a11y";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
+import storybook from "eslint-plugin-storybook";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config([
-  globalIgnores(["dist"]),
+export default tseslint.config(
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
     extends: [
@@ -44,7 +44,7 @@ export default tseslint.config([
       "no-restricted-syntax": [
         "error",
         {
-          selector: "ImportDeclaration[source.value=/^\\.{1,2}(?!.*\\.s?css)/]",
+          selector: "ImportDeclaration[source.value=/^\\.{2}/]",
           message: 'Use absolute "@/" imports instead of relative ones.',
         },
       ],
@@ -74,8 +74,10 @@ export default tseslint.config([
         {
           devDependencies: [
             "./*.[jt]s",
-            "**/*.{test,spec}.?(mc)[jt]s?(x)",
-            "./src/test-utils/*.?(mc)[jt]s?(x)",
+            "**/*.stories.[jt]s?(x)",
+            "./.storybook/**/*.[jt]s?(x)",
+            "**/*.{test,spec}.[jt]s?(x)",
+            "./src/test-utils/*.[jt]s?(x)",
           ],
           optionalDependencies: false,
           peerDependencies: false,
@@ -119,4 +121,6 @@ export default tseslint.config([
       "import/resolver": { typescript: true, node: true },
     },
   },
-]);
+  globalIgnores(["dist"]),
+  storybook.configs["flat/recommended"]
+);
