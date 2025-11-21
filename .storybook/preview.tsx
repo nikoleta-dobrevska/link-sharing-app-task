@@ -8,6 +8,8 @@ import {
 } from "@storybook/addon-docs/blocks";
 import { type Preview } from "@storybook/react-vite";
 
+import "@/scss/reset.scss";
+
 const preview: Preview = {
   tags: ["autodocs"],
   parameters: {

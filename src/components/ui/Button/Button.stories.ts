@@ -13,7 +13,6 @@ const meta = {
       description: "Size of the button",
       table: {
         type: { summary: '"md"' },
-        defaultValue: { summary: "md" },
       },
     },
     variant: {
@@ -22,7 +21,6 @@ const meta = {
       description: "Variant of the button",
       table: {
         type: { summary: '"primary" | "secondary"' },
-        defaultValue: { summary: "primary" },
       },
     },
   },
@@ -35,14 +33,30 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    size: "md",
     variant: "primary",
+    size: "md",
   },
 };
 
 export const Secondary: Story = {
   args: {
-    size: "md",
     variant: "secondary",
+    size: "md",
+  },
+};
+
+export const DisabledPrimary: Story = {
+  args: {
+    disabled: true,
+    variant: "primary",
+    size: "md",
+  },
+};
+
+export const DisabledSecondary: Story = {
+  args: {
+    disabled: true,
+    variant: "secondary",
+    size: "md",
   },
 };

@@ -201,7 +201,18 @@ export const DropDownField = ({
             dropDownFieldClasses["drop-down-field__display-container__tools"]
           }
         >
-          <img aria-hidden="true" alt="" src={selected?.src} />
+          {selected && (
+            <img
+              aria-hidden="true"
+              alt=""
+              src={selected.src}
+              className={
+                dropDownFieldClasses[
+                  "drop-down-field__display-container__tools__img"
+                ]
+              }
+            />
+          )}
           <Typography
             component="span"
             id={id + "-currentOption"}

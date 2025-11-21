@@ -31,8 +31,9 @@
       align-items: center;
       color: colors.$dark-gray;
 
-      &__svg {
-        color: colors.$gray;
+      &__img {
+        width: 1rem;
+        height: 1rem;
       }
     }
   }
@@ -76,12 +77,16 @@
       }
 
       &__icon {
+        width: 1rem;
+        height: 1rem;
         filter: invert(47%) sepia(98%) saturate(7134%) hue-rotate(247deg)
           brightness(104%) contrast(109%);
       }
 
       &:not(:hover, :focus, [aria-selected="true"], &--current) &__icon {
         filter: none;
+        width: 1rem;
+        height: 1rem;
       }
 
       &__separator {
