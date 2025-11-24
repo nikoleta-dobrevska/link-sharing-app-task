@@ -36,6 +36,10 @@
     }
   }
 
+  &--invalid {
+    border: 1px solid colors.$red;
+  }
+
   &__file {
     @include constants.screen-reader-only;
 

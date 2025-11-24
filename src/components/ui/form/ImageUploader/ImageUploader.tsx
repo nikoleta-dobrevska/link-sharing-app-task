@@ -42,7 +42,8 @@ export const ImageUploader = ({
       <button
         className={clsx(
           imageUploaderClasses["img-uploader"],
-          preview && imageUploaderClasses["img-uploader--has-preview"]
+          preview && imageUploaderClasses["img-uploader--has-preview"],
+          errorMessage && imageUploaderClasses["img-uploader--invalid"]
         )}
         onClick={() => inputRef?.current?.click()}
         type="button"
